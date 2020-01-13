@@ -205,11 +205,8 @@ method：GET
 			"bonus": "10",
 			"bonus_coin_type": "ONT",
 			"create_time": 0,
-			"cust_id": 2,
-			"cust_name": "mm",
 			"cust_user_no": "mid123",
 			"cust_tx_id":"1",
-			"logo": "1.jpg",
 			"coinType":"PAX",
 			"tx_amount": "126"
 		  }
@@ -224,11 +221,8 @@ method：GET
 | bonus | String | 奖励 |
 | bonus_coin_type | String | 奖励币种 |
 |  create_time   | long |      创建日期   |
-|   cust_id   | int |          机构id          |
-|  cust_name   | String |      机构名称   |
 |    cust_user_no    |  String   |   绑定公司下用户编号          |
 |    cust_tx_id    |  String   |   绑定公司下交易号          |
-|    logo    |  String   |          公司图标          |
 |  coin_type   | String |      币种   |
 |  tx_amount   | String |      金额   |
 

@@ -321,39 +321,6 @@ method：GET
 
 
 
-### 1.3.获取的用户资产总额
-
-```text
-url：/api/v1/npay/cust/asset?acct_no=123
-method：GET
-```
-
-- 请求：
-
-- 响应：
-
-```json
-	{
-	  "code": 0,
-	  "msg": "string",
-	  "result": {
-		"ont_balance": "8",
-		"ont_expenditure": "2",
-		"ont_income": "10",
-		"pax_balance": "10",
-		"pax_expenditure": "10",
-		"pax_income": "20"
-	  }
-	}
-```
-|  Field_Name   |  Type  |        Description         |
-| :-----------: | :----: | :------------------------: |
-|  ont_balance   | String |     ONT资产总余额   |
-|  ont_income   | String |      ONT收入金额   |
-|  ont_expenditure   | String |      ONT支出金额   |
-|  pax_balance   | String |      PAX资产总余额   |
-|  pax_income   | String |      PAX收入金额   |
-|  pax_expenditure   | String |     PAX支出金额   |
 
 
 

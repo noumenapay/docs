@@ -139,16 +139,95 @@ Response if the verification fails:
 
 This deposit `API` is invoked when a user issues a withdrawal request on the **Microworker** web platform. 
 
-```json
-/api/v1/noumena/deposit
+```
+
+POST  /api/v1/npay/transaction
 
 {
-   "user": "did:ont:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz",
-   "amount": "10",
-   "coin": "PAX"
 
+  "acct_no": "ont:did:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz",
+  "cust_user_no": "mid-2323",
+  "cust_tx_id": "12346", 
+  "coin_type": "PAX",
+  "tx_amount": "1.01",
+  "bonus_tx_amount": "1.001",
+  "bonus_coin_type": "ONT",
+  "remark": ""
 }
+Response: 
+{
+  "code": 0,
+  "msg": "SUCCESS"
+  "result": {
+			"tx_id": "202001120001",
+			"bonus_txid": "202001120002"
+    }
+}
+
 ```
+
+
+| Body_Field_Name |  Type  |   Description   |
+|:----------:|:------:|:---------------------------------------------------------------------:|
+|   acct_no | String |ontid|
+|   cust_user_no | String |user id in microwokers|
+|   cust_tx_id | String |order id|
+|   coin_type | String |coin type|
+|   tx_amount | String |amount|
+|   bonus_coin_type | String |bonus coin type|
+|   bonus_tx_amount | String |bonus amount|
+|   remark | String |description |
+
+Record：
+
+```text
+url：/api/v1/npay/cust/transaction
+method：GET
+```
+
+- Request：
+
+|  Field_Name   |  Type  |        Description         |
+| :-----------: | :----: | :------------------------: |
+|  page_num   | int  |    page number     |
+|  page_size  | int  |  page size   |
+|  acct_no  | String  |  ontid   |
+|  cust_user_no  | String  | user id in microwokers |
+|  cust_tx_id  | String  | order id   |
+
+- Response：
+
+```json
+	{
+	  "code": 0,
+	  "msg": "SUCCESS",
+	  "result": {
+		"records": [
+		  {
+			"acct_no": "12345678",
+			"bonus": "10",
+			"bonus_coin_type": "ONT",
+			"create_time": 0,
+			"cust_user_no": "mid123",
+			"cust_tx_id":"1",
+			"coinType":"PAX",
+			"tx_amount": "126"
+		  }
+		],
+		"total": 0
+	  }
+	}
+```
+|  Field_Name   |  Type  |        Description         |
+| :-----------: | :----: | :------------------------: |
+|    acct_no    | String | ontid |
+| bonus | String | bonus |
+| bonus_coin_type | String | bonus coin type |
+|  create_time   | long |      create time   |
+|    cust_user_no    |  String   |   user id in microwokers          |
+|    cust_tx_id    |  String   |   order id          |
+|  coin_type   | String |      coin type   |
+|  tx_amount   | String |      amount   |
 
 > It is important to note that **ONTO** needs and maintains a record of only the withdrawal amount that the user decides to withdraw using **ONTO**, and not the the total balance or other account related information.
 

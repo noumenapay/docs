@@ -292,16 +292,17 @@ method：GET
 	  "msg": "SUCCESS",
 	  "result": {
 		"records": [
-		  {
-			"acct_no": "12345678",
-			"bonus": "10",
-			"bonus_coin_type": "ONT",
-			"create_time": 0,
-			"cust_user_no": "mid123",
-			"cust_tx_id":"1",
-			"coinType":"PAX",
-			"tx_amount": "126"
-		  }
+            {
+                "acct_no": "ont:did:AYUkLqCtozedCQrzLMXZiXq1wjr6Qm6Cj5",
+                "cust_user_no": "mid-zx",
+                "cust_tx_id": "12346",
+                "cust_id": 13,
+                "coin_type": "PAX",
+                "tx_amount": "1.01",
+                "bonus": "1.001",
+                "bonus_coin_type": "ONT",
+                "create_time": 1578889620000
+            }
 		],
 		"total": 0
 	  }

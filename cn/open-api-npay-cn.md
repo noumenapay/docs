@@ -252,8 +252,8 @@ method：POST
   "code": 0,
   "msg": "SUCCESS",
   "result": {
-			"tx_id": "202001120001",
-			"bonus_txid": "202001120002"
+		"tx_id": "202001120001",
+		"bonus_txid": "202001120002"
     }
 }
 ```

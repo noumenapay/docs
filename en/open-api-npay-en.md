@@ -1,8 +1,7 @@
-# noumena-pay-OpenAPI 接口
+# noumena-pay-OpenAPI 
 
-
-* [Noumena Pay充值](#Noumena-Pay充值)
-* [Onto对接 Noumena Pay](#Onto对接-Noumena-Pay)
+* [接口规范](#接口规范)
+* [Noumena Pay 接口](#1.-Noumena-Pay-接口)
 
 ## 接口规范
 
@@ -220,7 +219,7 @@ public class HmacSHA256Base64Util {
 
 ```
 
-## 1. Noumena Pay用户充值
+## 1. Noumena Pay 接口
 
 ### 1.1.给用户充值
 
@@ -251,7 +250,7 @@ method：POST
 ```json
 {
   "code": 0,
-  "msg": "SUCCESS"
+  "msg": "SUCCESS",
   "result": {
 			"tx_id": "202001120001",
 			"bonus_txid": "202001120002"
@@ -262,10 +261,6 @@ method：POST
 | :-----------: | :----: | :------------------------: |
 |    tx_id    | String | 主币种充值id|
 |    bonus_txid    | String | bonus币种充值id |
-
-
-
-
 
 
 
@@ -333,56 +328,8 @@ method：GET
 
 
 
-## 2. Onto对接 Noumena Pay
-### 2.1.获取的用户绑定的公司
 
-```text
-url：/api/v1/npay/customers?acct_no=123
-method：GET
-```
-
-- 请求：
-|  Field_Name   |  Type  |        Description         |
-| :-----------: | :----: | :------------------------: |
-|  page_num   | int  |    页数     |
-|  page_size  | int  |  页的大小   |
-
-- 响应：
-
-```json
-{
-    "code": 0,
-    "msg": "SUCCESS",
-    "result": {
-        "total": 1,
-        "records": [
-            {
-                "acct_no": "1",
-                "cust_user_no": "1",
-                "logo": "",
-                "cust_id": "1",
-                "cust_name": "abc"
-            }
-        ]
-    }
-}
-```
-|  Field_Name   |  Type  |        Description         |
-| :-----------: | :----: | :------------------------: |
-|    acct_no    | String | 机构端用户编号(机构端唯一) |
-|    cust_user_no    |  String   |   绑定公司下用户编号          |
-|    logo    |  String   |          公司图标          |
-|   cust_id   | int |          机构id          |
-|  cust_name   | String |      机构名称   |
-
-
-
-
-
-
-
-
-### 2.2.获取的用户交易记录
+### 1.3.获取用户交易记录
 
 ```text
 url：/api/v1/npay/transaction?acct_no=123
@@ -442,7 +389,7 @@ method：GET
 
 
 
-### 2.3.获取的用户资产总额
+### 1.4.获取的用户资产总额
 
 ```text
 url：/api/v1/npay/asset?acct_no=123&coin_type=PAX

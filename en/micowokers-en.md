@@ -4,7 +4,7 @@ This document contains an outline of integrating the **ONTO** platform with the 
 
 ## Data Exchange Process Flow
 
-![mw flow of control](img/mw-en.jpg)
+![mw flow of control](../img/mw-en.jpg)
 
 The process involves three major steps. Microworkers platform is actively involved in the first two. The process is as follows-
 
@@ -135,7 +135,7 @@ Response if the verification fails:
 }
 ```
 
-### 2. Microworkers backend invokes Noumena API to deposit the withdrawal amount
+### 2. Microworkers backend invokes NoumenaPay API to deposit the withdrawal amount
 
 This deposit `API` is invoked when a user issues a withdrawal request on the **Microworker** web platform. 
 

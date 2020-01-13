@@ -1,13 +1,13 @@
-# micro worker 对接
+# micro workers 对接
 
 
 流程图：
 
-![](img/mw.jpg)
+![](../img/mw.jpg)
 
 主要分3个步骤，MW只需要完成前两个步骤：
 1. ONTO(https://onto.app/) 扫描, 绑定mid和ontid
-2. MW后台调用Noumena充值接口给用户充值
+2. MW后台调用Noumena Pay充值接口给用户充值
 3. ONTO 用户提现(未完成)
 
 ### 准备条件
@@ -133,10 +133,10 @@ if(b){
 }
 ```
 
-### 2. MW后台调用Noumena充值接口给用户充值
+### 2. MW后台调用NoumenaPay充值接口给用户充值
 
 
-用户在MW网站提交提币申请时，MW后台调用Noumena的充值接口。
+用户在MW网站提交提币申请时，MW后台调用Noumena Pay的充值接口。
 ```
 
 POST  /api/v1/npay/transaction

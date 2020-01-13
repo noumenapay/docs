@@ -361,7 +361,7 @@ method：GET
 			"cust_id": 2,
 			"cust_name": "mm",
 			"cust_user_no": "mid123",
-			"cust_tx_id":"1"
+			"cust_tx_id":"1",
 			"logo": "1.jpg",
 			"coinType":"PAX",
 			"tx_amount": "126"

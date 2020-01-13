@@ -313,11 +313,8 @@ method：GET
 | bonus | String | 奖励 |
 | bonus_coin_type | String | 奖励币种 |
 |  create_time   | long |      创建日期   |
-|   cust_id   | int |          机构id          |
-|  cust_name   | String |      机构名称   |
 |    cust_user_no    |  String   |   绑定公司下用户编号          |
 |    cust_tx_id    |  String   |   绑定公司下交易号          |
-|    logo    |  String   |          公司图标          |
 |  coin_type   | String |      币种   |
 |  tx_amount   | String |      金额   |
 

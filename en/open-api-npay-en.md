@@ -225,7 +225,7 @@ public class HmacSHA256Base64Util {
 
 
 ```text
-url：/api/v1/npay/transaction
+url：/api/v1/npay/cust/transaction
 method：POST
 ```
 
@@ -297,11 +297,8 @@ method：GET
 			"bonus": "10",
 			"bonus_coin_type": "ONT",
 			"create_time": 0,
-			"cust_id": 2,
-			"cust_name": "mm",
 			"cust_user_no": "mid123",
 			"cust_tx_id":"1",
-			"logo": "1.jpg",
 			"coinType":"PAX",
 			"tx_amount": "126"
 		  }
@@ -327,74 +324,10 @@ method：GET
 
 
 
-
-
-
-### 1.3.获取用户交易记录
+### 1.3.获取的用户资产总额
 
 ```text
-url：/api/v1/npay/transaction?acct_no=123
-method：GET
-```
-
-- 请求：
-
-|  Field_Name   |  Type  |        Description         |
-| :-----------: | :----: | :------------------------: |
-|  page_num   | int  |    页数     |
-|  page_size  | int  |  页的大小   |
-|  acct_no  | String  |  onto 用戶账号(必选)   |
-
-- 响应：
-
-```json
-	{
-	  "code": 0,
-	  "msg": "SUCCESS",
-	  "result": {
-		"records": [
-		  {
-			"acct_no": "12345678",
-			"bonus": "10",
-			"bonus_coin_type": "ONT",
-			"create_time": 0,
-			"cust_id": 2,
-			"cust_name": "mm",
-			"cust_user_no": "mid123",
-			"cust_tx_id":"1",
-			"logo": "1.jpg",
-			"coinType":"PAX",
-			"tx_amount": "126"
-		  }
-		],
-		"total": 0
-	  }
-	}
-```
-|  Field_Name   |  Type  |        Description         |
-| :-----------: | :----: | :------------------------: |
-|    acct_no    | String | 机构端用户编号(机构端唯一) |
-| bonus | String | 奖励 |
-| bonus_coin_type | String | 奖励币种 |
-|  create_time   | long |      创建日期   |
-|   cust_id   | int |          机构id          |
-|  cust_name   | String |      机构名称   |
-|    cust_user_no    |  String   |   绑定公司下用户编号          |
-|    cust_tx_id    |  String   |   绑定公司下交易号          |
-|    logo    |  String   |          公司图标          |
-|  coin_type   | String |      币种   |
-|  tx_amount   | String |      金额   |
-
-
-
-
-
-
-
-### 1.4.获取的用户资产总额
-
-```text
-url：/api/v1/npay/asset?acct_no=123&coin_type=PAX
+url：/api/v1/npay/cust/asset?acct_no=123
 method：GET
 ```
 

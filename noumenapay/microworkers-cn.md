@@ -8,7 +8,7 @@
 主要分3个步骤，MW只需要完成前两个步骤：
 1. ONTO(https://onto.app/) 扫描, 绑定mid和ontid
 2. MW后台调用Noumena Pay充值接口给用户充值
-3. ONTO 用户提现(未完成)
+3. 用户在 ONTO 提现（未完成）
 
 ### 准备条件
 
@@ -235,70 +235,20 @@ method：GET
 WM提供查询用户信息的查询接口，用于ONTO页面展示,例如：
 ```
 GET http://api.microwokers.com/api/v1/user/{user ontid}
-{
-   "user": "did:ont:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz",
-   "name": "",
-   "score": ""，
-   "balance": "",
-   "total_salary": ""
-   "label":  ""
-
-}
-
-name  用户的账户名
-score  用户的星级评分
-balance 账户余额
-total_salary 总共获得的酬劳
-label 能力标签
 
 ```
-### 3. ONTO 用户提现（未完成）
+
+|  Field_Name   |  Type  |        Description         |
+| :-----------: | :----: | :------------------------: |
+|    user    | String | ontid|
+| name | String | 用户的账户名 |
+| score | String | 用户的星级评分 |
+|  current_balance   | String |      账户余额   |
+|  total_rewards   | String |      总共获得的酬劳   |
+|  label   | String |      能力标签   |
+
+### 3. 用户在 ONTO 提现（未完成）
 
 
-> 体现需要提供PAXO的PAX地址，用户先授权才能获取到用户的PAX地址。如果用户还没注册PAXO，需要先注册，才能授权。
+> 提现需要用户提供PAXO的PAX地址，用户先授权才能获取到用户的PAX地址。如果用户还没注册PAXO，需要先注册，才能授权。
 
-用户申请提现：
-```
-POST  /api/v1/noumena/user/withdraw
-{
-   "params": {
-       "user": "did:ont:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz",
-       "address": "input coin address",
-       "amount": "10",
-       "coin": "PAX"
-   },
-   "publickey": "0205c8fff4b1d21f4b2ec3b48cf88004e38402933d7e914b2a0eda0de15e73ba61",
-   "signature": "01abd7ea9d79c857cd838cabbbaad3efb44a6fc4f5a5ef52ea8461d6c055b8a7cf324d1a58962988709705cefe40df5b26e88af3ca387ec5036ec7f5e6640a1754"
-}
-```
-
-ONTO 中查看用户信息：
-```
-GET /api/v1/noumena/user/info/{ontid}
-{
-   "company": "Micro waker",
-   "company_logo": "http://",
-   "name": "",
-   "score": ""，
-   "balance": "",
-   "total_salary": ""
-   "bonus": "",
-   "label":  ""
-}
-```
-
-查询用户提现记录:
-
-```
-GET /api/v1/noumena/user/withdraw/history/{ontid}
-{
-    "history": [
-        {
-           "withdrawtime": "",
-           "amount": "10",
-           "address": "input coin address",
-           "coin": "PAX"
-        }
-    ]
-}
-```

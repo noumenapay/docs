@@ -1,7 +1,7 @@
 # Noumena pay OpenAPI
 
 * [API Specifications](#1-api-specifications)
-* [Noumena Pay API](#1.-Noumena-Pay-API)
+* [Noumena Pay API](#2-noumena-pay-api)
 
 ## 1. API Specifications
 

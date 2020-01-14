@@ -4,7 +4,7 @@ This document contains an outline of integrating the **ONTO** platform with the 
 
 ## Data Exchange Process Flow
 
-![mw flow of control](img/mw-process-flow.png)
+![mw flow of control](img/mw-process-flow-en.png)
 
 The process involves three major steps. Microworkers platform is actively involved in the first two. The process is as follows-
 
@@ -248,13 +248,14 @@ Method: GET
 
 ```json
 
+Response：
 {
    "user": "did:ont:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz",
-   "name": "", 
-   "score": "",
-   "current_balance": "",
-   "total_rewards": "",
-   "label":  ""
+   "name": "user name", 
+   "score": "5",
+   "current_balance": "100",
+   "total_rewards": "1000",
+   "label":  "Java Python"
 
 }
 
@@ -270,67 +271,17 @@ Method: GET
 
 ```label```: A label that serves as a direct indicator of performance
 
+
+|  Field_Name   |  Type  |        Description         |
+| :-----------: | :----: | :------------------------: |
+|    user    | String | ontid|
+| name | String | User account name |
+| score | String | A rating measure for the user (score) |
+|  current_balance   | String |      Current balance   |
+|  total_rewards   | String |      Total Microwroker reward   |
+|  label   | String |      A label that serves as a direct indicator of performance   |
+
 ### 3. ONTO user withdrawal
 
 > To withdraw the amount using PAXOS the user needs to provide the PAX account address. It is possible to carry out a transaction only when the user registers a PAXOS acouent and then authorizes ONTO to use it.
 
-#### The structure of user's withdrawal request-
-
-```text
-URL: /api/v1/noumena/user/withdraw
-Method: POST
-```
-
-```json
-{
-   "params": {
-       "user": "did:ont:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz",
-       "address": "input coin address",
-       "amount": "10",
-       "coin": "PAX"
-   },
-   "publickey": "0205c8fff4b1d21f4b2ec3b48cf88004e38402933d7e914b2a0eda0de15e73ba61",
-   "signature": "01abd7ea9d79c857cd838cabbbaad3efb44a6fc4f5a5ef52ea8461d6c055b8a7cf324d1a58962988709705cefe40df5b26e88af3ca387ec5036ec7f5e6640a1754"
-}
-```
-
-#### User information that can be queried from **ONTO**-
-
-```text
-URL: /api/v1/noumena/user/info/{ontid}
-Method: GET
-```
-
-```json
-
-{
-   "company": "Microworker",
-   "company_logo": "http://",
-   "name": "",
-   "score": "",
-   "balance": "",
-   "total_salary": "",
-   "bonus": "",
-   "label":  ""
-}
-```
-
-#### Querying the user withdrawal history-
-
-```text
-URL: /api/v1/noumena/user/withdraw/history/{ontid}
-Method: GET
-```
-
-```
-{
-    "history": [
-        {
-           "withdrawtime": "",
-           "amount": "10",
-           "address": "input coin address",
-           "coin": "PAX"
-        }
-    ]
-}
-```

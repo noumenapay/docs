@@ -3,7 +3,7 @@
 
 流程图：
 
-![](img/mw.jpg)
+![](img/mw-process-flow-cn.jpg)
 
 主要分3个步骤，MW只需要完成前两个步骤：
 1. ONTO(https://onto.app/) 扫描, 绑定mid和ontid
@@ -235,6 +235,21 @@ method：GET
 WM提供查询用户信息的查询接口，用于ONTO页面展示,例如：
 ```
 GET http://api.microwokers.com/api/v1/user/{user ontid}
+
+```
+
+```json
+
+Response：
+{
+   "user": "did:ont:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz",
+   "name": "user name", 
+   "score": "5",
+   "current_balance": "100",
+   "total_rewards": "1000",
+   "label":  "Java Python"
+
+}
 
 ```
 

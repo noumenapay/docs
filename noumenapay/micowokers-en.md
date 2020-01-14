@@ -14,7 +14,7 @@ The process involves three major steps. Microworkers platform is actively involv
 
 ## Prerequisites
 
-**Microworkers** back end applies for the `Appkey` and `Secret` from `Noumena` (http://noumena.pro)
+**Microworkers** back end applies for the `Appkey` and `Secret` from `Noumena` (User Acceptance Test: http://uat.noumena.pro )
 
 ### Data structures
 
@@ -142,8 +142,12 @@ This deposit `API` is invoked when a user issues a withdrawal request on the **M
 - Request:
 
 ```text
-URL: /api/v1/npay/transaction
+URL: http://uat.noumena.pro/api/v1/npay/cust/transaction
 Method: POST
+
+-H 'Access-Passphrase: 12345678a' 
+-H 'Authorization: Noumena:cdb780f1afc64e57a32928608b78cb11:123' 
+-H 'Content-Type: application/json' 
 ```
 
 ```json

@@ -12,7 +12,7 @@
 
 ### 准备条件
 
-WM 在Noumena( http://uat.noumena.pro )申请 Appkey 和 Screte。在执行第二步操作时需要使用。
+WM 在Noumena(测试环境 http://uat.noumena.pro )申请 Appkey 和 Screte。在执行第二步操作时需要使用。
 
 ### 1. ONTO 扫描, 绑定mid和ontid：
 
@@ -139,8 +139,12 @@ if(b){
 用户在MW网站提交提币申请时，MW后台调用Noumena Pay的充值接口。
 ```
 
-POST  /api/v1/npay/transaction
+POST  http://uat.noumena.pro/api/v1/npay/cust/transaction
 
+-H 'Access-Passphrase: 12345678a' 
+-H 'Authorization: Noumena:cdb780f1afc64e57a32928608b78cb11:123' 
+-H 'Content-Type: application/json' 
+  
 {
 
   "acct_no": "ont:did:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz",

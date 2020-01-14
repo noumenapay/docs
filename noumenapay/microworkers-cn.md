@@ -3,7 +3,7 @@
 
 流程图：
 
-![](../img/mw.jpg)
+![](img/mw.jpg)
 
 主要分3个步骤，MW只需要完成前两个步骤：
 1. ONTO(https://onto.app/) 扫描, 绑定mid和ontid

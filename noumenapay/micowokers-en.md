@@ -139,12 +139,15 @@ Response if the verification fails:
 
 This deposit `API` is invoked when a user issues a withdrawal request on the **Microworker** web platform. 
 
+- Request:
+
+```text
+URL: /api/v1/npay/transaction
+Method: POST
 ```
 
-POST  /api/v1/npay/transaction
-
+```json
 {
-
   "acct_no": "ont:did:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz",
   "cust_user_no": "mid-2323",
   "cust_tx_id": "12346", 
@@ -154,9 +157,10 @@ POST  /api/v1/npay/transaction
   "bonus_coin_type": "ONT",
   "remark": ""
 }
+```
+- Response: 
 
-Response: 
-
+```
 {
   "code": 0,
   "msg": "SUCCESS"
@@ -180,14 +184,13 @@ Response:
 |   bonus_tx_amount | String |bonus amount|
 |   remark | String |description |
 
-Record：
-
-```text
-url：/api/v1/npay/cust/transaction
-method：GET
-```
 
 - Request：
+
+```text
+URL：/api/v1/npay/cust/transaction
+Method：GET
+```
 
 |  Field_Name   |  Type  |        Description         |
 | :-----------: | :----: | :------------------------: |
@@ -238,8 +241,12 @@ method：GET
 
 **Microworkers** backend platform provides work experience related data to be displayed in **ONTO**. **ONTO** queries the following data from **Microworkers** API:
 
+```text
+URL: http://api.microwokers.com/api/v1/user/{user ontid}
+Method: GET
+```
+
 ```json
-GET http://api.microwokers.com/api/v1/user/{user ontid}
 
 {
    "user": "did:ont:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz",
@@ -269,9 +276,12 @@ GET http://api.microwokers.com/api/v1/user/{user ontid}
 
 #### The structure of user's withdrawal request-
 
-```json
-POST  /api/v1/noumena/user/withdraw
+```text
+URL: /api/v1/noumena/user/withdraw
+Method: POST
+```
 
+```json
 {
    "params": {
        "user": "did:ont:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz",
@@ -286,8 +296,12 @@ POST  /api/v1/noumena/user/withdraw
 
 #### User information that can be queried from **ONTO**-
 
+```text
+URL: /api/v1/noumena/user/info/{ontid}
+Method: GET
+```
+
 ```json
-GET /api/v1/noumena/user/info/{ontid}
 
 {
    "company": "Micro waker",
@@ -303,9 +317,12 @@ GET /api/v1/noumena/user/info/{ontid}
 
 #### Querying the user withdrawal history-
 
-```json
-GET /api/v1/noumena/user/withdraw/history/{ontid}
+```text
+URL: /api/v1/noumena/user/withdraw/history/{ontid}
+Method: GET
+```
 
+```
 {
     "history": [
         {

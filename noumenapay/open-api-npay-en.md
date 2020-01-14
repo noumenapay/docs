@@ -219,9 +219,9 @@ public class HmacSHA256Base64Util {
 
 ```
 
-## 1. Noumena Pay API
+## 2. Noumena Pay API
 
-### 1.1. Deposit funds for a user
+### 2.1. Deposit funds for a user
 
 
 ```text
@@ -267,7 +267,7 @@ method：POST
 
 
 
-### 1.2. Fetch user's transaction records
+### 2.2. Fetch user's transaction records
 
 ```text
 url：/api/v1/npay/cust/transaction

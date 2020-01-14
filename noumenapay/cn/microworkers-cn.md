@@ -152,13 +152,15 @@ POST  /api/v1/npay/transaction
   "bonus_coin_type": "ONT",
   "remark": ""
 }
+
 Response: 
+
 {
   "code": 0,
   "msg": "SUCCESS"
   "result": {
-			"tx_id": "202001120001",
-			"bonus_txid": "202001120002"
+		"tx_id": "202001120001",
+		"bonus_txid": "202001120002"
     }
 }
 
@@ -184,6 +186,7 @@ method：GET
 ```
 
 - 请求：
+
 |  Field_Name   |  Type  |        Description         |
 | :-----------: | :----: | :------------------------: |
 |  page_num   | int  |    页数     |
@@ -215,6 +218,7 @@ method：GET
 	  }
 	}
 ```
+
 |  Field_Name   |  Type  |        Description         |
 | :-----------: | :----: | :------------------------: |
 |    acct_no    | String | 机构端用户编号(机构端唯一) |

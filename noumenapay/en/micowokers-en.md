@@ -154,13 +154,15 @@ POST  /api/v1/npay/transaction
   "bonus_coin_type": "ONT",
   "remark": ""
 }
+
 Response: 
+
 {
   "code": 0,
   "msg": "SUCCESS"
   "result": {
-			"tx_id": "202001120001",
-			"bonus_txid": "202001120002"
+		"tx_id": "202001120001",
+		"bonus_txid": "202001120002"
     }
 }
 
@@ -218,6 +220,7 @@ method：GET
 	  }
 	}
 ```
+
 |  Field_Name   |  Type  |        Description         |
 | :-----------: | :----: | :------------------------: |
 |    acct_no    | String | ontid |

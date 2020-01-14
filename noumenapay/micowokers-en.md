@@ -45,7 +45,7 @@ The QR code displayed on the **Microworkers** web platform contains the followin
 | type | string | Default value `ontid` if logging in using ONT ID, `address` if logging in using a wallet address |
 | dappName | string | dApp name |
 | dappIcon | string | dApp icon resource URI |
-| message | string | Randomly generated message, used for identity verification, microwoker `userid` + `cointype` + `amount` + `timestamp` + `nonce`, Example: 1234+PAX+10+1578395085+3535|
+| message | string | Randomly generated message used for identity verification, Microwoker `userid` + `cointype` + `amount` + `timestamp` + `nonce`, Example: `1234+PAX+10+1578395085+3535`|
 | expire | long | UNIX timestamp of the expiration time |
 | callback | string | The callback `URL` to send the response to Microworkers back end after signing the user's QR code scanning action |
 

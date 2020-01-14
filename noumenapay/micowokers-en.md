@@ -4,7 +4,7 @@ This document contains an outline of integrating the **ONTO** platform with the 
 
 ## Data Exchange Process Flow
 
-![mw flow of control](img/mw-en.jpg)
+![mw flow of control](img/microworker data process flow(2).png)
 
 The process involves three major steps. Microworkers platform is actively involved in the first two. The process is as follows-
 

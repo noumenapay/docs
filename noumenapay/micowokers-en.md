@@ -304,12 +304,12 @@ Method: GET
 ```json
 
 {
-   "company": "Micro waker",
+   "company": "Microworker",
    "company_logo": "http://",
    "name": "",
-   "score": ""，
+   "score": "",
    "balance": "",
-   "total_salary": ""
+   "total_salary": "",
    "bonus": "",
    "label":  ""
 }

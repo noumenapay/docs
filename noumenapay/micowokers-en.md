@@ -35,7 +35,29 @@ The QR code displayed on the **Microworkers** web platform contains the followin
         "expire": 1581562747,
         "callback": "http://101.132.193.149:4027/blockchain/v1/common/test-onto-login"
     }
+}    
 ```
+
+ONTO Test Example：[http://139.219.129.55/testnet/app-debug.apk](http://139.219.129.55/testnet/app-debug.apk )
+
+<div align="center"><img height="200px" src="https://raw.githubusercontent.com/noumenapay/noumena-docs/master/noumenapay/img/qrcode.png"><br><br></div>
+
+```
+{
+	"action": "login",
+	"version": "v1.0.0",
+	"id": "1",
+	"params": {
+		"type": "ontid",
+		"dappName": "Microwokers",
+		"dappIcon": "",
+		"message": "mid12345+PAX+5+1578395085+5464645",
+		"expire": 1581562747,
+		"callback": "http://101.132.193.149:4027/blockchain/v1/common/test-onto-login"
+	}
+}
+```
+
 > `MID` is the Microworker `ID` of the user
 
 | Field | Type | Description |

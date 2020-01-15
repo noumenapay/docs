@@ -36,7 +36,7 @@ MW web显示二维码，二维码可以是json数据也可以是链接地址（�
 
 
 
-ONTO Scan Example：[http://139.219.129.55/testnet/app-debug.apk](http://139.219.129.55/testnet/app-debug.apk )
+ONTO Test Example：[http://139.219.129.55/testnet/app-debug.apk](http://139.219.129.55/testnet/app-debug.apk )
 
 <div align="center"><img height="200px" src="https://raw.githubusercontent.com/noumenapay/noumena-docs/master/noumenapay/img/qrcode.png"><br><br></div>
 

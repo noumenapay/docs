@@ -32,8 +32,28 @@ MW web显示二维码，二维码可以是json数据也可以是链接地址（�
         "callback": "http://101.132.193.149:4027/blockchain/v1/common/test-onto-login"
     }
 }
+```
 
 
+
+ONTO Scan Example：[http://139.219.129.55/testnet/app-debug.apk](http://139.219.129.55/testnet/app-debug.apk )
+
+<div align="center"><img height="200px" src="https://raw.githubusercontent.com/noumenapay/noumena-docs/master/noumenapay/img/qcode.png"><br><br></div>
+
+```
+{
+	"action": "login",
+	"version": "v1.0.0",
+	"id": "1",
+	"params": {
+		"type": "ontid",
+		"dappName": "Microwokers",
+		"dappIcon": "",
+		"message": "mid12345+PAX+5+1578395085+5464645",
+		"expire": 1581562747,
+		"callback": "http://101.132.193.149:4027/blockchain/v1/common/test-onto-login"
+	}
+}
 ```
 
 > mid是用户在 MW的id

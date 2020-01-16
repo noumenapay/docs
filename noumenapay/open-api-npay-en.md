@@ -1,9 +1,9 @@
 # Noumena pay OpenAPI
 
 * [API Specifications](#1-api-specifications)
-* [Noumena Pay API](#2-noumena-pay-api)
+* [1.Noumena Pay API](#2-noumena-pay-api)
 
-## 1. API Specifications
+## API Specifications
 
 - API requests use `HMAC` authentication.
 
@@ -19,7 +19,7 @@
 
 - API response format standard-
 
-  | Field_Name |  Type  |                         Description                          |
+  | Parameter |  Type  |                         Description                          |
   | :--------: | :----: | :----------------------------------------------------------: |
   |    code    |  int   |          Error code. `0`: Normal, non-`0`: Abnormal          |
   |    msg     | string | `SUCCESS` indicates success, error code indicates and describes failure |
@@ -73,155 +73,12 @@ amount=190&ont_id=did:ont:Ae9ujqUnAtH9yRiepRvLUE3t9R2NbCTZPG&to_address=AUol16gh
 
 #### Code Implementation and Examples:
 
-```java
+[https://github.com/noumenapay/noumena-sdk-java](https://github.com/noumenapay/noumena-sdk-java)
 
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.github.ontio.network.rest.http;
-import com.onchain.noumena.util.HmacSHA256Base64Util;
-import okhttp3.*;
-import org.junit.Test;
+## 1. Noumena Pay API
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-
-/**
- * @author 
- * @version 1.0
- * @date 2019/12/11
- */
-public class HmacTest {
-
-    private static final String appKey = "9781d1588a8241918eeb908e39dd4f24";
-    private static final String appSecret = "31da0108-5d1b-44ae-8b2c-054778d140e0";
-    private static final String hmacScheme = "Noumena";
-    
-    public String getAuthorizationStr(String method, String requestPath, String requestQueryStr, JSONObject reqBody) throws Exception {
-        String timeStampStr = String.valueOf(System.currentTimeMillis());
-        TreeMap map = JSONObject.parseObject(reqBody.toJSONString(), TreeMap.class);
-        String sign = HmacSHA256Base64Util.sign(timeStampStr, method, requestPath,
-                requestQueryStr, appKey, appSecret, map);
-        String authorizationStr = hmacScheme +":"+ appKey +":"+ timeStampStr+":" + sign;
-        return authorizationStr;
-    }
-    @Test
-    public void getaccount() throws Exception {
-        String requestPath = "/api/v1/customers/accounts/6/kyc-status";
-        JSONObject reqBody = new JSONObject();
-        String authorizationStr = getAuthorizationStr("POST", requestPath, "", reqBody);
-        Map<String, String> header = new HashMap<>();
-        header.put("Authorization", authorizationStr);
-        header.put("Access-Passphrase", "12345678a");
-
-        String result = http.get("http://172.168.3.30:8585/"+requestPath, header);
-        System.out.println(result);
-    }
-
-}
-
-```
-
-
-
-```java
-
-import com.onchain.noumena.exception.AuthenticationException;
-import com.onchain.noumena.model.common.ErrorCode;
-import com.onchain.noumena.model.enums.AlgorithmEnum;
-import com.onchain.noumena.model.enums.CharsetEnum;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.Base64Utils;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import javax.management.RuntimeErrorException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Set;
-import java.util.TreeMap;
-
-@Slf4j
-public class HmacSHA256Base64Util {
-
-    public static String sign(String timestamp, String method, String requestPath,
-                              String queryString, String appKey, String secretKey, TreeMap<String, String> body)
-            throws CloneNotSupportedException, InvalidKeyException, UnsupportedEncodingException {
-        if (StringUtils.isEmpty(secretKey) || StringUtils.isEmpty(method)) {
-            throw new AuthenticationException(ErrorCode.BAD_REQUEST);
-        }
-        String preHash = preHash(timestamp, method, requestPath, queryString, appKey, body);
-        log.info("origin sign data:{}",preHash);
-        byte[] secretKeyBytes = secretKey.getBytes(CharsetEnum.UTF_8.charset());
-        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKeyBytes, AlgorithmEnum.HMAC_SHA256.algorithm());
-        Mac mac = (Mac) MAC.clone();
-        mac.init(secretKeySpec);
-        return Base64Utils.encodeToString(mac.doFinal(preHash.getBytes(CharsetEnum.UTF_8.charset())));
-    }
-
-    /**
-     * the prehash string = timestamp + method + requestPath + body .<br/>
-     *
-     * @param timestamp   the number of seconds since Unix Epoch in UTC. Decimal values are allowed.
-     *                    eg: 2018-03-08T10:59:25.789Z
-     * @param method      eg: POST
-     * @param requestPath eg: /orders
-     * @param queryString eg: before=2&limit=30
-     *                    //     * @param body        json string, eg: {"product_id":"BTC-USD-0309","order_id":"377454671037440"}
-     * @return prehash string eg: 2018-03-08T10:59:25.789ZPOST/orders?before=2&limit=30{"product_id":"BTC-USD-0309",
-     * "order_id":"377454671037440"}
-     */
-    public static String preHash(String timestamp, String method, String requestPath, String queryString, String appKey, TreeMap<String, String> body) throws UnsupportedEncodingException {
-        StringBuilder preHash = new StringBuilder();
-        preHash.append(timestamp);
-        preHash.append(method.toUpperCase());
-        preHash.append(appKey);
-        preHash.append(requestPath);
-        if (!StringUtils.isEmpty(queryString)) {
-            preHash.append(APIConstants.QUESTION).append(URLDecoder.decode(queryString, "UTF-8"));
-        }
-        if (!CollectionUtils.isEmpty(body)) {
-            preHash.append(appendBody(body));
-        }
-        return preHash.toString();
-    }
-
-    public static String appendBody(TreeMap<String, String> params) {
-        StringBuilder str = new StringBuilder("");
-        Set<String> setKey = params.keySet();
-        for (String key : setKey) {
-            str.append(key).append("=").append(String.valueOf(params.get(key))).append("&");
-        }
-        String strBody = str.toString();
-        if(!StringUtils.isEmpty(strBody)){
-            //Delete the final linked string
-            strBody = strBody.substring(0,strBody.length()-1);
-        }
-        return strBody;
-    }
-
-    public static Mac MAC;
-
-    static {
-        try {
-            MAC = Mac.getInstance(AlgorithmEnum.HMAC_SHA256.algorithm());
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeErrorException(new Error("Can't get Mac's instance."));
-        }
-    }
-}
-
-```
-
-## 2. Noumena Pay API
-
-### 2.1. Deposit funds for a user
+### 1.1. Deposit funds for a user
 
 
 ```text
@@ -257,7 +114,8 @@ method：POST
     }
 }
 ```
-|  Field_Name   |  Type  |        Description         |
+
+|  Parameter   |  Type  |        Description         |
 | :-----------: | :----: | :------------------------: |
 |    tx_id    | String | Funds transaction ID|
 |    bonus_txid    | String | Bonus transaction ID |
@@ -267,7 +125,7 @@ method：POST
 
 
 
-### 2.2. Fetch user's transaction records
+### 1.2. Fetch user's transaction records
 
 ```text
 url：/api/v1/npay/cust/transaction
@@ -276,7 +134,7 @@ method：GET
 
 - Request:
 
-|  Field_Name   |  Type  |        Description         |
+|  Parameter   |  Type  |        Description         |
 | :-----------: | :----: | :------------------------: |
 |  page_num   | int  |    Page number     |
 |  page_size  | int  |  Page size   |
@@ -308,7 +166,8 @@ method：GET
 	  }
 	}
 ```
-|  Field_Name   |  Type  |        Description         |
+
+|  Parameter   |  Type  |        Description         |
 | :-----------: | :----: | :------------------------: |
 |    acct_no    | String | User institution level ID (unique)|
 | bonus | String | Bonus |

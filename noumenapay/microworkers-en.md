@@ -60,7 +60,7 @@ ONTO Test Example：[http://139.219.129.55/testnet/app-debug.apk](http://139.219
 
 > `MID` is the Microworker `ID` of the user
 
-| Field | Type | Description |
+| Parameter | Type | Description |
 | ----- | ---- | ----------- |
 | action | string | Describes the function of QR code, default value for login action is `login` |
 | id | string | Message serial no. (optional) |
@@ -74,7 +74,7 @@ ONTO Test Example：[http://139.219.129.55/testnet/app-debug.apk](http://139.219
 ONTO invokes Microworkers callback `API` after the user enters password in ONTO and sends the signature data. The data structures is as follows-
 
 ```json
-POST
+POST  Microworkers callback url
 
 { 
     "action": "login",
@@ -159,7 +159,8 @@ Response if the verification fails:
 
 ### 2. Microworkers backend invokes NoumenaPay API to deposit the withdrawal amount
 
-This deposit `API` is invoked when a user issues a withdrawal request on the **Microworker** web platform. 
+This deposit `API` is invoked when a user issues a withdrawal request on the **Microworker** web platform. Code Implementation and Examples: [https://github.com/noumenapay/noumena-sdk-java](https://github.com/noumenapay/noumena-sdk-java)
+
 
 - Request:
 
@@ -199,7 +200,7 @@ Method: POST
 ```
 
 
-| Body_Field_Name |  Type  |   Description   |
+| Parameter |  Type  |   Description   |
 |:----------:|:------:|:---------------------------------------------------------------------:|
 |   acct_no | String |ontid|
 |   cust_user_no | String |user id in microwokers|
@@ -250,7 +251,7 @@ Method：GET
 	}
 ```
 
-|  Field_Name   |  Type  |        Description         |
+|  Parameter   |  Type  |        Description         |
 | :-----------: | :----: | :------------------------: |
 |    acct_no    | String | ontid |
 | bonus | String | bonus |
@@ -272,9 +273,11 @@ URL: http://api.microwokers.com/api/v1/user/{user ontid}
 Method: GET
 ```
 
-```json
+
 
 Response：
+
+```json
 {
    "user": "did:ont:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz",
    "name": "user name", 
@@ -287,18 +290,8 @@ Response：
 
 ```
 
-```name```: User account name
 
-```score```: A rating measure for the user (score)
-
-``` current_balance```: Current balance
-
-```total_rewards```: Total Microwroker reward
-
-```label```: A label that serves as a direct indicator of performance
-
-
-|  Field_Name   |  Type  |        Description         |
+|  Parameter   |  Type  |        Description         |
 | :-----------: | :----: | :------------------------: |
 |    user    | String | ontid|
 | name | String | User account name |

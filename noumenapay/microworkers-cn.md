@@ -58,7 +58,7 @@ ONTO Test Example：[http://139.219.129.55/testnet/app-debug.apk](http://139.219
 
 > mid是用户在 MW的id
 
- 字段 | 类型 | 描述 
+ Parameter | Type | Description  
 -----|---------|----------
 action	|string	|定义此二维码的功能，登录设定为 "Login"，调用智能合约设定为 "invoke"
 id	|string	|消息序列号，可选
@@ -71,7 +71,7 @@ callback	|string	|用户扫码签名后发送到 DAPP 后端 URL
  
 ONTO 用户输入密码后，ONTO 调用 micro woker 的 callback接口，发送签名数据，内容如下：
 ```
-POST  callback
+POST  callback url
 
 {
     "action": "login",
@@ -156,7 +156,8 @@ if(b){
 ### 2. MW后台调用NoumenaPay充值接口给用户充值
 
 
-用户在MW网站提交提币申请时，MW后台调用Noumena Pay的充值接口。
+用户在MW网站提交提币申请时，MW后台调用Noumena Pay的充值接口。实现代码示例：[https://github.com/noumenapay/noumena-sdk-java](https://github.com/noumenapay/noumena-sdk-java)
+
 ```
 
 POST  http://uat.noumena.pro/api/v1/npay/cust/transaction
@@ -176,9 +177,11 @@ POST  http://uat.noumena.pro/api/v1/npay/cust/transaction
   "bonus_coin_type": "ONT",
   "remark": ""
 }
+```
 
 Response: 
 
+```
 {
   "code": 0,
   "msg": "SUCCESS"
@@ -191,7 +194,7 @@ Response:
 ```
 
 
-| Body_Field_Name |  Type  |   Description   |
+| Parameter |  Type  |   Description   |
 |:----------:|:------:|:---------------------------------------------------------------------:|
 |   acct_no | String |要充值的用户编号|
 |   cust_user_no | String |机构端用户编号(机构端唯一)|
@@ -211,7 +214,7 @@ method：GET
 
 - 请求：
 
-|  Field_Name   |  Type  |        Description         |
+|  Parameter   |  Type  |        Description         |
 | :-----------: | :----: | :------------------------: |
 |  page_num   | int  |    页数     |
 |  page_size  | int  |  页的大小   |
@@ -243,7 +246,7 @@ method：GET
 	}
 ```
 
-|  Field_Name   |  Type  |        Description         |
+|  Parameter   |  Type  |        Description         |
 | :-----------: | :----: | :------------------------: |
 |    acct_no    | String | 机构端用户编号(机构端唯一) |
 | bonus | String | 奖励 |
@@ -262,9 +265,9 @@ GET http://api.microwokers.com/api/v1/user/{user ontid}
 
 ```
 
-```json
+返回：
 
-Response：
+```json
 {
    "user": "did:ont:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz",
    "name": "user name", 
@@ -277,7 +280,7 @@ Response：
 
 ```
 
-|  Field_Name   |  Type  |        Description         |
+|  Parameter   |  Type  |        Description         |
 | :-----------: | :----: | :------------------------: |
 |    user    | String | ontid|
 | name | String | 用户的账户名 |

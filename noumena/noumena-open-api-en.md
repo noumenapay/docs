@@ -21,9 +21,11 @@
 
 - All the requests that have a `body` but don't explicitly define a format are of `JSON` type, `Content-Type: application/json`
 
+- The query interval of all query interfaces must be **less than one month**
+
 - API response format standard-
 
-  | Field  |  Type  |                               Description                               |
+  | Parameter  |  Type  |                               Description                               |
   | :----: | :----: | :---------------------------------------------------------------------: |
   |  code  |  int   |               Error code. `0`: Normal, non-`0`: Abnormal                |
   |  msg   | string | `SUCCESS` indicates success, error code indicates and describes failure |
@@ -69,7 +71,7 @@ Here is an example `body`-
 
 The payload is converted to-
 
-```java
+```text
 amount=190&ont_id=did:ont:Ae9ujqUnAtH9yRiepRvLUE3t9R2NbCTZPG&to_address=AUol16ghiT9AtxRDtNeq3ovhWJ5iaY6iyd
 ```
 
@@ -130,40 +132,8 @@ method：POST
 }
 ```
 
-### 1.2. Querying KYC status
 
-- Request:
-
-```text
-url：/api/v1/customers/accounts/{acct_no}/kyc-status
-method：GET
-```
-
-| Parameter |  Type  | Whether Required |                            Description                            |
-| :-------: | :----: | :--------------: | :---------------------------------------------------------------: |
-|  acct_no  | String |     Required     | Institution account name (Unique within scope of the institution) |
-
-- Response:
-
-```json
-{
-  "code": 0,
-  "msg": "string",
-  "result": [{
-    "status": 1,
-    "bank_id": "1001",
-    "reason": ""
-  }]
-}
-```
-
-| Field  |  Type  |                                   Description                                   |
-| :----: | :----: | :-----------------------------------------------------------------------------: |
-|bank_id|String| bank id|
-| status |  int   | KYC status. 0：Under review，1：Verification successful，2：Verification failed |
-| reason | String |      Reason for verification failure. Blank for status other than failure       |
-
-### 1.3 Query all KYC records
+### 1.2 Query all KYC records
 
 - Request:
 
@@ -201,7 +171,7 @@ method：GET
 }
 ```
 
-|    Field    |  Type   |                                                    Description                                                     |
+|    Parameter    |  Type   |                                                    Description                                                     |
 | :---------: | :----:   | :----------------------------------------------------------------------------------------------------------------: |
 |   acct_no   | String  |                         Institution account name (Unique within scope of the institution)                          |
 |bank_id|String| bank id|
@@ -209,7 +179,7 @@ method：GET
 | reason | String |      Reason for verification failure. Blank for status other than failure       |
 | create_time |  long   |                                                   Creation time                                                    |
 
-### 1.4 Query a specific user's KYC records
+### 1.3 Query a specific user's KYC records
 
 - Request:
 
@@ -245,7 +215,7 @@ method：GET
 }
 ```
 
-|    Field    |  Type   |                                                    Description                                                     |
+|    Parameter    |  Type   |                                                    Description                                                     |
 | :---------: | :----:   | :----------------------------------------------------------------------------------------------------------------: |
 |   acct_no   | String  |                         Institution account name (Unique within scope of the institution)                          |
 |bank_id|String| bank id|
@@ -284,7 +254,7 @@ method：POST
 }
 ```
 
-|  Field  |  Type  |     Description     |
+|  Parameter  |  Type  |     Description     |
 | :-----: | :----: | :-----------------: |
 | card_no | String | Allocated bank card |
 
@@ -345,7 +315,7 @@ url：/api/v1/debit-cards
 method：GET
 ```
 
-|    Field    | Type  | Whether Required |                        Description                         |
+|    Parameter    | Type  | Whether Required |                        Description                         |
 | :---------: | :---: | :--------------: | :--------------------------------------------------------: |
 |  page_num   |  int  |     Required     |                        Page number                         |
 |  page_size  |  int  |     Required     |                         Page size                          |
@@ -373,7 +343,7 @@ method：GET
 }
 ```
 
-|    Field    |  Type  |                             Description                              |
+|    Parameter    |  Type  |                             Description                              |
 | :---------: | :----: | :------------------------------------------------------------------: |
 |   acct_no   | String |  Institution account name (Unique within scope of the institution)   |
 |   card_no   |  int   |                             Card number                              |
@@ -418,7 +388,7 @@ method：GET
 }
 ```
 
-|    Field    |  Type  |                             Description                              |
+|    Parameter    |  Type  |                             Description                              |
 | :---------: | :----: | :------------------------------------------------------------------: |
 |   acct_no   | String |  Institution account name (Unique within scope of the institution)   |
 |   card_no   |  int   |                             Card number                              |
@@ -451,9 +421,16 @@ method：POST
 {
   "code": 0,
   "msg": "string",
-  "result": true
+  "result": {
+  	"tx_id": "2020011910590413101433814"
+  }
 }
 ```
+
+| Parameter |  Type    | Description |
+| :------------: | :----------: |:---------- |
+|     tx_id      | String | Noumena transaction ID  |
+
 
 ### 3.2. Query a deposit transaction status
 
@@ -466,7 +443,7 @@ method：GET
 
 | Parameter |  Type  | Whether Required | Description    |
 | :-------: | :----: | :--------------: | :------------- |
-|   tx_id   | String |     Required     | Transaction ID |
+|   tx_id   | String |     Required     | Noumena Transaction ID |
 
 - Response：
 
@@ -475,10 +452,14 @@ method：GET
   "code": 0,
   "msg": "string",
   "result": {
-  	"tx_status": //0:process pending，1: deposit successful，2: deposit failed
+  	"tx_status": 0
   }
 }
 ```
+
+| Parameter |  Type    | Description |
+| :------------: | :----------: |:---------- |
+|     tx_status      | int | 0:process pending，1: deposit successful，2: deposit failed  |
 
 ### 3.3 Query all the deposit records
 
@@ -487,7 +468,7 @@ url：/api/v1/deposit-transactions
 method：GET
 ```
 
-|    Field    | Type  | Whether Required |                        Description                         |
+|    Parameter    | Type  | Whether Required |                        Description                         |
 | :---------: | :---: | :--------------: | :--------------------------------------------------------: |
 |  page_num   |  int  |     Optional     |                        Page number                         |
 |  page_size  |  int  |     Optional     |                         Page size                          |
@@ -519,7 +500,7 @@ method：GET
 }
 ```
 
-|     Field     |  Type  |                            Description                            |
+|     Parameter     |  Type  |                            Description                            |
 | :-----------: | :----: | :---------------------------------------------------------------: |
 |    acct_no    | String | Institution account name (Unique within scope of the institution) |
 |    card_no    |  int   |                            Card number                            |
@@ -574,7 +555,7 @@ method：GET
 }
 ```
 
-|     Field     |  Type  |                            Description                            |
+|     Parameter     |  Type  |                            Description                            |
 | :-----------: | :----: | :---------------------------------------------------------------: |
 |    acct_no    | String | Institution account name (Unique within scope of the institution) |
 |    card_no    |  int   |                            Card number                            |
@@ -612,7 +593,7 @@ method：POST
 }
 ```
 
-|   Field    |  Type  | Description                  |
+|   Parameter    |  Type  | Description                  |
 | :--------: | :----: | :--------------------------- |
 | mail_token | String | Allocated verification token |
 
@@ -667,7 +648,7 @@ method：POST
 }
 ```
 
-|    Field     |  Type  |         Description          |
+|    Parameter     |  Type  |         Description          |
 | :----------: | :----: | :--------------------------: |
 | mobile_token | String | Allocated verification token |
 
@@ -751,7 +732,7 @@ method：POST
 }
 ```
 
-|       Field       |  Type  | Description     |
+|       Parameter       |  Type  | Description     |
 | :---------------: | :----: | :-------------- |
 |      card_no      | String | Card number     |
 |     card_type     | String | Card type       |
@@ -807,7 +788,7 @@ method：POST
  }   
 ```
 
-|              Field               |  Type  | Description                                                        |
+|              Parameter               |  Type  | Description                                                        |
 | :------------------------------: | :----: | :----------------------------------------------------------------- |
 |       statement_cycle_date       | String | Date for generating statement                                      |
 |         opening_balance          | String | Opening balance                                                    |

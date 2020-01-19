@@ -21,9 +21,11 @@
 
 - 所有带 `body` 的请求没有特殊说明body都是 `JSON`格式，`Content-Type：application/json`
 
+- 所有查询接口查询时间间隔必须**小于一个月**
+
 - 接口返回格式统一：
 
-  | Field_Name |  Type  |           Description            |
+  | Parameter |  Type  |           Description            |
   | :--------: | :----: | :------------------------------ |
   |    code    |  int   |  错误码。`0`：正常，非`0`：异常  |
   |    msg     | String | 成功为 `SUCCESS`，失败为错误描述 |
@@ -70,7 +72,7 @@
 
 转换后为：
 
-```java
+```text
 amount=190&ont_id=did:ont:Ae9ujqUnAtH9yRiepRvLUE3t9R2NbCTZPG&to_address=AUol16ghiT9AtxRDtNeq3ovhWJ5iaY6iyd
 ```
 
@@ -133,44 +135,7 @@ method：POST
 }
 ```
 
-
-
-### 1.2.查询用户 KYC 状态
-```text
-url：/api/v1/customers/accounts/{acct_no}/kyc-status
-method：GET
-```
-
-- 请求：
-
-| Parameter |  Type  |  Requirement  |Description   |
-| :------------: | :----: | :----------: |:---------- |
-| acct_no | String | 必填 |机构端用户编号(机构端唯一)|
-
-
-- 响应：
-
-```json
-{
-  "code": 0,
-  "msg": "string",
-  "result": [{
-      "bank_id":1001,
-      "status":1,
-      "reason":""
-  }]
-}
-```
-
-| Parameter |  Type  |          Description          |
-| :--------: | :----: | :------------------------------ |
-|bank_id|String| 开卡银行id|
-|   status | int |kyc状态。0：认证中，1：认证成功，2：认证失败|
-|   reason   | String | 认证失败原因。其他情况为空字符串 |
-
-
-
-### 1.3 查询所有用户kyc记录
+### 1.2 查询所有用户kyc记录
 
 ```text
 url：/api/v1/customers/accounts
@@ -209,7 +174,7 @@ method：GET
 ```
 
 
-| Field_Name  |  Type  |                     Description                     |
+| Parameter  |  Type  |                     Description                     |
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |             机构端用户编号(机构端唯一)              |
 |bank_id|String| 开卡银行id|
@@ -218,7 +183,7 @@ method：GET
 | create_time |  long  |                      创建时间                       |
 
 
-### 1.4 查询指定用户kyc记录
+### 1.3 查询指定用户kyc记录
 
 ```text
 url：/api/v1/customers/accounts
@@ -255,7 +220,7 @@ method：GET
 ```
 
 
-| Field_Name  |  Type  |                     Description                     |
+| Parameter  |  Type  |                     Description                     |
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |             机构端用户编号(机构端唯一)              |
 |bank_id|String| 开卡银行id|
@@ -298,7 +263,7 @@ method：POST
 }
 ```
 
-| Field_Name |  Type  |          Description          |
+| Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
 |   card_no   | String |           分配的银行卡           |
 
@@ -368,7 +333,7 @@ url：/api/v1/debit-cards
 method：GET
 ```
 
-| Field_Name  | Type | Requirement  |Description |
+| Parameter  | Type | Requirement  |Description |
 | :------------: | :----: | :----------: |:---------- |
 |  page_num   | int  |    选填    |页数     |
 |  page_size  | int  |  选填    |页的大小   |
@@ -397,7 +362,7 @@ method：GET
 ```
 
 
-| Field_Name  |  Type  |             Description             |
+| Parameter  |  Type  |             Description             |
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |     机构端用户编号(机构端唯一)      |
 |   card_no   |  int   |              银行卡号               |
@@ -445,7 +410,7 @@ method：GET
 }
 ```
 
-| Field_Name  |  Type  |             Description             |
+| Parameter  |  Type  |             Description             |
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |     机构端用户编号(机构端唯一)      |
 |   card_no   |  int   |              银行卡号               |
@@ -482,9 +447,16 @@ method：POST
 {
   "code": 0,
   "msg": "string",
-  "result": true
+  "result": {
+  	"tx_id": "2020011910590413101433814"
+  }
 }
 ```
+
+| Parameter |  Type    | Description |
+| :------------: | :----------: |:---------- |
+|     tx_id      | String | Noumena 交易流水id  |
+
 
 ### 3.2.查询某笔卡充值交易状态
 
@@ -497,7 +469,7 @@ method：GET
 
 | Parameter |  Type  |Requirement  | Description |
 | :------------: | :----: | :----------: |:---------- |
-|     tx_id      | String | 必填|交易流水id  |
+|     tx_id      | String | 必填|Noumena 交易流水id  |
 
 - 响应：
 
@@ -511,7 +483,7 @@ method：GET
 }
 ```
 
-| Field_Name |  Type  |          Description          |
+| Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
 |   tx_status   | int |           0:待处理中，1:充值成功，2:充值失败           |
 
@@ -557,7 +529,7 @@ method：GET
 }
 ```
 
-|  Field_Name   |  Type  |        Description         |
+|  Parameter   |  Type  |        Description         |
 | :--------: | :----: | :------------------------------ |
 |    acct_no    | String | 机构端用户编号(机构端唯一) |
 |    card_no    |  int   |          银行卡号          |
@@ -615,7 +587,7 @@ method：GET
 }
 ```
 
-|  Field_Name   |  Type  |        Description         |
+|  Parameter   |  Type  |        Description         |
 | :--------: | :----: | :------------------------------ |
 |    acct_no    | String | 机构端用户编号(机构端唯一) |
 |    card_no    |  int   |          银行卡号          |
@@ -659,7 +631,7 @@ method：POST
 }
 ```
 
-| Field_Name |  Type  |          Description          |
+| Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
 |   mail_token   | String |           分配的验证token           |
 
@@ -715,7 +687,7 @@ method：POST
 }
 ```
 
-| Field_Name |  Type  |          Description          |
+| Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
 |   mobile_token   | String |           分配的验证token         |
 
@@ -800,7 +772,7 @@ method：POST
 }
 ```
 
-| Field_Name |  Type  |          Description          |
+| Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
 |   card_no   | String |         银行卡号           |
 |   card_type   | String |         银行卡类型           |
@@ -808,7 +780,7 @@ method：POST
 |   available_balance   | String |   可用余额           |
 
 
-### 5.3 查询卡账单(暂不支持)
+### 5.3 查询卡账单 (暂不支持)
 
 ```text
 url：/api/v1/bank/transaction-record
@@ -856,7 +828,7 @@ method：POST
  }   
 ```
 
-| Field_Name |  Type  |          Description          |
+| Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
 |   statement_cycle_date   | String |  报表生成日期 |
 |   opening_balance   | String | 起始余额  |

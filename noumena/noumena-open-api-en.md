@@ -759,7 +759,7 @@ method：POST
 | available_balance | String | Usable balance  |
 
 
-### 5.3 Check transaction records
+### 5.3 Check transaction records (Currently not supported)
 
 ```text
 url：/api/v1/bank/transaction-record

@@ -808,7 +808,7 @@ method：POST
 |   available_balance   | String |   可用余额           |
 
 
-### 5.3 查询卡账单
+### 5.3 查询卡账单(暂不支持)
 
 ```text
 url：/api/v1/bank/transaction-record

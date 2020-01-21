@@ -110,7 +110,7 @@ method：POST
 |        doc_type        | String |     Required     | Document type. passport：Passport，idcard：National ID card，driving_license：Driving Licence |
 |       front_doc        | String |     Required     |                              Front face picture. Base64 encoding                              |
 |        back_doc        | String |     Required     |                              Back face picture. Base64 encoding                               |
-|        mix_doc         | String |     Required     |                            Other clicked pictures. Base64 encoding                            |
+|        mix_doc         | String |     Required     |                            Handheld pictures. Base64 encoding                            |
 |      country_code      | String |     Required     | International country code，refer to `ISO 3166-1 alpha-2` standards, Max. character length: 5 |
 |         mobile         | String |     Required     |                           Mobile number, Max. character length: 32                            |
 |          mail          | String |     Required     |                           Email address, Max. character length: 64                            |
@@ -740,7 +740,7 @@ method：POST
 | available_balance | String | Usable balance  |
 
 
-### 5.3 Check transaction records (Currently not supported)
+### 5.3 Check transaction records 
 
 ```text
 url：/api/v1/bank/transaction-record

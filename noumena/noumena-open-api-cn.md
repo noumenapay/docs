@@ -110,9 +110,9 @@ method：POST
 |   nationality | String |必填 |出生国，字符长度最大255位|
 | doc_no | String |必填 |证件号码，字符长度最大128位|
 | doc_type | String |必填 |证件类型:1=护照,2=身份证，字符长度最大6位|
-| front_doc | String |必填 |正面照。base64编码，字符长度最大256位|
-| back_doc | String |必填 |反面照。base64编码，字符长度最大256位|
-| mix_doc | String |必填 |手持照。base64编码，字符长度最大256位|
+| front_doc | String |必填 |正面照。base64编码|
+| back_doc | String |必填 |反面照。base64编码|
+| mix_doc | String |必填 |手持照。base64编码|
 |   country_code | String |必填 |手机国际区号，字符长度最大5位|
 |   mobile | String |必填 |手机号，字符长度最大32位|
 |  mail | String |必填 |邮箱，字符长度最大64位|
@@ -780,7 +780,7 @@ method：POST
 |   available_balance   | String |   可用余额           |
 
 
-### 5.3 查询卡账单 (暂不支持)
+### 5.3 查询卡账单 
 
 ```text
 url：/api/v1/bank/transaction-record

@@ -103,7 +103,7 @@ method：POST
 |   first_name | String |必填 |真实用户名，字符长度最大50位|
 |   last_name | String |必填 |真实用户姓，字符长度最大50位|
 |   gender | String |必填 |male:男，female:女，unknown:其他，字符长度最大6位|
-|   birthday | Date |必填 |生日（生日格式为1990-01-01）|
+|   birthday | String |必填 |生日（生日格式为1990-01-01）|
 |   city | String |必填 |城市，字符长度最大100位|
 |   state | String |必填 |省份，字符长度最大100位|
 |   country | String |必填 |国家，字符长度最大50位|
@@ -805,7 +805,7 @@ method：POST
         "statement_cycle_date": "28/11/2019",
         "opening_balance": "0.00",
         "closing_balance": "150.55",
-        "available_balance": "0",
+        "available_balance": "N/A",
         "bank_tx_list": [
             {
                 "transaction_date": "20/11/2019",

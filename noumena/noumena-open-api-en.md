@@ -765,7 +765,7 @@ method：POST
         "statement_cycle_date": "28/11/2019",
         "opening_balance": "0.00",
         "closing_balance": "150.55",
-        "available_balance": "0",
+        "available_balance": "N/A",
         "bank_tx_list": [
             {
                 "transaction_date": "20/11/2019",

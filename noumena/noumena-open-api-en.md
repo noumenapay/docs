@@ -110,7 +110,7 @@ method：POST
 |        doc_type        | String |     Required     | Document type. passport：Passport，idcard：National ID card，driving_license：Driving Licence |
 |       front_doc        | String |     Required     |                              Front face picture. Base64 encoding. File size should be less than 2M  |
 |        back_doc        | String |     Required     |                              Back face picture. Base64 encoding. File size should be less than 2M              |
-|        mix_doc         | String |     Required     |                            Other clicked pictures. Base64 encoding. File size should be less than 2M |
+|        mix_doc         | String |     Required     |                            Photo with certificate in hand. Base64 encoding. File size should be less than 2M |
 |      country_code      | String |     Required     | International country code，refer to `ISO 3166-1 alpha-2` standards, Max. character length: 5 |
 |         mobile         | String |     Required     |                           Mobile number, Max. character length: 32                            |
 |          mail          | String |     Required     |                           Email address, Max. character length: 64                            |
@@ -132,6 +132,7 @@ method：POST
 }
 ```
 
+>> How to mail_token and mail_verification_code? Please see "4.1. Sending Email verification code". mail_verification_code is filled by user.
 
 ### 1.2 Query all KYC records
 

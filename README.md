@@ -42,11 +42,11 @@ A: Dont have this parameters
 
 A: "1990-01-01"
 
-- According to the API documentation the parameter “doc_type” can be “Passport”, “National ID card” and “Driving Licence” . Which values should we send for Residency Verification (level 2)? 
+- According to the API documentation the parameter “doc_type” can be “Passport”, “National ID card”. Which values should we send for Residency Verification (level 2)? 
 
-A：Only support Passport right now. Only need
+A：Only support Passport right now. Only need "front_doc" in this vertion, please fill  "back_doc" and "mix_doc" with empty.
 
-- What is the meaning of the parameter “mix_doc” (Other clicked pictures)? What is required for?  
+- What is the meaning of the parameter "mix_doc"? What is required for?  
 
 A: Photo with certificate in hand, Please fill in empty.
 

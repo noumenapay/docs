@@ -107,7 +107,7 @@ method：POST
 |        country         | String |     Required     |                              Country, Max. character length: 50                               |
 |      nationality       | String |     Required     |                           Nationality，, Max. character length: 255                           |
 |         doc_no         | String |     Required     |                                        Document number                                        |
-|        doc_type        | String |     Required     | Document type. passport：Passport，idcard：National ID card，driving_license：Driving Licence |
+|        doc_type        | String |     Required     | Document type. passport：Passport，idcard：National ID card |
 |       front_doc        | String |     Required     |                              Front face picture. Base64 encoding. File size should be less than 2M  |
 |        back_doc        | String |     Required     |                              Back face picture. Base64 encoding. File size should be less than 2M              |
 |        mix_doc         | String |     Required     |                            Photo with certificate in hand. Base64 encoding. File size should be less than 2M |

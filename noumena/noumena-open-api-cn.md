@@ -103,16 +103,16 @@ method：POST
 |   first_name | String |必填 |真实用户名，字符长度最大50位|
 |   last_name | String |必填 |真实用户姓，字符长度最大50位|
 |   gender | String |必填 |male:男，female:女，unknown:其他，字符长度最大6位|
-|   birthday | String |必填 |生日（生日格式为1990-01-01）|
+|   birthday | String |必填 |生日（生日格式为"1990-01-01"）|
 |   city | String |必填 |城市，字符长度最大100位|
 |   state | String |必填 |省份，字符长度最大100位|
 |   country | String |必填 |国家，字符长度最大50位|
 |   nationality | String |必填 |出生国，字符长度最大255位|
 | doc_no | String |必填 |证件号码，字符长度最大128位|
 | doc_type | String |必填 |证件类型:1=护照,2=身份证，字符长度最大6位|
-| front_doc | String |必填 |正面照。base64编码|
-| back_doc | String |必填 |反面照。base64编码|
-| mix_doc | String |必填 |手持照。base64编码|
+| front_doc | String |必填 |正面照。base64编码, 照片文件大小应小于2M|
+| back_doc | String |必填 |反面照。base64编码，照片文件大小应小于2M|
+| mix_doc | String |必填 |手持照。base64编码，照片文件大小应小于2M|
 |   country_code | String |必填 |手机国际区号，字符长度最大5位|
 |   mobile | String |必填 |手机号，字符长度最大32位|
 |  mail | String |必填 |邮箱，字符长度最大64位|
@@ -178,7 +178,7 @@ method：GET
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |             机构端用户编号(机构端唯一)              |
 |bank_id|String| 开卡银行id|
-|   status    |  int   | 状态码(0 已提交, 1 认证通过(开卡成功), 2 认证未通过 |
+|   status    |  int   | 状态码(0 已提交, 1 认证通过(开卡成功), 2 认证未通过 3 认证中|
 |   reason   | String | 认证失败原因。其他情况为空字符串 |
 | create_time |  long  |                      创建时间                       |
 
@@ -258,15 +258,16 @@ method：POST
   "code": 0,
   "msg": "string",
   "result": {
-  	"card_no":"xxxx"
+  	"card_no":"xxxx",
+    "card_number":"xxxx"
   }
 }
 ```
 
 | Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
-|   card_no   | String |           分配的银行卡           |
-
+|   card_no   | String |           分配的银行卡ID，查询时用card_no，避免真是卡号信息泄露           |
+|   card_number   | String |           分配的真实银行卡号           |
 
 
 ### 2.2.用户激活卡片
@@ -485,7 +486,7 @@ method：GET
 
 | Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
-|   tx_status   | int |           0:待处理中，1:充值成功，2:充值失败           |
+|   tx_status   | int |           0:待处理中，1:充值成功，           |
 
 
 ### 3.3 查询所有卡充值记录
@@ -764,7 +765,7 @@ method：POST
     "code": 0,
     "msg": "SUCCESS",
     "result": {
-        "card_no": "4385211206642001",
+        "card_number": "4385211206642001",
         "card_type": "EGEN BLUE",
         "current_balance": "148.05",
         "available_balance": "138.05"
@@ -774,7 +775,7 @@ method：POST
 
 | Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
-|   card_no   | String |         银行卡号           |
+|   card_number   | String |         真实银行卡号           |
 |   card_type   | String |         银行卡类型           |
 |   current_balance   | String |      当前余额           |
 |   available_balance   | String |   可用余额           |

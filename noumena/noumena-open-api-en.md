@@ -108,9 +108,9 @@ method：POST
 |      nationality       | String |     Required     |                           Nationality，, Max. character length: 255                           |
 |         doc_no         | String |     Required     |                                        Document number                                        |
 |        doc_type        | String |     Required     | Document type. passport：Passport，idcard：National ID card，driving_license：Driving Licence |
-|       front_doc        | String |     Required     |                              Front face picture. Base64 encoding                              |
-|        back_doc        | String |     Required     |                              Back face picture. Base64 encoding                               |
-|        mix_doc         | String |     Required     |                            Handheld pictures. Base64 encoding                            |
+|       front_doc        | String |     Required     |                              Front face picture. Base64 encoding. File size should be less than 2M  |
+|        back_doc        | String |     Required     |                              Back face picture. Base64 encoding. File size should be less than 2M              |
+|        mix_doc         | String |     Required     |                            Other clicked pictures. Base64 encoding. File size should be less than 2M |
 |      country_code      | String |     Required     | International country code，refer to `ISO 3166-1 alpha-2` standards, Max. character length: 5 |
 |         mobile         | String |     Required     |                           Mobile number, Max. character length: 32                            |
 |          mail          | String |     Required     |                           Email address, Max. character length: 64                            |
@@ -175,7 +175,7 @@ method：GET
 | :---------: | :----:   | :----------------------------------------------------------------------------------------------------------------: |
 |   acct_no   | String  |                         Institution account name (Unique within scope of the institution)                          |
 |bank_id|String| bank id|
-|   status    |  int    | Status code : 0 - Submitted successfully, 1 - Verification successful (Account activated), 2 - Verification failed |
+|   status    |  int    | Status code : 0 - Submitted successfully, 1 - Verification successful (Account activated), 2 - Verification failed 3 Verifying|
 | reason | String |      Reason for verification failure. Blank for status other than failure       |
 | create_time |  long   |                                                   Creation time                                                    |
 
@@ -249,14 +249,16 @@ method：POST
   "code": 0,
   "msg": "string",
   "result": {
-    "card_no": "xxxx"
+    "card_no": "xxxx",
+    "card_number":"xxxx"
   }
 }
 ```
 
 |  Parameter  |  Type  |     Description     |
 | :-----: | :----: | :-----------------: |
-| card_no | String | Allocated bank card |
+| card_no | String | To prevent real card information from being exposed, use 'card_no' parameter to query  |
+| card_number | String | Actual card number |
 
 ### 2.2. User activating bank card
 
@@ -459,7 +461,7 @@ method：GET
 
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
-|     tx_status      | int | 0:process pending，1: deposit successful，2: deposit failed  |
+|     tx_status      | int | 0:process pending，1: deposit successful  |
 
 ### 3.3 Query all the deposit records
 
@@ -724,7 +726,7 @@ method：POST
     "code": 0,
     "msg": "SUCCESS",
     "result": {
-        "card_no": "4385211206642001",
+        "card_number": "4385211206642001",
         "card_type": "EGEN BLUE",
         "current_balance": "148.05",
         "available_balance": "138.05"
@@ -734,7 +736,7 @@ method：POST
 
 |       Parameter       |  Type  | Description     |
 | :---------------: | :----: | :-------------- |
-|      card_no      | String | Card number     |
+|      card_number      | String | Actual card number     |
 |     card_type     | String | Card type       |
 |  current_balance  | String | Current balance |
 | available_balance | String | Usable balance  |

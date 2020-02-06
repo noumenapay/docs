@@ -1,5 +1,6 @@
 # FAQ
 
+We have collected some FAQs from partners. Maybe there are some questions you want to know.
 
 #### Normal question
 
@@ -18,9 +19,37 @@ Open api access demonstration： [https://github.com/noumenapay/noumena-sdk-ja
 **A:** After KYC successful, send card in 48h. User receives and activates the card in your APP.
 
 
+
  
+- Do the deposits corresponds to the transactions performed with the card? Or are those just the USDT deposits that are added to the fiat balance available to spend?
+if not, how can we get the payments been made by the user with the card?
 
+**A:**  When you call the deposit API, we will transfer USD  to your user card， and it is available to spend.
+ 
+- Do we really have to verify the email and phone number of the user? we already do that for our own on-boarding
+  
+**A:**  Mobile phone verification is not required. Email verification is optional. If you've done validation, you don't need to do it again in Noumena.
+ 
+- Is it normal that the balances come out as null?
 
+**A:** Balance should not be null, Bank API example: https://github.com/noumenapay/noumena-sdk-java/blob/master/src/test/java/com/noumena/open/api/test/BankTest.java
+ 
+- the "API Doc" in the portal shows an empty page
+
+**A:** If shows empty page, please refer to the same documentation of GitHub:  https://github.com/noumenapay/noumena-docs/tree/master/noumena
+ 
+- another question is how do we reconcile the "Deposits" that we perform in USDT?
+
+**A:**  "Reserve Deposit Address" is your USDT address, should have enough balance before you "Deposits" for your user .
+ 
+- I dont see any API to get list of transactions made on the card?
+
+**A:**   This is get list of transactions API: "5.3 Check transaction records"
+ 
+```
+ url：/api/v1/bank/transaction-record
+ method：POST
+```
 
 #### API Submitting user's KYC data
 ```

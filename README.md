@@ -23,8 +23,10 @@ A: After KYC successful, send card in 48h. User receives and activates the card 
 
 
 #### API Submitting user's KYC data
+```
 url：/api/v1/customers/accounts
 method：POST
+```
 
 - The parameter “acct_no” - Is a unique user’s ID on our side?   
 
@@ -92,9 +94,10 @@ A: The address in KYC.
 A: Please ask our business colleagues
 
 #### User activating bank card
+```
 url：/api/v1/debit-cards/status
 method：PUT
-
+```
 - Will we receive card activation result synchronously or activation can take some time and we need to additionally query card activation result using the API GET /api/v1/debit-cards?acct_no={acct_no} ?
 
 A:  After use receive card and activation. User input card number in your website and you call this API "2.2. User activating bank card", we will return if your user activation successful.

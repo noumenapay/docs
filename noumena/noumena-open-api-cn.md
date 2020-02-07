@@ -135,6 +135,9 @@ method：POST
 }
 ```
 
+>> 如何获取 mail_token and mail_verification_code? 请看 "4.1.发送邮箱验证码". mail_verification_code 由用户自己填写.
+
+
 ### 1.2 查询所有用户kyc记录
 
 ```text
@@ -195,8 +198,11 @@ method：GET
 | Parameter  | Type |Requirement  | Description |
 | :------------: | :----: | :----------: |:---------- |
 |    acct_no     | String | 必填|机构用户的唯一id号 |
+|  page_num   | int  |    选填|页数     |
+|  page_size  | int  |  选填|页的大小   |
 | former_time | long |  选填|前置时间, UNIX 时间戳，`秒为单位`   |
 | latter_time | long | 选填|后置时间, UNIX 时间戳，`秒为单位`   |
+| time_sort | String | 选填|时间排序, asc为升序，desc为降序   |
 
 - 响应：
 
@@ -802,35 +808,39 @@ method：POST
 {
     "code": 0,
     "msg": "SUCCESS",
-    "result": {
-        "statement_cycle_date": "28/11/2019",
-        "opening_balance": "0.00",
-        "closing_balance": "150.55",
-        "available_balance": "N/A",
-        "bank_tx_list": [
-            {
-                "transaction_date": "20/11/2019",
-                "posting_date": "20/11/2019",
-                "description": "MONTHLY FEE",
-                "debit": "2.50",
-                "credit": "",
-                "type": 1
-            },
-            {
-                "transaction_date": "28/11/2019",
-                "posting_date": "28/11/2019",
-                "description": "MONTHLY FEE",
-                "debit": "2.50",
-                "credit": "",
-                "type": 1
-            }
-        ]
-    }
+    "result": [
+      {
+      	  "month_year":"022020",
+          "statement_cycle_date": "28/11/2019",
+          "opening_balance": "0.00",
+          "closing_balance": "150.55",
+          "available_balance": "N/A",
+          "bank_tx_list": [
+              {
+                  "transaction_date": "20/11/2019",
+                  "posting_date": "20/11/2019",
+                  "description": "MONTHLY FEE",
+                  "debit": "2.50",
+                  "credit": "",
+                  "type": 1
+              },
+              {
+                  "transaction_date": "28/11/2019",
+                  "posting_date": "28/11/2019",
+                  "description": "MONTHLY FEE",
+                  "debit": "2.50",
+                  "credit": "",
+                  "type": 1
+              }
+          ]
+      }
+    ]
  }   
 ```
 
 | Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
+|   month_year   | String |  日期，MMyyyy |
 |   statement_cycle_date   | String |  报表生成日期 |
 |   opening_balance   | String | 起始余额  |
 |   closing_balance   | String | 截止余额  |

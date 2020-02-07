@@ -212,7 +212,7 @@ Card’s actual status retrieving. Card blocking / unblocking.
 
 In the document I can’t find API for card blocking / unblocking and actual card status retrieving. Do you have them? We need to display actual card status in our account and allow users to block/unblock their cards if required. Also our support operators can block/unblock cards by users requests 
 
-**A:** We will support blocking / unblocking card.
+**A:** We will support blocking / unblocking card，but not provider API in this version. Please ask our business colleagues for detail.
 
 - API to retrieve balance on a card
 In the document I can’t find API for card balance retrieving. Do you have such an API? We need to display actual card balance in the user’s  account

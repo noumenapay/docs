@@ -132,7 +132,8 @@ method：POST
 }
 ```
 
->> How to mail_token and mail_verification_code? Please see "4.1. Sending Email verification code". mail_verification_code is filled by user.
+>> How to get mail_token and mail_verification_code? Please see "4.1. Sending Email verification code". mail_verification_code is filled by user.
+
 
 ### 1.2 Query all KYC records
 
@@ -764,35 +765,39 @@ method：POST
 {
     "code": 0,
     "msg": "SUCCESS",
-    "result": {
-        "statement_cycle_date": "28/11/2019",
-        "opening_balance": "0.00",
-        "closing_balance": "150.55",
-        "available_balance": "N/A",
-        "bank_tx_list": [
-            {
-                "transaction_date": "20/11/2019",
-                "posting_date": "20/11/2019",
-                "description": "MONTHLY FEE",
-                "debit": "2.50",
-                "credit": "",
-                "type": 1
-            },
-            {
-                "transaction_date": "28/11/2019",
-                "posting_date": "28/11/2019",
-                "description": "MONTHLY FEE",
-                "debit": "2.50",
-                "credit": "",
-                "type": 1
-            }
-        ]
-    }
+    "result": [
+      {
+      	  "month_year":"022020",
+          "statement_cycle_date": "28/11/2019",
+          "opening_balance": "0.00",
+          "closing_balance": "150.55",
+          "available_balance": "N/A",
+          "bank_tx_list": [
+              {
+                  "transaction_date": "20/11/2019",
+                  "posting_date": "20/11/2019",
+                  "description": "MONTHLY FEE",
+                  "debit": "2.50",
+                  "credit": "",
+                  "type": 1
+              },
+              {
+                  "transaction_date": "28/11/2019",
+                  "posting_date": "28/11/2019",
+                  "description": "MONTHLY FEE",
+                  "debit": "2.50",
+                  "credit": "",
+                  "type": 1
+              }
+          ]
+      }
+    ]
  }   
 ```
 
 |              Parameter               |  Type  | Description                                                        |
 | :------------------------------: | :----: | :----------------------------------------------------------------- |
+|       month_year                 | String  | query Date,format:DDyyyy                                      |
 |       statement_cycle_date       | String | Date for generating statement                                      |
 |         opening_balance          | String | Opening balance                                                    |
 |         closing_balance          | String | Closing balance                                                    |

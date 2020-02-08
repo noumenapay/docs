@@ -135,8 +135,7 @@ method：POST
 }
 ```
 
->> 如何获取 mail_token and mail_verification_code? 请看 "4.1.发送邮箱验证码". mail_verification_code 由用户自己填写.
-
+> 如何获取 mail_token and mail_verification_code? 请看 "4.1.发送邮箱验证码". mail_verification_code 由用户自己填写.
 
 ### 1.2 查询所有用户kyc记录
 
@@ -492,7 +491,7 @@ method：GET
 
 | Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
-|   tx_status   | int |           0:待处理中，1:充值成功，           |
+|   tx_status   | int |           0:待处理中，1:充值成功，5:取消充值           |
 
 
 ### 3.3 查询所有卡充值记录

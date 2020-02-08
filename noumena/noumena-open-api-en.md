@@ -132,7 +132,7 @@ method：POST
 }
 ```
 
->> How to get mail_token and mail_verification_code? Please see "4.1. Sending Email verification code". mail_verification_code is filled by user.
+> How to get mail_token and mail_verification_code? Please see "4.1. Sending Email verification code". mail_verification_code is filled by user.
 
 
 ### 1.2 Query all KYC records
@@ -463,7 +463,7 @@ method：GET
 
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
-|     tx_status      | int | 0:process pending，1: deposit successful  |
+|     tx_status      | int | 0:process pending，1: deposit successful，5：cancelled  |
 
 ### 3.3 Query all the deposit records
 

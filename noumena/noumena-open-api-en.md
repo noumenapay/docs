@@ -426,7 +426,10 @@ method：POST
   "code": 0,
   "msg": "string",
   "result": {
-  	"tx_id": "2020011910590413101433814"
+    "tx_id": "2020011910590413101433814",
+    "usd_amount": "10",
+    "exchange_rate": "1",
+    "fee": "1"
   }
 }
 ```
@@ -434,7 +437,9 @@ method：POST
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
 |     tx_id      | String | Noumena transaction ID  |
-
+|     usd_amount      | String | Noumena transaction ID  |
+|     exchange_rate      | String | Exchange rate |
+|     fee      | String | Deposit fee |
 
 ### 3.2. Query a deposit transaction status
 

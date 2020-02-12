@@ -454,7 +454,10 @@ method：POST
   "code": 0,
   "msg": "string",
   "result": {
-  	"tx_id": "2020011910590413101433814"
+    "tx_id": "2020011910590413101433814",
+    "usd_amount": "10",
+    "exchange_rate": "1",
+    "fee": "1"
   }
 }
 ```
@@ -462,7 +465,9 @@ method：POST
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
 |     tx_id      | String | Noumena 交易流水id  |
-
+|     usd_amount      | String | 到账USD  |
+|     exchange_rate      | String | 汇率  |
+|     fee      | String | 手续费  |
 
 ### 3.2.查询某笔卡充值交易状态
 

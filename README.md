@@ -4,6 +4,10 @@ We have collected some FAQs from partners. Maybe there are some questions that m
 
 #### General Questions
 
+- How to test Noumena API?
+
+**A:** Please provider your IPs to be whitelisted on our side, then you access [https://uat.noumena.pro](https://uat.noumena.pro). After you create account successful and create API key and secret in setting, then try example in [https://github.com/noumenapay/noumena-sdk-java](https://github.com/noumenapay/noumena-sdk-java).
+
 - What are the required steps to get a card issued from scratch? 
 
 **A:** KYC -> KYC Approved -> Apply for bank card -> Activate bank card

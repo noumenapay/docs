@@ -415,7 +415,7 @@ method：POST
 |  card_no   | String |     Required     |                           Bank card no.                           |
 |  acct_no   | String |     Required     | Institution account name (Unique within scope of the institution) |
 |   amount   | String |     Required     |             Deposit amount in corresponding currency              |
-| coin_type  | String |     Required     |             Currency. Only USDT supported in Phase 1              |
+| coin_type  | String |     Required     |              Only USDT supported in version v1.0.0              |
 | cust_tx_id | String |     Required     |                    Institution transaction ID                     |
 |  remarks   | String |     Optional     |                        Transaction remarks                        |
 

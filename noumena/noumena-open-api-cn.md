@@ -113,7 +113,7 @@ method：POST
 | front_doc | String |必填 |正面照。base64编码, 照片文件大小应小于2M|
 | back_doc | String |必填 |反面照。base64编码，照片文件大小应小于2M|
 | mix_doc | String |必填 |手持照。base64编码，照片文件大小应小于2M|
-|   country_code | String |必填 |手机国际区号，字符长度最大5位|
+|   country_code | String |必填 |手机国际区号，如“+86”。字符长度最大5位|
 |   mobile | String |必填 |手机号，字符长度最大32位|
 |  mail | String |必填 |邮箱，字符长度最大64位|
 |   address | String |必填 |通讯地址，字符长度最大256位|

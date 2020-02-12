@@ -111,7 +111,7 @@ method：POST
 |       front_doc        | String |     Required     |                              Front face picture. Base64 encoding. File size should be less than 2M  |
 |        back_doc        | String |     Required     |                              Back face picture. Base64 encoding. File size should be less than 2M              |
 |        mix_doc         | String |     Required     |                            Photo with certificate in hand. Base64 encoding. File size should be less than 2M |
-|      country_code      | String |     Required     | International country code，refer to `ISO 3166-1 alpha-2` standards, Max. character length: 5 |
+|      country_code      | String |     Required     | International country code, for example "+86". Max. character length: 5 |
 |         mobile         | String |     Required     |                           Mobile number, Max. character length: 32                            |
 |          mail          | String |     Required     |                           Email address, Max. character length: 64                            |
 |        address         | String |     Required     |                          Postal address, Max. character length: 256                           |

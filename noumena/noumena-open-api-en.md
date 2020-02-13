@@ -111,16 +111,18 @@ method：POST
 |       front_doc        | String |     Required     |                              Front face picture. Base64 encoding. File size should be less than 2M  |
 |        back_doc        | String |     Required     |                              Back face picture. Base64 encoding. File size should be less than 2M              |
 |        mix_doc         | String |     Required     |                            Photo with certificate in hand. Base64 encoding. File size should be less than 2M |
-|      country_code      | String |     Required     | International country code, for example "+86". Max. character length: 5 |
+|      country_code      | String |     Required     | International country code，for example "+86". Max. character length: 5 |
 |         mobile         | String |     Required     |                           Mobile number, Max. character length: 32                            |
 |          mail          | String |     Required     |                           Email address, Max. character length: 64                            |
 |        address         | String |     Required     |                          Postal address, Max. character length: 256                           |
 |        zipcode         | String |     Required     |                              Zip code, Max. character length: 20                              |
 |      maiden_name       | String |     Required      |                         Legal maiden name, Max. character length: 255                         |
 |        bank_id         | String |     Required     |                            ID of the bank where the account exists                            |
+| cust_tx_id | String | Optional| customer transaction id|
 |        kyc_info        | String |     Optional     |                                     Other KYC information                                     |
 | mail_verification_code | String |     Optional     |                                    Email verification code                                    |
 |       mail_token       | String |     Optional     |                        Token returned upon sending verification Email                         |
+
 
 - Response:
 
@@ -415,7 +417,7 @@ method：POST
 |  card_no   | String |     Required     |                           Bank card no.                           |
 |  acct_no   | String |     Required     | Institution account name (Unique within scope of the institution) |
 |   amount   | String |     Required     |             Deposit amount in corresponding currency              |
-| coin_type  | String |     Required     |              Only USDT supported in version v1.0.0              |
+| coin_type  | String |     Required     |             Only USDT supported in version v1.0.0              |
 | cust_tx_id | String |     Required     |                    Institution transaction ID                     |
 |  remarks   | String |     Optional     |                        Transaction remarks                        |
 
@@ -440,6 +442,7 @@ method：POST
 |     usd_amount      | String | Noumena transaction ID  |
 |     exchange_rate      | String | Exchange rate |
 |     fee      | String | Deposit fee |
+
 
 ### 3.2. Query a deposit transaction status
 
@@ -685,6 +688,46 @@ method：PUT
   "result": true
 }
 ```
+
+
+### 4.5.Querying rate
+
+```text
+url：/api/v1/rates?bank_id={bank_id}
+method：GET
+```
+
+- 请求：
+
+| Parameter |  Type  |   Requirement  | Description   |
+| :------------: | :----: | :----------: |:---------- |
+| bank_id | String |Required| bank id|
+
+- Response：
+
+```json
+{
+  "code": 0,
+  "msg": "string",
+  "result": {
+    "open_card_fee_usdt":"20",
+    "usdt_usd_exchange_rate":"1.12",
+    "loading_rate": "0.005",
+    "bank_transaction_rate":"0.0012",
+    "bank_atm_rate":"0.005"
+  }
+}
+```
+
+| Parameter |  Type  |          Description          |
+| :--------: | :----: | :------------------------------ |
+|   open_card_fee_usdt   | String |           Open card fee in USDT          |
+|   usdt_usd_exchange_rate   | String |           USDT to USD exchange rate         |
+|   loading_rate   | String |           Loading rate for deposit to user        |
+|   bank_transaction_rate   | String |          Bank transaction rate for consumption          |
+|   bank_atm_rate   | String |          ATM withdraw rate           |
+
+
 ## 5. Bank account API
 
 This API provides details such as transaction records and other account related information.
@@ -745,9 +788,8 @@ method：POST
 | :---------------: | :----: | :-------------- |
 |      card_number      | String | Actual card number     |
 |     card_type     | String | Card type       |
-|  current_balance  | String | Current balance |
-| available_balance | String | Usable balance  |
-
+|  current_balance  | String | Current balance（USD） |
+| available_balance | String | Usable balance（USD）  |
 
 ### 5.3 Check transaction records 
 
@@ -777,6 +819,9 @@ method：POST
           "opening_balance": "0.00",
           "closing_balance": "150.55",
           "available_balance": "N/A",
+          "opening_usd_balance": "50",
+          "closing_usd_balance": "50",
+          "available_usd_balance": "",
           "bank_tx_list": [
               {
                   "transaction_date": "20/11/2019",
@@ -784,6 +829,8 @@ method：POST
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
                   "credit": "",
+                  "debit_usd": "1.25",
+                  "credit_usd": ",
                   "type": 1
               },
               {
@@ -792,6 +839,8 @@ method：POST
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
                   "credit": "",
+                  "debit_usd": "1.25",
+                  "credit_usd": ",
                   "type": 1
               }
           ]
@@ -807,10 +856,15 @@ method：POST
 |         opening_balance          | String | Opening balance                                                    |
 |         closing_balance          | String | Closing balance                                                    |
 |        available_balance         | String | Usable balance                                                     |
+|   opening_usd_balance   | String | Opening balance(USD)  |
+|   closing_usd_balance   | String | Closing balance(USD)   |
+|   available_usd_balance   | String | Usable balance  (USD)   |
 |         bank_tx_list[n]          | Object | Transaction list                                                   |
 | bank_tx_list[0].transaction_date | String | Transaction date                                                   |
 |   bank_tx_list[0].posting_date   | String | Transaction record submission date                                 |
 |   bank_tx_list[0].description    | String | Description                                                        |
 |      bank_tx_list[0].debit       | String | Debit amount                                                       |
 |      bank_tx_list[0].credit      | String | Credit amount                                                      |
+|   bank_tx_list[0].debit_usd   | String | Debit amount（USD）  |
+|   bank_tx_list[0].credit_usd   | String | Credit amount   （USD）    |
 |       bank_tx_list[0].type       |  int   | Transaction type, 1. Debit, 2. Deposit, 3. Withdrawal, 4. Transfer |

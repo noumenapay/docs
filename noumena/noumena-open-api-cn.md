@@ -123,7 +123,7 @@ method：POST
 |   kyc_info | text |选填 |KYC 其他信息|
 | mail_verification_code | String |选填 |邮箱验证码|
 | mail_token | String |选填|发送邮件后返回的token|
-
+| cust_tx_id | String | 选填| KYC流水号|
 
 - 响应：
 
@@ -254,7 +254,7 @@ method：POST
 | :------------: | :----: | :----------: |:---------- |
 | acct_no | String | 必填|机构端用户编号(机构端唯一)|
 | bank_id | String | 必填|开卡银行对应的id|
-| cust_tx_id | String | 必填| 开卡费交易流水号|
+
 
 - 响应：
 
@@ -468,6 +468,7 @@ method：POST
 |     usd_amount      | String | 到账USD  |
 |     exchange_rate      | String | 汇率  |
 |     fee      | String | 手续费  |
+
 
 ### 3.2.查询某笔卡充值交易状态
 
@@ -727,6 +728,46 @@ method：PUT
 }
 ```
 
+### 4.5.费率查询
+
+```text
+url：/api/v1/rates?bank_id={bank_id}
+method：GET
+```
+
+- 请求：
+
+| Parameter |  Type  |   Requirement  | Description   |
+| :------------: | :----: | :----------: |:---------- |
+| bank_id | String |必填|银行id|
+
+- 响应：
+
+```json
+{
+  "code": 0,
+  "msg": "string",
+  "result": {
+    "open_card_fee_usdt":"20",
+    "usdt_usd_exchange_rate":"1.12",
+    "loading_rate": "0.005",
+    "bank_transaction_rate":"0.0012",
+    "bank_atm_rate":"0.005"
+  }
+}
+```
+
+| Parameter |  Type  |          Description          |
+| :--------: | :----: | :------------------------------ |
+|   open_card_fee_usdt   | String |           开卡的手续费（USDT）           |
+|   usdt_usd_exchange_rate   | String |           USDT兑换USD的汇率           |
+|   loading_rate   | String |           给用户充值时付给 Noumena 的费率           |
+|   bank_transaction_rate   | String |          银行卡刷卡消费的手续费率           |
+|   bank_atm_rate   | String |          ATM取款时的手续费率           |
+
+
+
+
 ## 5.银行卡接口
 
 提供银行卡消费记录等接口
@@ -777,8 +818,8 @@ method：POST
     "result": {
         "card_number": "4385211206642001",
         "card_type": "EGEN BLUE",
-        "current_balance": "148.05",
-        "available_balance": "138.05"
+        "current_balance": "121.12454",
+        "available_balance": "10.23"
     }
 }
 ```
@@ -787,8 +828,8 @@ method：POST
 | :--------: | :----: | :------------------------------ |
 |   card_number   | String |         真实银行卡号           |
 |   card_type   | String |         银行卡类型           |
-|   current_balance   | String |      当前余额           |
-|   available_balance   | String |   可用余额           |
+|   current_balance   | String |      当前余额（USD）           |
+|   available_balance   | String |   可用余额（USD）           |
 
 
 ### 5.3 查询卡账单 
@@ -819,6 +860,9 @@ method：POST
           "opening_balance": "0.00",
           "closing_balance": "150.55",
           "available_balance": "N/A",
+          "opening_usd_balance": "50",
+          "closing_usd_balance": "50",
+          "available_usd_balance": "",
           "bank_tx_list": [
               {
                   "transaction_date": "20/11/2019",
@@ -826,6 +870,8 @@ method：POST
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
                   "credit": "",
+                  "debit_usd": "1.25",
+                  "credit_usd": ""
                   "type": 1
               },
               {
@@ -834,6 +880,8 @@ method：POST
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
                   "credit": "",
+                  "debit_usd": "1.25",
+                  "credit_usd": ""
                   "type": 1
               }
           ]
@@ -849,12 +897,17 @@ method：POST
 |   opening_balance   | String | 起始余额  |
 |   closing_balance   | String | 截止余额  |
 |   available_balance   | String | 可用余额  |
+|   opening_usd_balance   | String | 起始余额(USD)  |
+|   closing_usd_balance   | String | 截止余额(USD)   |
+|   available_usd_balance   | String | 可用余额(USD)   |
 |   bank_tx_list[n]   | Object | 交易列表  |
 |   bank_tx_list[0].transaction_date   | String | 交易日期  |
 |   bank_tx_list[0].posting_date   | String | 交易提交日期  |
 |   bank_tx_list[0].description   | String | 描述  |
 |   bank_tx_list[0].debit   | String | 消费金额  |
 |   bank_tx_list[0].credit   | String | 存入金额  |
+|   bank_tx_list[0].debit_usd   | String | 消费金额（USD）  |
+|   bank_tx_list[0].credit_usd   | String | 存入金额（USD）    |
 |   bank_tx_list[0].type   | int | 交易类型，1.消费、2.充值、3.取款、4.转账  |
 
 

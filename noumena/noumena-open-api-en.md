@@ -113,8 +113,8 @@ method：POST
 |        mix_doc         | String |     Required     |                            Photo with certificate in hand. Base64 encoding. File size should be less than 2M |
 |      country_code      | String |     Required     | International country code，for example "+86". Max. character length: 5 |
 |         mobile         | String |     Required     |                           Mobile number, Max. character length: 32                            |
-|          mail          | String |     Required     |                           Email address, Max. character length: 64                            |
-|        address         | String |     Required     |                          Postal address, Max. character length: 256                           |
+|          mail          | String |     Required     |                           Email address,don't support 163.com email host. Max. character length: 64                            |
+|        address         | String |     Required     |                          Postal address, the bank card will send tothis address. Max. character length: 256                           |
 |        zipcode         | String |     Required     |                              Zip code, Max. character length: 20                              |
 |      maiden_name       | String |     Required      |                         Legal maiden name, Max. character length: 255                         |
 |        bank_id         | String |     Required     |                            ID of the bank where the account exists                            |

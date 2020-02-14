@@ -115,8 +115,8 @@ method：POST
 | mix_doc | String |必填 |手持照。base64编码，照片文件大小应小于2M|
 |   country_code | String |必填 |手机国际区号，如“+86”。字符长度最大5位|
 |   mobile | String |必填 |手机号，字符长度最大32位|
-|  mail | String |必填 |邮箱，字符长度最大64位|
-|   address | String |必填 |通讯地址，字符长度最大256位|
+|  mail | String |必填 |邮箱，不支持163.com的邮箱。字符长度最大64位|
+|   address | String |必填 |通讯地址，银行卡会寄到该地址。字符长度最大256位|
 |   zipcode | String |必填 |邮编，字符长度最大20位|
 |   maiden_name | String |必填 |妈妈的名字，字符长度最大255位|
 | bank_id |String |必填 |开卡银行对应的id|

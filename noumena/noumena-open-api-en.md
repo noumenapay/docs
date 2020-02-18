@@ -819,9 +819,6 @@ method：POST
           "opening_balance": "0.00",
           "closing_balance": "150.55",
           "available_balance": "N/A",
-          "opening_usd_balance": "50",
-          "closing_usd_balance": "50",
-          "available_usd_balance": "",
           "bank_tx_list": [
               {
                   "transaction_date": "20/11/2019",
@@ -829,8 +826,6 @@ method：POST
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
                   "credit": "",
-                  "debit_usd": "1.25",
-                  "credit_usd": ",
                   "type": 1
               },
               {
@@ -839,8 +834,6 @@ method：POST
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
                   "credit": "",
-                  "debit_usd": "1.25",
-                  "credit_usd": ",
                   "type": 1
               }
           ]
@@ -851,20 +844,15 @@ method：POST
 
 |              Parameter               |  Type  | Description                                                        |
 | :------------------------------: | :----: | :----------------------------------------------------------------- |
-|       month_year                 | String  | query Date,format:DDyyyy                                      |
+|       month_year                 | String  | query Date,format:MMyyyy                                      |
 |       statement_cycle_date       | String | Date for generating statement                                      |
-|         opening_balance          | String | Opening balance                                                    |
-|         closing_balance          | String | Closing balance                                                    |
-|        available_balance         | String | Usable balance                                                     |
-|   opening_usd_balance   | String | Opening balance(USD)  |
-|   closing_usd_balance   | String | Closing balance(USD)   |
-|   available_usd_balance   | String | Usable balance  (USD)   |
+|         opening_balance          | String | Opening balance（USD）                                                    |
+|         closing_balance          | String | Closing balance（USD）                                                   |
+|        available_balance         | String | Usable balance（USD）                                                    |
 |         bank_tx_list[n]          | Object | Transaction list                                                   |
 | bank_tx_list[0].transaction_date | String | Transaction date                                                   |
 |   bank_tx_list[0].posting_date   | String | Transaction record submission date                                 |
 |   bank_tx_list[0].description    | String | Description                                                        |
-|      bank_tx_list[0].debit       | String | Debit amount                                                       |
-|      bank_tx_list[0].credit      | String | Credit amount                                                      |
-|   bank_tx_list[0].debit_usd   | String | Debit amount（USD）  |
-|   bank_tx_list[0].credit_usd   | String | Credit amount   （USD）    |
+|      bank_tx_list[0].debit       | String | Debit amount（USD）                                                       |
+|      bank_tx_list[0].credit      | String | Credit amount（USD）                                                      |
 |       bank_tx_list[0].type       |  int   | Transaction type, 1. Debit, 2. Deposit, 3. Withdrawal, 4. Transfer |

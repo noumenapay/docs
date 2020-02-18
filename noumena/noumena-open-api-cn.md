@@ -860,9 +860,6 @@ method：POST
           "opening_balance": "0.00",
           "closing_balance": "150.55",
           "available_balance": "N/A",
-          "opening_usd_balance": "50",
-          "closing_usd_balance": "50",
-          "available_usd_balance": "",
           "bank_tx_list": [
               {
                   "transaction_date": "20/11/2019",
@@ -870,8 +867,6 @@ method：POST
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
                   "credit": "",
-                  "debit_usd": "1.25",
-                  "credit_usd": ""
                   "type": 1
               },
               {
@@ -880,8 +875,6 @@ method：POST
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
                   "credit": "",
-                  "debit_usd": "1.25",
-                  "credit_usd": ""
                   "type": 1
               }
           ]
@@ -894,20 +887,15 @@ method：POST
 | :--------: | :----: | :------------------------------ |
 |   month_year   | String |  日期，MMyyyy |
 |   statement_cycle_date   | String |  报表生成日期 |
-|   opening_balance   | String | 起始余额  |
-|   closing_balance   | String | 截止余额  |
-|   available_balance   | String | 可用余额  |
-|   opening_usd_balance   | String | 起始余额(USD)  |
-|   closing_usd_balance   | String | 截止余额(USD)   |
-|   available_usd_balance   | String | 可用余额(USD)   |
+|   opening_balance   | String | 起始余额（USD）  |
+|   closing_balance   | String | 截止余额（USD）  |
+|   available_balance   | String | 可用余额（USD）  |
 |   bank_tx_list[n]   | Object | 交易列表  |
 |   bank_tx_list[0].transaction_date   | String | 交易日期  |
 |   bank_tx_list[0].posting_date   | String | 交易提交日期  |
 |   bank_tx_list[0].description   | String | 描述  |
-|   bank_tx_list[0].debit   | String | 消费金额  |
-|   bank_tx_list[0].credit   | String | 存入金额  |
-|   bank_tx_list[0].debit_usd   | String | 消费金额（USD）  |
-|   bank_tx_list[0].credit_usd   | String | 存入金额（USD）    |
+|   bank_tx_list[0].debit   | String | 消费金额（USD）  |
+|   bank_tx_list[0].credit   | String | 存入金额（USD）  |
 |   bank_tx_list[0].type   | int | 交易类型，1.消费、2.充值、3.取款、4.转账  |
 
 

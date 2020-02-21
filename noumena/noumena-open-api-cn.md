@@ -119,7 +119,7 @@ method：POST
 |   address | String |必填 |通讯地址，银行卡会寄到该地址。字符长度最大256位|
 |   zipcode | String |必填 |邮编，字符长度最大20位|
 |   maiden_name | String |必填 |妈妈的名字，字符长度最大255位|
-| bank_id |String |必填 |开卡银行对应的id|
+| card_type_id |String |必填 |银行卡种类对应的id,比如 10010001|
 |   kyc_info | text |选填 |KYC 其他信息|
 | mail_verification_code | String |选填 |邮箱验证码|
 | mail_token | String |选填|发送邮件后返回的token|
@@ -165,7 +165,7 @@ method：GET
     "records": [
       {
         "acct_no": "1222",
-        "bank_id": "1001",
+        "card_type_id": "10010001",
         "status": 1,
         "reason": "",
         "create_time": 1546300800000
@@ -179,7 +179,7 @@ method：GET
 | Parameter  |  Type  |                     Description                     |
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |             机构端用户编号(机构端唯一)              |
-|bank_id|String| 开卡银行id|
+| card_type_id |String |卡种对应的id|
 |   status    |  int   | 状态码(0 已提交, 1 认证通过(开卡成功), 2 认证未通过 3 认证中|
 |   reason   | String | 认证失败原因。其他情况为空字符串 |
 | create_time |  long  |                      创建时间                       |
@@ -214,7 +214,7 @@ method：GET
     "records": [
       {
         "acct_no": "1222",
-        "bank_id": "1001",
+        "card_type_id": "10010001",
         "status": 1,
         "reason": "",
         "create_time": 1546300800000
@@ -228,7 +228,7 @@ method：GET
 | Parameter  |  Type  |                     Description                     |
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |             机构端用户编号(机构端唯一)              |
-|bank_id|String| 开卡银行id|
+| card_type_id |String  |卡种对应的id|
 |   status    |  int   | 状态码: 0 已提交, 1 认证通过(开卡成功) 2 认证未通过 |
 |   reason   | String | 认证失败原因。其他情况为空字符串 |
 | create_time |  long  |                      创建时间                       |
@@ -253,7 +253,7 @@ method：POST
 | Parameter |  Type  |   Requirement  |Description   |
 | :------------: | :----: | :----------: |:---------- |
 | acct_no | String | 必填|机构端用户编号(机构端唯一)|
-| bank_id | String | 必填|开卡银行对应的id|
+| card_type_id |String |必填 |卡种对应的id|
 
 
 - 响应：
@@ -263,8 +263,8 @@ method：POST
   "code": 0,
   "msg": "string",
   "result": {
-  	"card_no":"xxxx",
-    "card_number":"xxxx"
+  	"card_no": "xxxx",
+    "card_number": "430021******1144"
   }
 }
 ```
@@ -272,7 +272,7 @@ method：POST
 | Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
 |   card_no   | String |           分配的银行卡ID，查询时用card_no，避免真是卡号信息泄露           |
-|   card_number   | String |           分配的真实银行卡号           |
+|   card_number   | String |           分配的真实银行卡号, 只显示前6位和后4位           |
 
 
 ### 2.2.用户激活卡片
@@ -887,15 +887,15 @@ method：POST
 | :--------: | :----: | :------------------------------ |
 |   month_year   | String |  日期，MMyyyy |
 |   statement_cycle_date   | String |  报表生成日期 |
-|   opening_balance   | String | 起始余额（USD）  |
-|   closing_balance   | String | 截止余额（USD）  |
-|   available_balance   | String | 可用余额（USD）  |
+|   opening_balance   | String | 起始余额(USD)  |
+|   closing_balance   | String | 截止余额(USD)  |
+|   available_balance   | String | 可用余额(USD)  |
 |   bank_tx_list[n]   | Object | 交易列表  |
 |   bank_tx_list[0].transaction_date   | String | 交易日期  |
 |   bank_tx_list[0].posting_date   | String | 交易提交日期  |
 |   bank_tx_list[0].description   | String | 描述  |
-|   bank_tx_list[0].debit   | String | 消费金额（USD）  |
-|   bank_tx_list[0].credit   | String | 存入金额（USD）  |
+|   bank_tx_list[0].debit   | String | 消费金额(USD)  |
+|   bank_tx_list[0].credit   | String | 存入金额(USD)  |
 |   bank_tx_list[0].type   | int | 交易类型，1.消费、2.充值、3.取款、4.转账  |
 
 

@@ -117,12 +117,11 @@ method：POST
 |        address         | String |     Required     |                          Postal address, the bank card will send tothis address. Max. character length: 256                           |
 |        zipcode         | String |     Required     |                              Zip code, Max. character length: 20                              |
 |      maiden_name       | String |     Required      |                         Legal maiden name, Max. character length: 255                         |
-|        bank_id         | String |     Required     |                            ID of the bank where the account exists                            |
-| cust_tx_id | String | Optional| customer transaction id|
+| card_type_id |String |Required | Bank card type id, for example: 10010001|   
 |        kyc_info        | String |     Optional     |                                     Other KYC information                                     |
 | mail_verification_code | String |     Optional     |                                    Email verification code                                    |
 |       mail_token       | String |     Optional     |                        Token returned upon sending verification Email                         |
-
+| cust_tx_id            | String | Optional         | customer transaction id|
 
 - Response:
 
@@ -165,7 +164,7 @@ method：GET
     "records": [
       {
         "acct_no": "1222",
-        "bank_id": "1001",
+        "card_type_id": "10010001",
         "status": 1,
         "reason": "",
         "create_time": 1546300800000
@@ -178,7 +177,7 @@ method：GET
 |    Parameter    |  Type   |                                                    Description                                                     |
 | :---------: | :----:   | :----------------------------------------------------------------------------------------------------------------: |
 |   acct_no   | String  |                         Institution account name (Unique within scope of the institution)                          |
-|bank_id|String| bank id|
+| card_type_id |String | Card type id|   
 |   status    |  int    | Status code : 0 - Submitted successfully, 1 - Verification successful (Account activated), 2 - Verification failed 3 Verifying|
 | reason | String |      Reason for verification failure. Blank for status other than failure       |
 | create_time |  long   |                                                   Creation time                                                    |
@@ -209,7 +208,7 @@ method：GET
     "records": [
       {
         "acct_no": "1222",
-        "bank_id": "1001",
+        "card_type_id": "10010001",
         "status": 1,
         "reason": "",
         "create_time": 1546300800000
@@ -222,7 +221,7 @@ method：GET
 |    Parameter    |  Type   |                                                    Description                                                     |
 | :---------: | :----:   | :----------------------------------------------------------------------------------------------------------------: |
 |   acct_no   | String  |                         Institution account name (Unique within scope of the institution)                          |
-|bank_id|String| bank id|
+| card_type_id |String  | Card type id|   
 |   status    |  int    | Status code : 0 - Submitted successfully, 1 - Verification successful (Account activated), 2 - Verification failed |
 | reason | String |      Reason for verification failure. Blank for status other than failure       |
 | create_time |  long   |                                                   Creation time                                                    |
@@ -244,7 +243,7 @@ method：POST
 | Parameter |  Type  | Whether Required |                            Description                            |
 | :-------: | :----: | :--------------: | :---------------------------------------------------------------: |
 |  acct_no  | String |     Required     | Institution account name (Unique within scope of the institution) |
-|  bank_id  | String |     Required     |              ID of the bank where the account exists              |
+| card_type_id |String |Required | Card type id|   
 
 - Response:
 
@@ -254,7 +253,7 @@ method：POST
   "msg": "string",
   "result": {
     "card_no": "xxxx",
-    "card_number":"xxxx"
+    "card_number": "430021******1144"
   }
 }
 ```
@@ -262,7 +261,7 @@ method：POST
 |  Parameter  |  Type  |     Description     |
 | :-----: | :----: | :-----------------: |
 | card_no | String | To prevent real card information from being exposed, use 'card_no' parameter to query  |
-| card_number | String | Actual card number |
+| card_number | String | Actual card number, Expose only the first 6 and last 4 |
 
 ### 2.2. User activating bank card
 
@@ -846,13 +845,13 @@ method：POST
 | :------------------------------: | :----: | :----------------------------------------------------------------- |
 |       month_year                 | String  | query Date,format:MMyyyy                                      |
 |       statement_cycle_date       | String | Date for generating statement                                      |
-|         opening_balance          | String | Opening balance（USD）                                                    |
-|         closing_balance          | String | Closing balance（USD）                                                   |
-|        available_balance         | String | Usable balance（USD）                                                    |
+|         opening_balance          | String | Opening balance(USD)                                                    |
+|         closing_balance          | String | Closing balance(USD)                                                    |
+|        available_balance         | String | Usable balance(USD)                                                     |
 |         bank_tx_list[n]          | Object | Transaction list                                                   |
 | bank_tx_list[0].transaction_date | String | Transaction date                                                   |
 |   bank_tx_list[0].posting_date   | String | Transaction record submission date                                 |
 |   bank_tx_list[0].description    | String | Description                                                        |
-|      bank_tx_list[0].debit       | String | Debit amount（USD）                                                       |
-|      bank_tx_list[0].credit      | String | Credit amount（USD）                                                      |
+|      bank_tx_list[0].debit       | String | Debit amount(USD)                                                       |
+|      bank_tx_list[0].credit      | String | Credit amount(USD)                                                      |
 |       bank_tx_list[0].type       |  int   | Transaction type, 1. Debit, 2. Deposit, 3. Withdrawal, 4. Transfer |

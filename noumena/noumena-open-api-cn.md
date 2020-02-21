@@ -93,6 +93,7 @@ amount=190&ont_id=did:ont:Ae9ujqUnAtH9yRiepRvLUE3t9R2NbCTZPG&to_address=AUol16gh
 url：/api/v1/customers/accounts
 method：POST
 ```
+> 目前已支持的 card_type_id （银行卡类型 ID ） 请用4.5的接口查询
 
 - 请求：
 
@@ -728,7 +729,44 @@ method：PUT
 }
 ```
 
-### 4.5.费率查询
+
+
+### 4.5 支持的卡种类查询
+
+```text
+url：/api/v1/card/type
+method：GET
+```
+
+- 响应:
+
+```json
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "total": 2,
+        "records": [
+            {
+                "card_type_id": "50000001",
+                "bank_id": "5000"
+            },
+            {
+                "card_type_id": "50000002",
+                "bank_id": "5000"
+            }
+        ]
+    }
+}
+```
+
+| Parameter |  Type  |          Description          |
+| :--------: | :----: | :------------------------------ |
+| card_type_id |String |银行卡种类对应的id,比如 50000001|
+|   bank_id   | String |        银行ID           |
+
+
+### 4.6 费率查询
 
 ```text
 url：/api/v1/rates?card_type_id={card_type_id}
@@ -739,7 +777,7 @@ method：GET
 
 | Parameter |  Type  |   Requirement  | Description   |
 | :------------: | :----: | :----------: |:---------- |
-| card_type_id |String |必填 |银行卡种类对应的id,比如 10010001|
+| card_type_id |String |必填 |银行卡种类对应的id,比如 50000001|
 
 - 响应：
 
@@ -764,8 +802,6 @@ method：GET
 |   loading_rate   | String |           给用户充值时付给 Noumena 的费率           |
 |   bank_transaction_rate   | String |          银行卡刷卡消费的手续费率           |
 |   bank_atm_rate   | String |          ATM取款时的手续费率           |
-
-
 
 
 ## 5.银行卡接口

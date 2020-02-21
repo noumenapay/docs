@@ -93,6 +93,8 @@ Email verification feature is optional. The verification code status is updated 
 url：/api/v1/customers/accounts
 method：POST
 ```
+> How to fill Card_type_id (bank card type ID) ? Please use the 4.5 interface to query.
+
 
 |       Parameter        |  Type  | Whether Required |                                          Description                                          |
 | :--------------------: | :----: | :--------------: | :-------------------------------------------------------------------------------------------: |
@@ -689,7 +691,44 @@ method：PUT
 ```
 
 
-### 4.5.Querying rate
+
+
+### 4.5 Querying Card type
+
+```text
+url：/api/v1/card/type
+method：GET
+```
+
+- Response:
+
+```json
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "total": 2,
+        "records": [
+            {
+                "card_type_id": "50000001",
+                "bank_id": "5000"
+            },
+            {
+                "card_type_id": "50000002",
+                "bank_id": "5000"
+            }
+        ]
+    }
+}
+```
+
+| Parameter |  Type  |          Description          |
+| :--------: | :----: | :------------------------------ |
+|   bank_id   | String |        Bank ID              |
+| card_type_id |String | Card type id, for example 50000001|
+
+
+### 4.6 Querying rate
 
 ```text
 url：/api/v1/rates?card_type_id={card_type_id}
@@ -700,7 +739,7 @@ method：GET
 
 | Parameter |  Type  |   Requirement  | Description   |
 | :------------: | :----: | :----------: |:---------- |
-| card_type_id |String |Required |Bank card type id, for example 10010001|
+| card_type_id | String |Required| Card type id, for example 50000001|
 
 - Response：
 
@@ -725,7 +764,6 @@ method：GET
 |   loading_rate   | String |           Loading rate for deposit to user        |
 |   bank_transaction_rate   | String |          Bank transaction rate for consumption          |
 |   bank_atm_rate   | String |          ATM withdraw rate           |
-
 
 ## 5. Bank account API
 

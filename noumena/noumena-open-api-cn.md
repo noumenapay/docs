@@ -731,7 +731,7 @@ method：PUT
 ### 4.5.费率查询
 
 ```text
-url：/api/v1/rates?bank_id={bank_id}
+url：/api/v1/rates?card_type_id={card_type_id}
 method：GET
 ```
 
@@ -739,7 +739,7 @@ method：GET
 
 | Parameter |  Type  |   Requirement  | Description   |
 | :------------: | :----: | :----------: |:---------- |
-| bank_id | String |必填|银行id|
+| card_type_id |String |必填 |银行卡种类对应的id,比如 10010001|
 
 - 响应：
 

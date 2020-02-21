@@ -692,15 +692,15 @@ method：PUT
 ### 4.5.Querying rate
 
 ```text
-url：/api/v1/rates?bank_id={bank_id}
+url：/api/v1/rates?card_type_id={card_type_id}
 method：GET
 ```
 
-- 请求：
+- Request：
 
 | Parameter |  Type  |   Requirement  | Description   |
 | :------------: | :----: | :----------: |:---------- |
-| bank_id | String |Required| bank id|
+| card_type_id |String |Required |Bank card type id, for example 10010001|
 
 - Response：
 

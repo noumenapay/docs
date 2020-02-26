@@ -110,10 +110,10 @@ method：POST
 |   country | String |必填 |国家，字符长度最大50位|
 |   nationality | String |必填 |出生国，字符长度最大255位|
 | doc_no | String |必填 |证件号码，字符长度最大128位|
-| doc_type | String |必填 |证件类型:1=护照,2=身份证，字符长度最大6位|
+| doc_type | String |必填 |证件类型: passport: 护照，idcard：身份证，字符长度最大8位|
 | front_doc | String |必填 |正面照。base64编码, 照片文件大小应小于2M|
 | back_doc | String |必填 |反面照。base64编码，照片文件大小应小于2M|
-| mix_doc | String |必填 |手持照。base64编码，照片文件大小应小于2M|
+| mix_doc | String |必填 |手持证件照。base64编码，照片文件大小应小于2M|
 |   country_code | String |必填 |手机国际区号，如“+86”。字符长度最大5位|
 |   mobile | String |必填 |手机号，字符长度最大32位|
 |  mail | String |必填 |邮箱，不支持163.com的邮箱。字符长度最大64位|
@@ -287,7 +287,7 @@ method：PUT
 
 | Parameter |  Type  |   Requirement  |     Description         |
 | :------------: | :----: | :----------: |:---------- |
-|    card_no     | String |      必填    |银行卡号          |
+|    card_no     | String |      必填    |银行卡ID          |
 | acct_no | String | 必填    |机构端用户编号(机构端唯一) |
 
 
@@ -420,7 +420,7 @@ method：GET
 | Parameter  |  Type  |             Description             |
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |     机构端用户编号(机构端唯一)      |
-|   card_no   |  int   |              银行卡号               |
+|   card_no   |  int   |              银行卡ID               |
 |   status    |  int   | 状态码: 0 冻结, 1 激活成功, 2未激活 |
 | create_time |  long  |              创建时间               |
 
@@ -441,7 +441,7 @@ method：POST
 
 | Parameter |  Type  | Requirement  |Description                |
 | :------------: | :----: | :----------: |:---------- |
-|     card_no     | String | 必填|银行卡号                   |
+|     card_no     | String | 必填|银行卡ID                   |
 |     acct_no     | String | 必填|机构端用户编号(机构端唯一) |
 |     amount      | String | 必填|充值对应币种的金额         |
 |    coin_type    | String | 必填|币种。一期只支持USDT       |
@@ -452,24 +452,33 @@ method：POST
 
 ```json
 {
-  "code": 0,
-  "msg": "string",
-  "result": {
-    "tx_id": "2020011910590413101433814",
-    "usd_amount": "10",
-    "exchange_rate": "1",
-    "fee": "1"
-  }
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "tx_id": "2020022511324811001637548",
+        "currency_type": "USD",
+        "deposit_usdt": "0.9188",
+        "currency_amount": "0.92",
+        "exchange_rate": "1.00239251357",
+        "exchange_fee_rate": "0",
+        "exchange_fee": "0",
+        "loading_fee": "0.0812"
+    }
 }
 ```
 
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
 |     tx_id      | String | Noumena 交易流水id  |
-|     usd_amount      | String | 到账USD  |
-|     exchange_rate      | String | 汇率  |
-|     fee      | String | 手续费  |
+|     currency_amount      | String | 到账法币数量  |
+|     currency_type      | String | 到账法币类型  |
+|     exchange_rate      | String | USDT/法币汇率  |
+|     loading_fee      | String | 充值手续费，单位是USDT   |
+|     exchange_fee      | String | 充值币种兑换成USDT的费用，单位是USDT  |
+|     exchange_fee_rate      | String | 充值币种兑换成USDT的费率   |
+|     deposit_usdt      | String | 扣除手续费后,为用户充值的USDT数量，单位是USDT   |
 
+> 从机构扣的USDT费用 = exchange_fee + loading_fee + deposit_usdt。
 
 ### 3.2.查询某笔卡充值交易状态
 
@@ -530,11 +539,12 @@ method：GET
                 "card_no": "",
                 "coin_type": "USDT",
                 "tx_amount": "1",
-                "usd_amount": "1",
+                "currency_amount": "10",
+                "currency_type": "USD",
                 "exchange_rate": "1",
                 "cust_tx_id": "1",
                 "bank_tx_id": "",
-                "fee": "1",
+                "loading_fee": "1",
                 "cust_tx_time": null
             }
         ]
@@ -545,14 +555,15 @@ method：GET
 |  Parameter   |  Type  |        Description         |
 | :--------: | :----: | :------------------------------ |
 |    acct_no    | String | 机构端用户编号(机构端唯一) |
-|    card_no    |  int   |          银行卡号          |
+|    card_no    |  int   |          银行卡ID         |
 |    coin_type    |  int   |          币种          |
 |   tx_amount   | String |          交易金额          |
-|  usd_amount   | String |     交易等值的美元金额     |
+|     currency_amount      | String | 到账法币数量  |
+|     currency_type      | String | 到账法币类型  |
 | exchange_rate | String |            汇率            |
 |  cust_tx_id   | String |         机构流水号         |
 |  bank_tx_id   | String |         银行流水号         |
-|      fee      | String |           手续费           |
+|      loading_fee      | String |           手续费           |
 |  cust_tx_time  |  long  |          创建时间          |
 
 ### 3.4 查询指定用户所有卡充值记录
@@ -588,11 +599,12 @@ method：GET
                 "card_no": "",
                 "coin_type": "USDT",
                 "tx_amount": "1",
-                "usd_amount": "1",
+                "currency_amount": "10",
+                "currency_type": "USD",
                 "exchange_rate": "1",
                 "cust_tx_id": "1",
                 "bank_tx_id": "",
-                "fee": "1",
+                "loading_fee": "1",
                 "cust_tx_time": null
             }
         ]
@@ -603,14 +615,15 @@ method：GET
 |  Parameter   |  Type  |        Description         |
 | :--------: | :----: | :------------------------------ |
 |    acct_no    | String | 机构端用户编号(机构端唯一) |
-|    card_no    |  int   |          银行卡号          |
+|    card_no    |  int   |          银行卡ID          |
 |    coin_type    |  int   |          币种          |
 |   tx_amount   | String |          交易金额          |
-|  usd_amount   | String |     交易等值的美元金额     |
+|     currency_amount      | String | 到账法币数量  |
+|     currency_type      | String | 到账法币类型  |
 | exchange_rate | String |            汇率            |
 |  cust_tx_id   | String |         机构流水号         |
 |  bank_tx_id   | String |         银行流水号         |
-|      fee      | String |           手续费           |
+|      loading_fee      | String |           手续费           |
 |  cust_tx_time  |  long  |          创建时间          |
 
 
@@ -819,7 +832,7 @@ method：POST
 
 | Parameter |  Type  | Requirement  |Description |
 | :------------: | :----: | :----------: |:---------- |
-|     card_no     | String | 必填|银行卡号 |
+|     card_no     | String | 必填|银行卡ID |
 
 - 响应：
 
@@ -843,7 +856,7 @@ method：POST
 
 | Parameter |  Type  | Requirement  |Description |
 | :------------: | :----: | :----------: |:---------- |
-|     card_no     | String |必填| 银行卡号 |
+|     card_no     | String |必填| 银行卡ID |
 
 - 响应：
 
@@ -852,7 +865,7 @@ method：POST
     "code": 0,
     "msg": "SUCCESS",
     "result": {
-        "card_number": "4385211206642001",
+        "card_number": "438521******2001",
         "card_type": "EGEN BLUE",
         "current_balance": "121.12454",
         "available_balance": "10.23"
@@ -879,7 +892,7 @@ method：POST
 
 | Parameter |  Type  | Requirement  |Description |
 | :------------: | :----: | :----------: |:---------- |
-|     card_no     | String | 必填|银行卡号 |
+|     card_no     | String | 必填|银行卡ID |
 |     former_month_year     | String | 必填|指定查询的月份(格式“012020”) |
 |     latter_month_year     | String | 必填|指定查询的月份(格式“012020”) |
 

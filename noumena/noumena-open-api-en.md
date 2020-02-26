@@ -353,7 +353,7 @@ method：GET
 |    Parameter    |  Type  |                             Description                              |
 | :---------: | :----: | :------------------------------------------------------------------: |
 |   acct_no   | String |  Institution account name (Unique within scope of the institution)   |
-|   card_no   |  int   |                             Card number                              |
+|   card_no   |  int   |                             Card ID                              |
 |   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active |
 | create_time |  long  |                            Creation time                             |
 
@@ -398,7 +398,7 @@ method：GET
 |    Parameter    |  Type  |                             Description                              |
 | :---------: | :----: | :------------------------------------------------------------------: |
 |   acct_no   | String |  Institution account name (Unique within scope of the institution)   |
-|   card_no   |  int   |                             Card number                              |
+|   card_no   |  int   |                             Card ID                              |
 |   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active |
 | create_time |  long  |                            Creation time                             |
 
@@ -426,23 +426,33 @@ method：POST
 
 ```json
 {
-  "code": 0,
-  "msg": "string",
-  "result": {
-    "tx_id": "2020011910590413101433814",
-    "usd_amount": "10",
-    "exchange_rate": "1",
-    "fee": "1"
-  }
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "tx_id": "2020022511324811001637548",
+        "currency_type": "USD",
+        "deposit_usdt": "0.9188",
+        "currency_amount": "0.92",
+        "exchange_rate": "1.00239251357",
+        "exchange_fee_rate": "0",
+        "exchange_fee": "0",
+        "loading_fee": "0.0812"
+    }
 }
 ```
 
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
 |     tx_id      | String | Noumena transaction ID  |
-|     usd_amount      | String | Noumena transaction ID  |
-|     exchange_rate      | String | Exchange rate |
-|     fee      | String | Deposit fee |
+|     currency_amount      | String | received currency amount  |
+|     currency_type      | String | received currency type  |
+|     exchange_rate      | String |  exchange rate of USDT/Fiat currency  |
+|     loading_fee      | String | Deposit fee，Unit: USDT   |
+|     exchange_fee      | String | Fee for exchanging digital coin to USDT, Unit: USDT  |
+|     exchange_fee_rate      | String | Fee rate for exchanging digital coin to USDT   |
+|     deposit_usdt      | String | The amount of USDT deposited for the user after charging loading_fee and exchange_fee, Unit: USDT   |
+
+> USDT amount charged from customer = exchange_fee + loading_fee + deposit_usdt.
 
 
 ### 3.2. Query a deposit transaction status
@@ -502,10 +512,11 @@ method：GET
         "acct_no": "1",
         "card_no": "",
         "tx_amount": "1",
-        "usd_amount": "1",
+        "currency_amount": "10",
+        "currency_type": "USD",
         "exchange_rate": "1",
         "bank_tx_id": "",
-        "fee": "1",
+        "loading_fee": "1",
         "cust_tx_time": null
       }
     ]
@@ -516,12 +527,13 @@ method：GET
 |     Parameter     |  Type  |                            Description                            |
 | :-----------: | :----: | :---------------------------------------------------------------: |
 |    acct_no    | String | Institution account name (Unique within scope of the institution) |
-|    card_no    |  int   |                            Card number                            |
+|    card_no    |  int   |                            Card ID                            |
 |   tx_amount   | String |                        Transaction amount                         |
-|  usd_amount   | String |                     Transaction amount in USD                     |
+|     currency_amount      | String | received currency amount  |
+|     currency_type      | String | received currency type  |
 | exchange_rate | String |                           Exchange rate                           |
 |  bank_tx_id   | String |                        Bank transaction ID                        |
-|      fee      | String |                          Transaction fee                          |
+|      loading_fee      | String |                          Transaction fee                          |
 | cust_tx_time  |  long  |                           Creation time                           |
 
 ### 3.4 Query a particular user's deposit records
@@ -556,11 +568,12 @@ method：GET
         "card_no": "",
         "coin_type": "USDT",
         "tx_amount": "1",
-        "usd_amount": "1",
+        "currency_amount": "10",
+        "currency_type": "USD",
         "exchange_rate": "1",
         "cust_tx_id": "1",
         "bank_tx_id": "",
-        "fee": "1",
+        "loading_fee": "1",
         "cust_tx_time": null
       }
     ]
@@ -571,12 +584,13 @@ method：GET
 |     Parameter     |  Type  |                            Description                            |
 | :-----------: | :----: | :---------------------------------------------------------------: |
 |    acct_no    | String | Institution account name (Unique within scope of the institution) |
-|    card_no    |  int   |                            Card number                            |
+|    card_no    |  int   |                            Card ID                            |
 |   tx_amount   | String |                        Transaction amount                         |
-|  usd_amount   | String |                     Transaction amount in USD                     |
+|     currency_amount      | String | received currency amount  |
+|     currency_type      | String | received currency type  |
 | exchange_rate | String |                           Exchange rate                           |
 |  bank_tx_id   | String |                     Bank transaction records                      |
-|      fee      | String |                          Transaction fee                          |
+|      loading_fee      | String |                          Transaction fee                          |
 | cust_tx_time  |  long  |                           Creation time                           |
 
 ## 4. Public API
@@ -780,7 +794,7 @@ method：POST
 
 | Parameter |  Type  | Whether Required | Description |
 | :-------: | :----: | :--------------: | :---------- |
-|  card_no  | String |     Required     | Card number |
+|  card_no  | String |     Required     | Card ID |
 
 - Response: 
 
@@ -804,7 +818,7 @@ method：POST
 
 | Parameter |  Type  | Whether Required | Description |
 | :-------: | :----: | :--------------: | :---------- |
-|  card_no  | String |     Required     | Card number |
+|  card_no  | String |     Required     | Card ID |
 
 - Response:
 
@@ -813,7 +827,7 @@ method：POST
     "code": 0,
     "msg": "SUCCESS",
     "result": {
-        "card_number": "4385211206642001",
+        "card_number": "438521******2001",
         "card_type": "EGEN BLUE",
         "current_balance": "148.05",
         "available_balance": "138.05"
@@ -839,7 +853,7 @@ method：POST
 
 |     Parameter     |  Type  | Whether Required | Description                                 |
 | :---------------: | :----: | :--------------: | :------------------------------------------ |
-|      card_no      | String |     Required     | Card number                                 |
+|      card_no      | String |     Required     | Card ID                                 |
 | former_month_year | String |     Required     | Period upper limit month (Format: `012020`) |
 | latter_month_year | String |     Required     | Period lower limit month (Format: `012020`) |
 

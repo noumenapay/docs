@@ -1,11 +1,12 @@
 # noumena-OpenAPI 接口
 
-* [接口规范](#1.接口规范)
-* [1.Customers接口](#2.Customers)
-* [2.Debit Cards接口](#3.DebitCards)
-* [3.Transactions接口](#4.Transactions)
-* [4.公共接口](#5.公共接口)
-* [5.银行卡接口](#6.银行卡接口)
+* [接口规范](#接口规范)
+* [1.Customers接口](#1-Customers)
+* [2.Debit Cards接口](#2-DebitCards)
+* [3.Transactions接口](#3-Transactions)
+* [4.公共接口](#4-公共接口)
+* [5.银行卡接口](#5-银行卡接口)
+* [6.错误码](#6-错误码)
 
 ## 接口规范
 
@@ -181,7 +182,7 @@ method：GET
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |             机构端用户编号(机构端唯一)              |
 | card_type_id |String |卡种对应的id|
-|   status    |  int   | 状态码(0 已提交, 1 认证通过(开卡成功), 2 认证未通过 3 认证中|
+|   status    |  int   | 状态码: 0 已提交， 1 认证通过(开卡成功)， 2 认证未通过， 3 认证中， 4 提交信息处理中 |
 |   reason   | String | 认证失败原因。其他情况为空字符串 |
 | create_time |  long  |                      创建时间                       |
 
@@ -230,7 +231,7 @@ method：GET
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |             机构端用户编号(机构端唯一)              |
 | card_type_id |String  |卡种对应的id|
-|   status    |  int   | 状态码: 0 已提交, 1 认证通过(开卡成功) 2 认证未通过 |
+|   status    |  int   | 状态码: 0 已提交， 1 认证通过(开卡成功)， 2 认证未通过， 3 认证中， 4 提交信息处理中  |
 |   reason   | String | 认证失败原因。其他情况为空字符串 |
 | create_time |  long  |                      创建时间                       |
 

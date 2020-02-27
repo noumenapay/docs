@@ -6,6 +6,7 @@
 - [3.Transactions API](#3-transactions)
 - [4.Public API](#4-public-api)
 - [5.Bank Account API](#5-bank-account-api)
+- [6.Error Codes](#6-error-codes)
 
 ## API Specifications
 
@@ -180,7 +181,7 @@ method：GET
 | :---------: | :----:   | :----------------------------------------------------------------------------------------------------------------: |
 |   acct_no   | String  |                         Institution account name (Unique within scope of the institution)                          |
 | card_type_id |String | Card type id|   
-|   status    |  int    | Status code : 0 - Submitted successfully, 1 - Verification successful (Account activated), 2 - Verification failed 3 Verifying|
+|   status    |  int    | Status code : 0 - Submitted successfully, 1 - Verification successful (Account activated), 2 - Verification failed, 3 - Verifying, 4 - Submission in progress|
 | reason | String |      Reason for verification failure. Blank for status other than failure       |
 | create_time |  long   |                                                   Creation time                                                    |
 
@@ -224,7 +225,7 @@ method：GET
 | :---------: | :----:   | :----------------------------------------------------------------------------------------------------------------: |
 |   acct_no   | String  |                         Institution account name (Unique within scope of the institution)                          |
 | card_type_id |String  | Card type id|   
-|   status    |  int    | Status code : 0 - Submitted successfully, 1 - Verification successful (Account activated), 2 - Verification failed |
+|   status    |  int    | Status code : 0 - Submitted successfully, 1 - Verification successful (Account activated), 2 - Verification failed, 3 - Verifying, 4 - Submission in progress |
 | reason | String |      Reason for verification failure. Blank for status other than failure       |
 | create_time |  long   |                                                   Creation time                                                    |
 
@@ -910,3 +911,75 @@ method：POST
 |      bank_tx_list[0].debit       | String | Debit amount(USD)                                                       |
 |      bank_tx_list[0].credit      | String | Credit amount(USD)                                                      |
 |       bank_tx_list[0].type       |  int   | Transaction type, 1. Debit, 2. Deposit, 3. Withdrawal, 4. Transfer |
+
+## 6. Error Codes
+
+### 6.1. Business Logic Error Codes
+
+| Status Code | Description                                                 |
+| :---------: | ----------------------------------------------------------- |
+|      0      | Succesful                                                   |
+|   111001    | Request parameter error                                     |
+|   111002    | KYC status abnormal                                         |
+|   111003    | KYC failure                                                 |
+|   111004    | Duplicate KYC                                               |
+|   111005    | KYC record not found                                        |
+|   111006    | Specified institution not found                             |
+|   111007    | Abnormal institution status                                 |
+|   111008    | Institution asset configuration not found                   |
+|   111009    | Institution asset status abnormal                           |
+|   111010    | Institution configuration not found                         |
+|   111011    | Insufficient institution balance                            |
+|   111012    | Account not found                                           |
+|   111013    | Account status abnormal                                     |
+|   111014    | Insufficient accounts of specified account type             |
+|   111015    | Account frozen                                              |
+|   111016    | ID Account type ID not found                                |
+|   111017    | Account already exists                                      |
+|   111018    | Internet banking not active                                 |
+|   111019    | Account ID already exists                                   |
+|   111020    | Only one card can be registered for one particular type     |
+|   111021    | No account of the specified type exists for the institution |
+|   111022    | Transaction not found                                       |
+|   111023    | Unauthorized to query this transaction                      |
+|   111024    | Invalid Email format                                        |
+|   111025    | Invalid Email verification code                             |
+|   111026    | Email already exists                                        |
+|   111027    | Email provider not supported                                |
+|   111028    | Contact number already exists                               |
+|   111029    | Invalid mobile verification code                            |
+|   111030    | Unable to fetch bank details                                |
+|   111031    | Specified bank not found                                    |
+|   111032    | Noumena configuration not found                             |
+|   111033    | Birthdate field cannot be left empty                        |
+|   111034    | Picture could not be uploaded                               |
+|   111035    | Max. query time limited to one month                        |
+|   111036    | Invalid time format                                         |
+|   111037    | Max. bank statement period limited to six months            |
+
+### 6.2 Identity Authentication Error Codes
+
+| Status Code | Description                 |
+| :---------: | --------------------------- |
+|   112001    | Request timed out           |
+|   112002    | Illegal access privileges   |
+|   112003    | Invalid IP address          |
+|   112004    | Invalid timestamp           |
+|   112005    | Verification failure        |
+|   112006    | Invalid verification format |
+|   112007    | Invalid signature           |
+|   112008    | Specified app key not found |
+|   112009    | Invalid app key secret      |
+|   112010    | Invalid request header      |
+
+### 6.3 Abnormal Status Error Codes
+
+| Status Code | Description           |
+| :---------: | --------------------- |
+|   119001    | Service unusable      |
+|   119002    | Communication error   |
+|   119003    | Data encryption error |
+|   119004    | Data decryption error |
+|   119005    | Too many API requests |
+|   119006    | Unauthorized API      |
+

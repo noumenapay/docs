@@ -233,7 +233,7 @@ method：GET
 
 This API contains methods related to
 
-### 2.1. Submitting user's card information
+### 2.1. Apply a card
 
 - Request:
 
@@ -725,10 +725,12 @@ method：GET
         "records": [
             {
                 "card_type_id": "50000001",
+                "currency_type": "USD",               
                 "bank_id": "5000"
             },
             {
                 "card_type_id": "50000002",
+                "currency_type": "USD",               
                 "bank_id": "5000"
             }
         ]
@@ -739,6 +741,7 @@ method：GET
 | Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
 |   bank_id   | String |        Bank ID              |
+|   currency_type   | String |    Currency type of the card             |
 | card_type_id |String | Card type id, for example 50000001|
 
 
@@ -763,7 +766,7 @@ method：GET
   "msg": "string",
   "result": {
     "open_card_fee_usdt":"20",
-    "usdt_usd_exchange_rate":"1.12",
+    "exchange_rate":"1.12",
     "loading_rate": "0.005",
     "bank_transaction_rate":"0.0012",
     "bank_atm_rate":"0.005"
@@ -774,7 +777,7 @@ method：GET
 | Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
 |   open_card_fee_usdt   | String |           Open card fee in USDT          |
-|   usdt_usd_exchange_rate   | String |           USDT to USD exchange rate         |
+|   exchange_rate   | String |   exchange rate of  USDT to fiat currency         |
 |   loading_rate   | String |           Loading rate for deposit to user        |
 |   bank_transaction_rate   | String |          Bank transaction rate for consumption          |
 |   bank_atm_rate   | String |          ATM withdraw rate           |

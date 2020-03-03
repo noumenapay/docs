@@ -483,7 +483,7 @@ method：GET
 
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
-|     tx_status      | int | 0:process pending，1: deposit successful，5：cancelled  |
+|     tx_status      | int | 0 and 3:process pending，1: deposit successful，5：deposit failed  |
 
 ### 3.3 Query all the deposit records
 

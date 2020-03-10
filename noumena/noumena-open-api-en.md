@@ -483,7 +483,7 @@ method：GET
 
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
-|     tx_status      | int | 0 and 3:process pending，1: deposit successful，5：deposit failed  |
+|     tx_status      | int | 0, 3 and 4:process pending，1: deposit successful, 5：deposit failed  |
 
 ### 3.3 Query all the deposit records
 
@@ -763,15 +763,26 @@ method：GET
 
 ```json
 {
-  "code": 0,
-  "msg": "string",
-  "result": {
-    "open_card_fee_usdt":"20",
-    "exchange_rate":"1.12",
-    "loading_rate": "0.005",
-    "bank_transaction_rate":"0.0012",
-    "bank_atm_rate":"0.005"
-  }
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "bank_atm_rate": "0.1",
+        "exchange_rate": "1.00505392692",
+        "open_card_fee_usdt": "1",
+        "loading_rate": [
+            {
+                "min": "0",
+                "max": "1000",
+                "step_rate": "0.05"
+            },
+            {
+                "min": "1000",
+                "max": "2000",
+                "step_rate": "0.03"
+            }
+        ],
+        "bank_transaction_rate": "0.2"
+    }
 }
 ```
 
@@ -779,7 +790,7 @@ method：GET
 | :--------: | :----: | :------------------------------ |
 |   open_card_fee_usdt   | String |           Open card fee in USDT          |
 |   exchange_rate   | String |   exchange rate of  USDT to fiat currency         |
-|   loading_rate   | String |           Loading rate for deposit to user        |
+|   loading_rate   | String |           Loading step rate for deposit to user        |
 |   bank_transaction_rate   | String |          Bank transaction rate for consumption          |
 |   bank_atm_rate   | String |          ATM withdraw rate           |
 

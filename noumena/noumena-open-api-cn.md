@@ -508,7 +508,7 @@ method：GET
 
 | Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
-|   tx_status   | int |           0和3:待处理中，1:充值成功， 5:充值失败           |
+|   tx_status   | int |           0, 3 和 4:待处理中，1:充值成功, 5:充值失败           |
 
 
 ### 3.3 查询所有卡充值记录
@@ -800,15 +800,26 @@ method：GET
 
 ```json
 {
-  "code": 0,
-  "msg": "string",
-  "result": {
-    "open_card_fee_usdt":"20",
-    "exchange_rate":"1.12",
-    "loading_rate": "0.005",
-    "bank_transaction_rate":"0.0012",
-    "bank_atm_rate":"0.005"
-  }
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "bank_atm_rate": "0.1",
+        "exchange_rate": "1.00505392692",
+        "open_card_fee_usdt": "1",
+        "loading_rate": [
+            {
+                "min": "0",
+                "max": "1000",
+                "step_rate": "0.05"
+            },
+            {
+                "min": "1000",
+                "max": "2000",
+                "step_rate": "0.03"
+            }
+        ],
+        "bank_transaction_rate": "0.2"
+    }
 }
 ```
 
@@ -816,7 +827,7 @@ method：GET
 | :--------: | :----: | :------------------------------ |
 |   open_card_fee_usdt   | String |           开卡的手续费（USDT）           |
 |   exchange_rate   | String |           USDT兑换相应法币的汇率           |
-|   loading_rate   | String |           给用户充值时付给 Noumena 的费率           |
+|   loading_rate   | String |           给用户充值时付给 Noumena 的阶梯费率           |
 |   bank_transaction_rate   | String |          银行卡刷卡消费的手续费率           |
 |   bank_atm_rate   | String |          ATM取款时的手续费率           |
 

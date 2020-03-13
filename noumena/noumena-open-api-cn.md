@@ -818,6 +818,7 @@ method：GET
                 "step_rate": "0.03"
             }
         ],
+        "bank_atm_fee": "0",
         "bank_transaction_rate": "0.2"
     }
 }
@@ -830,6 +831,7 @@ method：GET
 |   loading_rate   | String |           给用户充值时付给 Noumena 的阶梯费率           |
 |   bank_transaction_rate   | String |          银行卡刷卡消费的手续费率           |
 |   bank_atm_rate   | String |          ATM取款时的手续费率           |
+|   bank_atm_fee   | String |          ATM取款时的固定手续费           |
 
 
 ## 5.银行卡接口

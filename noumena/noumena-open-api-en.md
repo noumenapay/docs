@@ -781,6 +781,7 @@ method：GET
                 "step_rate": "0.03"
             }
         ],
+        "bank_atm_fee": 0,
         "bank_transaction_rate": "0.2"
     }
 }
@@ -793,6 +794,7 @@ method：GET
 |   loading_rate   | String |           Loading step rate for deposit to user        |
 |   bank_transaction_rate   | String |          Bank transaction rate for consumption          |
 |   bank_atm_rate   | String |          ATM withdraw rate           |
+|   bank_atm_fee| String |          ATM withdraw fixed fee|
 
 ## 5. Bank account API
 

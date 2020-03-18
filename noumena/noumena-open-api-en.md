@@ -125,6 +125,7 @@ method：POST
 | mail_verification_code | String |     Optional     |                                    Email verification code                                    |
 |       mail_token       | String |     Optional     |                        Token returned upon sending verification Email                         |
 | cust_tx_id            | String | Optional         | customer transaction id|
+| poa_doc | String |Optional |Pircture of proof of address. Base64 encoding. File size should be less than 2M|
 
 - Response:
 
@@ -234,7 +235,32 @@ method：GET
 
 This API contains methods related to
 
-### 2.1. Apply a card
+### 2.1 submit attachment
+
+- Request:
+
+```text
+url：/api/v1/debit-cards/attachment
+method：POST
+```
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
+|  card_no  |  String  |    Required     | card no     |
+|  poa_doc  |  String  |    Optional     | picture of proof of address     |
+|  active_doc  |  String  |    Optional     | picture of holding passport and bank card  |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+}
+```
+
+
+### 2.2 Apply a card
 
 - Request:
 
@@ -266,7 +292,7 @@ method：POST
 | card_no | String | To prevent real card information from being exposed, use 'card_no' parameter to query  |
 | card_number | String | Actual card number, Expose only the first 6 and last 4 |
 
-### 2.2. User activating bank card
+### 2.3 User activating bank card
 
 ```text
 url：/api/v1/debit-cards/status
@@ -290,7 +316,7 @@ method：PUT
 }
 ```
 
-### 2.3. User triggers a card withdrawal password reset Email (Currently not supported)
+### 2.4 User triggers a card withdrawal password reset Email (Currently not supported)
 
 An institution invokes the Noumena API triggering the action that sends the bank card withdrawal password reset Email to the user's Email account.
 
@@ -316,7 +342,7 @@ method：POST
 }
 ```
 
-### 2.4 Query all active card records
+### 2.5 Query all active card records
 
 ```text
 url：/api/v1/debit-cards
@@ -358,7 +384,7 @@ method：GET
 |   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active |
 | create_time |  long  |                            Creation time                             |
 
-### 2.5 Query a specific user's card activation records
+### 2.6 Query a specific user's card activation records
 
 - Request:
 
@@ -504,26 +530,31 @@ method：GET
 
 ```json
 {
-  "code": 0,
-  "msg": "SUCCESS",
-  "result": {
-    "total": 1,
-    "records": [
-      {
-        "acct_no": "1",
-        "card_no": "",
-        "tx_amount": "1",
-        "currency_amount": "10",
-        "currency_type": "USD",
-        "exchange_rate": "1",
-        "bank_tx_id": "",
-        "loading_fee": "1",
-        "cust_tx_time": null
-      }
-    ]
-  }
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "total": 1,
+        "records": [
+            {
+                "currency_type": "CNY_test",
+                "cust_tx_id": "1223",
+                "card_no": "8993152800000013334",
+                "acct_no": "03030062",
+                "cust_tx_time": 1584350913000,
+                "loading_fee": "1.8558",
+                "currency_amount": "60",
+                "tx_amount": "61.86",
+                "exchange_rate": "1",
+                "tx_id": "2020031609283339501898843",
+                "coin_type": "USDT",
+                "tx_status": 3,
+                "exchange_fee": "0"
+            }
+        ]
+    }
 }
 ```
+
 
 |     Parameter     |  Type  |                            Description                            |
 | :-----------: | :----: | :---------------------------------------------------------------: |
@@ -533,9 +564,12 @@ method：GET
 |     currency_amount      | String | received currency amount  |
 |     currency_type      | String | received currency type  |
 | exchange_rate | String |                           Exchange rate                           |
-|  bank_tx_id   | String |                        Bank transaction ID                        |
 |      loading_fee      | String |                          Transaction fee                          |
 | cust_tx_time  |  long  |                           Creation time                           |
+|  tx_id   | String |        transaction id         |
+|  exchange_fee   | String |     exchange fee for converting other coin to USDT   |
+|  tx_status   | int |   transaction status       |
+|    coin_type    |  int   |          coin type          |
 
 ### 3.4 Query a particular user's deposit records
 
@@ -559,28 +593,31 @@ method：GET
 
 ```json
 {
-  "code": 0,
-  "msg": "SUCCESS",
-  "result": {
-    "total": 1,
-    "records": [
-      {
-        "acct_no": "1",
-        "card_no": "",
-        "coin_type": "USDT",
-        "tx_amount": "1",
-        "currency_amount": "10",
-        "currency_type": "USD",
-        "exchange_rate": "1",
-        "cust_tx_id": "1",
-        "bank_tx_id": "",
-        "loading_fee": "1",
-        "cust_tx_time": null
-      }
-    ]
-  }
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "total": 1,
+        "records": [
+            {
+                "currency_type": "CNY_test",
+                "cust_tx_id": "1223",
+                "card_no": "8993152800000013334",
+                "acct_no": "03030062",
+                "cust_tx_time": 1584350913000,
+                "loading_fee": "1.8558",
+                "currency_amount": "60",
+                "tx_amount": "61.86",
+                "exchange_rate": "1",
+                "tx_id": "2020031609283339501898843",
+                "coin_type": "USDT",
+                "tx_status": 3,
+                "exchange_fee": "0"
+            }
+        ]
+    }
 }
 ```
+
 
 |     Parameter     |  Type  |                            Description                            |
 | :-----------: | :----: | :---------------------------------------------------------------: |
@@ -590,9 +627,13 @@ method：GET
 |     currency_amount      | String | received currency amount  |
 |     currency_type      | String | received currency type  |
 | exchange_rate | String |                           Exchange rate                           |
-|  bank_tx_id   | String |                     Bank transaction records                      |
 |      loading_fee      | String |                          Transaction fee                          |
 | cust_tx_time  |  long  |                           Creation time                           |
+|  tx_id   | String |        transaction id         |
+|  exchange_fee   | String |     exchange fee for converting other coin to USDT   |
+|  tx_status   | int |   transaction status       |
+|    coin_type    |  int   |          coin type          |
+
 
 ## 4. Public API
 
@@ -795,6 +836,129 @@ method：GET
 |   bank_transaction_rate   | String |          Bank transaction rate for consumption          |
 |   bank_atm_rate   | String |          ATM withdraw rate           |
 |   bank_atm_fee| String |          ATM withdraw fixed fee|
+
+
+### 4.7 crypto calculation
+
+- Request:
+
+```text
+url：/api/v1/calculation/crypto
+method：GET
+```
+- Request:
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :--------------------------------------------------------|
+|  currency_amount  |  String  |    Required     |  received currency amount     |
+|  currency_type  |  String  |    Required     |  received currency type     |
+|  card_type_id  |  String  |    Required     |  card type id    |
+|  coin_type  |  String  |    Required     |  the coin type you want to convert    |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "coin_type": "usdt",
+        "coin_amount": "106.23",
+        "exchange_rate": "1.00145966373",
+        "exchange_fee": "1.0623",
+        "exchange_fee_rate": "0.01",
+        "loading_fee": "5.3115",
+        "loading_fee_rate": "0.05"
+    }
+}
+```
+
+|    Parameter    |  Type   |      Description                                                     |
+| :---------: | :----:   | :--------------------------- |
+|  coin_amount    | String  |    required coin amount          |
+|  coin_type  |  String    |  the coin type you received    |
+| exchange_fee    | String  |   exchange fee for converting other coin to USDT           |
+| exchange_fee_rate    | String  |   exchange fee rate for converting other coin to USDT           |
+|  loading_fee    | String  |       loading fee of transaction       |
+|  loading_fee_rate    | String  |       loading fee rate of transaction       |
+| exchange_rate    | String  | exchange rate of USDT/USD             |
+
+
+
+### 4.8 currency calculation
+
+- Request:
+
+```text
+url：/api/v1/calculation/currency
+method：GET
+```
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
+|  coin_amount  |  String  |    Required     |  received coin amount     |
+| coin_type  |  String  |    Required     |  received coin type     |
+|  card_type_id  |  String  |    Required     |  card type id    |
+|  currency_type  |  String  |    Required     |  the currency type you want to convert    |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "currency_type": "usd",
+        "currency_amount": "94.13",
+        "exchange_rate": "1.00145966373",
+        "exchange_fee": "1",
+        "exchange_fee_rate": "0.01",
+        "loading_fee": "5",
+        "loading_fee_rate": "0.05"
+    }
+}
+```
+
+|    Parameter    |  Type   |      Description                                                     |
+| :---------: | :----:   | :--------------------------- |
+|  currency_amount    | String  |    received currency amount          |
+|  currency_type  |  String    |  the currency type you received    |
+| exchange_fee    | String  |   exchange fee for converting other coin to USDT           |
+| exchange_fee_rate    | String  |   exchange fee rate for converting other coin to USDT           |
+|  loading_fee    | String  |       loading fee of transaction       |
+|  loading_fee_rate    | String  |       loading fee rate of transaction       |
+| exchange_rate    | String  | exchange rate of USDT/USD             |
+
+### 4.9 get customer balance
+
+- Request:
+
+```text
+url：/api/v1/customers/balance
+method：GET
+```
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": [
+        {
+            "balance": "872.5262",
+            "address": "0x57700ea3429bc5b3c5c215a530d19cbc685389cd",
+            "coin_type": "USDT"
+        }
+    ]
+}
+```
+
+|    Parameter    |  Type   |      Description  |
+| :---------: | :----:   | :--------------------------- |
+| balance    | String  |  coin balance         |
+| address    | String  | coin address         |
+| coin_type    | String  |  coin type         |
 
 ## 5. Bank account API
 

@@ -126,6 +126,7 @@ method：POST
 | mail_verification_code | String |选填 |邮箱验证码|
 | mail_token | String |选填|发送邮件后返回的token|
 | cust_tx_id | String | 选填| KYC流水号|
+| poa_doc | String |选填 |地址证明照片。base64编码，照片文件大小应小于2M|
 
 - 响应：
 
@@ -243,7 +244,32 @@ method：GET
 
 提供机构给用户开卡，记录查询等接口。
 
-### 2.1.提交用户开卡申请
+### 2.1 提交附件
+
+- Request:
+
+```text
+url：/api/v1/debit-cards/attachment
+method：POST
+```
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
+|  card_no  |  String  |    必填     | 卡号    |
+|  poa_doc  |  String  |    选填     |   地址证明照。base64编码，照片文件大小应小于2M  |
+|  active_doc  |  String  |    选填     | 手持护照和银行卡照。base64编码，照片文件大小应小于2M  |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+}
+```
+
+
+### 2.2 提交用户开卡申请
 
 ```text
 url：/api/v1/debit-cards
@@ -277,7 +303,7 @@ method：POST
 |   card_number   | String |           分配的真实银行卡号, 只显示前6位和后4位           |
 
 
-### 2.2.用户激活卡片
+### 2.3 用户激活卡片
 
 ```text
 url：/api/v1/debit-cards/status
@@ -305,7 +331,7 @@ method：PUT
 
 
 
-### 2.3.用户触发设置卡片取款密码邮件（暂不支持）
+### 2.4.用户触发设置卡片取款密码邮件（暂不支持）
 
 B 机构调 Noumena 接口，Noumena 调 Bank，触发发送设置取款密码邮件到用户邮箱的动作
 
@@ -334,7 +360,7 @@ method：POST
 
 
 
-### 2.4 查询所有卡片信息
+### 2.5 查询所有卡片信息
 
 ```text
 url：/api/v1/debit-cards
@@ -379,7 +405,7 @@ method：GET
 
 
 
-### 2.5 查询指定用户所有卡片信息
+### 2.6 查询指定用户所有卡片信息
 
 ```text
 url：/api/v1/debit-cards?acct_no={acct_no}
@@ -536,17 +562,19 @@ method：GET
         "total": 1,
         "records": [
             {
-                "acct_no": "1",
-                "card_no": "",
-                "coin_type": "USDT",
-                "tx_amount": "1",
-                "currency_amount": "10",
-                "currency_type": "USD",
+                "currency_type": "CNY_test",
+                "cust_tx_id": "1223",
+                "card_no": "8993152800000013334",
+                "acct_no": "03030062",
+                "cust_tx_time": 1584350913000,
+                "loading_fee": "1.8558",
+                "currency_amount": "60",
+                "tx_amount": "61.86",
                 "exchange_rate": "1",
-                "cust_tx_id": "1",
-                "bank_tx_id": "",
-                "loading_fee": "1",
-                "cust_tx_time": null
+                "tx_id": "2020031609283339501898843",
+                "coin_type": "USDT",
+                "tx_status": 3,
+                "exchange_fee": "0"
             }
         ]
     }
@@ -563,9 +591,12 @@ method：GET
 |     currency_type      | String | 到账法币类型  |
 | exchange_rate | String |            汇率            |
 |  cust_tx_id   | String |         机构流水号         |
-|  bank_tx_id   | String |         银行流水号         |
-|      loading_fee      | String |           手续费           |
+|      loading_fee      | String |  充值手续费，单位是USDT          |
 |  cust_tx_time  |  long  |          创建时间          |
+|  tx_id   | String |        交易id         |
+|  exchange_fee   | String |     充值币种兑换成USDT的费用，单位是USDT   |
+|  tx_status   | int |   交易状态       |
+
 
 ### 3.4 查询指定用户所有卡充值记录
 
@@ -596,17 +627,19 @@ method：GET
         "total": 1,
         "records": [
             {
-                "acct_no": "1",
-                "card_no": "",
-                "coin_type": "USDT",
-                "tx_amount": "1",
-                "currency_amount": "10",
-                "currency_type": "USD",
+                "currency_type": "CNY_test",
+                "cust_tx_id": "1223",
+                "card_no": "8993152800000013334",
+                "acct_no": "03030062",
+                "cust_tx_time": 1584350913000,
+                "loading_fee": "1.8558",
+                "currency_amount": "60",
+                "tx_amount": "61.86",
                 "exchange_rate": "1",
-                "cust_tx_id": "1",
-                "bank_tx_id": "",
-                "loading_fee": "1",
-                "cust_tx_time": null
+                "tx_id": "2020031609283339501898843",
+                "coin_type": "USDT",
+                "tx_status": 3,
+                "exchange_fee": "0"
             }
         ]
     }
@@ -623,9 +656,11 @@ method：GET
 |     currency_type      | String | 到账法币类型  |
 | exchange_rate | String |            汇率            |
 |  cust_tx_id   | String |         机构流水号         |
-|  bank_tx_id   | String |         银行流水号         |
-|      loading_fee      | String |           手续费           |
+|      loading_fee      | String |     充值手续费，单位是USDT         |
 |  cust_tx_time  |  long  |          创建时间          |
+|  tx_id   | String |        交易id         |
+|  exchange_fee   | String |     充值币种兑换成USDT的费用，单位是USDT   |
+|  tx_status   | int |   交易状态       |
 
 
 
@@ -832,6 +867,130 @@ method：GET
 |   bank_transaction_rate   | String |          银行卡刷卡消费的手续费率           |
 |   bank_atm_rate   | String |          ATM取款时的手续费率           |
 |   bank_atm_fee   | String |          ATM取款时的固定手续费           |
+
+
+### 4.7 数字货币计算接口
+
+- Request:
+
+```text
+url：/api/v1/calculation/crypto
+method：GET
+```
+- Request:
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :--------------------------------------------------------|
+|  currency_amount  |  String  |    Required     |  需要充值到账的法币金额     |
+|  currency_type  |  String  |    Required     |  需要充值到账的法币类型     |
+|  card_type_id  |  String  |    Required     |  卡种ID    |
+|  coin_type  |  String  |    Required     |  需要换算的数字货币类型    |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "coin_type": "usdt",
+        "coin_amount": "106.23",
+        "exchange_rate": "1.00145966373",
+        "exchange_fee": "1.0623",
+        "exchange_fee_rate": "0.01",
+        "loading_fee": "5.3115",
+        "loading_fee_rate": "0.05"
+    }
+}
+```
+
+|    Parameter    |  Type   |      Description                                                     |
+| :---------: | :----:   | :--------------------------- |
+|  coin_amount    | String  |    需要的数字货币金额         |
+|  coin_type  |  String    |  需要的数字货币类型    |
+| exchange_fee    | String  |   其他币种兑换USDT的手续费           |
+| exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率           |
+|  loading_fee    | String  |       充值手续费       |
+|  loading_fee_rate    | String  |  充值手续费率     |
+| exchange_rate    | String  | USDT/USD 汇率             |
+
+
+
+### 4.8 法币计算接口
+
+- Request:
+
+```text
+url：/api/v1/calculation/currency
+method：GET
+```
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
+|  coin_amount  |  String  |    Required     |  充值的数字货币金额     |
+| coin_type  |  String  |    Required     |  充值的数字货币类型     |
+|  card_type_id  |  String  |    Required     |  卡种ID    |
+|  currency_type  |  String  |    Required     |   需要换算的法币类型   |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "currency_type": "usd",
+        "currency_amount": "94.13",
+        "exchange_rate": "1.00145966373",
+        "exchange_fee": "1",
+        "exchange_fee_rate": "0.01",
+        "loading_fee": "5",
+        "loading_fee_rate": "0.05"
+    }
+}
+```
+
+|    Parameter    |  Type   |      Description                                                     |
+| :---------: | :----:   | :--------------------------- |
+|  currency_amount    | String  |    充值到账的法币金额          |
+|  currency_type  |  String    |  充值到账的法币类型    |
+| exchange_fee    | String  |   其他币种兑换USDT的手续费           |
+| exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率          |
+|  loading_fee    | String  |       充值手续费       |
+|  loading_fee_rate    | String  |   充值手续费率       |
+| exchange_rate    | String  | USDT/USD 汇率              |
+
+
+### 4.9 查询机构余额
+
+- Request:
+
+```text
+url：/api/v1/customers/balance
+method：GET
+```
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": [
+        {
+            "balance": "872.5262",
+            "address": "0x57700ea3429bc5b3c5c215a530d19cbc685389cd",
+            "coin_type": "USDT"
+        }
+    ]
+}
+```
+
+|    Parameter    |  Type   |      Description  |
+| :---------: | :----:   | :--------------------------- |
+| balance    | String  |  数字货币余额         |
+| address    | String  | 数字货币地址         |
+| coin_type    | String  | 数字货币余额   |
 
 
 ## 5.银行卡接口

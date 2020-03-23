@@ -244,32 +244,7 @@ method：GET
 
 提供机构给用户开卡，记录查询等接口。
 
-### 2.1 提交附件
-
-- Request:
-
-```text
-url：/api/v1/debit-cards/attachment
-method：POST
-```
-
-|  Parameter  | Type  | Whether Required |                        Description                         |
-| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
-|  card_no  |  String  |    必填     | 卡号    |
-|  poa_doc  |  String  |    选填     |   地址证明照。base64编码，照片文件大小应小于2M  |
-|  active_doc  |  String  |    选填     | 手持护照和银行卡照。base64编码，照片文件大小应小于2M  |
-
-- Response:
-
-```
-{
-    "code": 0,
-    "msg": "SUCCESS",
-}
-```
-
-
-### 2.2 提交用户开卡申请
+### 2.1 提交用户开卡申请
 
 ```text
 url：/api/v1/debit-cards
@@ -302,6 +277,31 @@ method：POST
 |   card_no   | String |           分配的银行卡ID，查询时用card_no，避免真是卡号信息泄露。生成规则：机构id+5位随机数 +卡种id +卡最后四位           |
 |   card_number   | String |           分配的真实银行卡号, 只显示前6位和后4位           |
 
+
+### 2.2 提交激活卡需要的附件
+
+- Request:
+
+```text
+url：/api/v1/debit-cards/attachment
+method：POST
+```
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
+|  card_no  |  String  |    必填     | 卡号    |
+|  poa_doc  |  String  |    选填     |   地址证明照。base64编码，照片文件大小应小于2M  |
+|  active_doc  |  String  |    选填     | 手持护照和银行卡照。base64编码，照片文件大小应小于2M  |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": true
+}
+```
 
 ### 2.3 用户激活卡片
 
@@ -400,7 +400,7 @@ method：GET
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |     机构端用户编号(机构端唯一)      |
 |   card_no   |  int   |              银行卡号               |
-|   status    |  int   | 状态码: 0 冻结, 1 激活成功, 2未激活 |
+|   status    |  int   | 状态码: 0 冻结， 1 激活成功， 2未激活， 3. 待审核， 4. 审核失败 |
 | create_time |  long  |              创建时间               |
 
 
@@ -448,7 +448,7 @@ method：GET
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |     机构端用户编号(机构端唯一)      |
 |   card_no   |  int   |              银行卡ID               |
-|   status    |  int   | 状态码: 0 冻结, 1 激活成功, 2未激活 |
+|   status    |  int   | 状态码: 0 冻结， 1 激活成功， 2未激活， 3. 待审核， 4. 审核失败|
 | create_time |  long  |              创建时间               |
 
 
@@ -562,7 +562,7 @@ method：GET
         "total": 1,
         "records": [
             {
-                "currency_type": "CNY_test",
+                "currency_type": "CNY",
                 "cust_tx_id": "1223",
                 "card_no": "8993152800000013334",
                 "acct_no": "03030062",
@@ -583,19 +583,20 @@ method：GET
 
 |  Parameter   |  Type  |        Description         |
 | :--------: | :----: | :------------------------------ |
-|    acct_no    | String | 机构端用户编号(机构端唯一) |
-|    card_no    |  int   |          银行卡ID         |
-|    coin_type    |  int   |          币种          |
-|   tx_amount   | String |          交易金额          |
-|     currency_amount      | String | 到账法币数量  |
 |     currency_type      | String | 到账法币类型  |
-| exchange_rate | String |            汇率            |
 |  cust_tx_id   | String |         机构流水号         |
-|      loading_fee      | String |  充值手续费，单位是USDT          |
+|    card_no    |  int   |          银行卡ID         |
+|    acct_no    | String | 机构端用户编号(机构端唯一) |
 |  cust_tx_time  |  long  |          创建时间          |
+|      loading_fee      | String |  充值手续费，单位是USDT          |
+|     currency_amount      | String | 到账法币数量  |
+|   tx_amount   | String |          充值金额          |
+| exchange_rate | String |            USDT/法币汇率            |
 |  tx_id   | String |        交易id         |
-|  exchange_fee   | String |     充值币种兑换成USDT的费用，单位是USDT   |
+|    coin_type    |  int   |          充值币种          |
 |  tx_status   | int |   交易状态       |
+|  exchange_fee   | String |     充值币种兑换成USDT的费用，单位是USDT   |
+
 
 
 ### 3.4 查询指定用户所有卡充值记录
@@ -627,7 +628,7 @@ method：GET
         "total": 1,
         "records": [
             {
-                "currency_type": "CNY_test",
+                "currency_type": "CNY",
                 "cust_tx_id": "1223",
                 "card_no": "8993152800000013334",
                 "acct_no": "03030062",
@@ -648,19 +649,19 @@ method：GET
 
 |  Parameter   |  Type  |        Description         |
 | :--------: | :----: | :------------------------------ |
-|    acct_no    | String | 机构端用户编号(机构端唯一) |
-|    card_no    |  int   |          银行卡ID          |
-|    coin_type    |  int   |          币种          |
-|   tx_amount   | String |          交易金额          |
-|     currency_amount      | String | 到账法币数量  |
 |     currency_type      | String | 到账法币类型  |
-| exchange_rate | String |            汇率            |
 |  cust_tx_id   | String |         机构流水号         |
-|      loading_fee      | String |     充值手续费，单位是USDT         |
+|    card_no    |  int   |          银行卡ID         |
+|    acct_no    | String | 机构端用户编号(机构端唯一) |
 |  cust_tx_time  |  long  |          创建时间          |
+|      loading_fee      | String |  充值手续费，单位是USDT          |
+|     currency_amount      | String | 到账法币数量  |
+|   tx_amount   | String |          充值金额          |
+| exchange_rate | String |            USDT/法币汇率            |
 |  tx_id   | String |        交易id         |
-|  exchange_fee   | String |     充值币种兑换成USDT的费用，单位是USDT   |
+|    coin_type    |  int   |          充值币种          |
 |  tx_status   | int |   交易状态       |
+|  exchange_fee   | String |     充值币种兑换成USDT的费用，单位是USDT   |
 
 
 
@@ -875,14 +876,13 @@ method：GET
 
 ```text
 url：/api/v1/calculation/crypto
-method：GET
+method：POST
 ```
 - Request:
 
 |  Parameter  | Type  | Whether Required |                        Description                         |
 | :---------: | :---: | :--------------: | :--------------------------------------------------------|
 |  currency_amount  |  String  |    Required     |  需要充值到账的法币金额     |
-|  currency_type  |  String  |    Required     |  需要充值到账的法币类型     |
 |  card_type_id  |  String  |    Required     |  卡种ID    |
 |  coin_type  |  String  |    Required     |  需要换算的数字货币类型    |
 
@@ -922,7 +922,7 @@ method：GET
 
 ```text
 url：/api/v1/calculation/currency
-method：GET
+method：POST
 ```
 
 |  Parameter  | Type  | Whether Required |                        Description                         |
@@ -930,7 +930,6 @@ method：GET
 |  coin_amount  |  String  |    Required     |  充值的数字货币金额     |
 | coin_type  |  String  |    Required     |  充值的数字货币类型     |
 |  card_type_id  |  String  |    Required     |  卡种ID    |
-|  currency_type  |  String  |    Required     |   需要换算的法币类型   |
 
 - Response:
 

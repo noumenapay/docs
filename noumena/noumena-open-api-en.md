@@ -235,32 +235,7 @@ method：GET
 
 This API contains methods related to
 
-### 2.1 submit attachment
-
-- Request:
-
-```text
-url：/api/v1/debit-cards/attachment
-method：POST
-```
-
-|  Parameter  | Type  | Whether Required |                        Description                         |
-| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
-|  card_no  |  String  |    Required     | card no     |
-|  poa_doc  |  String  |    Optional     | picture of proof of address     |
-|  active_doc  |  String  |    Optional     | picture of holding passport and bank card  |
-
-- Response:
-
-```
-{
-    "code": 0,
-    "msg": "SUCCESS",
-}
-```
-
-
-### 2.2 Apply a card
+### 2.1 Apply a card
 
 - Request:
 
@@ -291,6 +266,33 @@ method：POST
 | :-----: | :----: | :-----------------: |
 | card_no | String | To prevent real card information from being exposed, use 'card_no' parameter to query  |
 | card_number | String | Actual card number, Expose only the first 6 and last 4 |
+
+
+### 2.2 submit attachment
+
+- Request:
+
+```text
+url：/api/v1/debit-cards/attachment
+method：POST
+```
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
+|  card_no  |  String  |    Required     | card no     |
+|  poa_doc  |  String  |    Optional     | picture of proof of address     |
+|  active_doc  |  String  |    Optional     | picture of holding passport and bank card  |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": true
+}
+```
+
 
 ### 2.3 User activating bank card
 
@@ -381,7 +383,7 @@ method：GET
 | :---------: | :----: | :------------------------------------------------------------------: |
 |   acct_no   | String |  Institution account name (Unique within scope of the institution)   |
 |   card_no   |  int   |                             Card ID                              |
-|   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active |
+|   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active, 3 - Under review, 4 - Verification failed |
 | create_time |  long  |                            Creation time                             |
 
 ### 2.6 Query a specific user's card activation records
@@ -426,7 +428,7 @@ method：GET
 | :---------: | :----: | :------------------------------------------------------------------: |
 |   acct_no   | String |  Institution account name (Unique within scope of the institution)   |
 |   card_no   |  int   |                             Card ID                              |
-|   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active |
+|   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active, 3 - Under review, 4 - Verification failed |
 | create_time |  long  |                            Creation time                             |
 
 ## 3. Transactions
@@ -536,7 +538,7 @@ method：GET
         "total": 1,
         "records": [
             {
-                "currency_type": "CNY_test",
+                "currency_type": "CNY",
                 "cust_tx_id": "1223",
                 "card_no": "8993152800000013334",
                 "acct_no": "03030062",
@@ -558,18 +560,23 @@ method：GET
 
 |     Parameter     |  Type  |                            Description                            |
 | :-----------: | :----: | :---------------------------------------------------------------: |
-|    acct_no    | String | Institution account name (Unique within scope of the institution) |
+|     currency_type      | String | Received currency type  |
+|  cust_tx_id   | String |         Customer transaction id         |
 |    card_no    |  int   |                            Card ID                            |
-|   tx_amount   | String |                        Transaction amount                         |
-|     currency_amount      | String | received currency amount  |
-|     currency_type      | String | received currency type  |
-| exchange_rate | String |                           Exchange rate                           |
-|      loading_fee      | String |                          Transaction fee                          |
+|    acct_no    | String | Institution account name (Unique within scope of the institution) |
 | cust_tx_time  |  long  |                           Creation time                           |
-|  tx_id   | String |        transaction id         |
-|  exchange_fee   | String |     exchange fee for converting other coin to USDT   |
-|  tx_status   | int |   transaction status       |
-|    coin_type    |  int   |          coin type          |
+|      loading_fee      | String |                          Transaction fee                          |
+|     currency_amount      | String | Received currency amount  |
+|   tx_amount   | String |                        Deposit amount                         |
+| exchange_rate | String |                           Exchange rate of USDT/Fiat currency                          |
+|  tx_id   | String |        Transaction id         |
+|    coin_type    |  int   |          Coin type          |
+|  tx_status   | int |   Transaction status       |
+|  exchange_fee   | String |     Exchange fee for converting other coin to USDT   |
+
+|     currency_type      | String | 到账法币类型  |
+
+
 
 ### 3.4 Query a particular user's deposit records
 
@@ -599,7 +606,7 @@ method：GET
         "total": 1,
         "records": [
             {
-                "currency_type": "CNY_test",
+                "currency_type": "CNY",
                 "cust_tx_id": "1223",
                 "card_no": "8993152800000013334",
                 "acct_no": "03030062",
@@ -621,18 +628,19 @@ method：GET
 
 |     Parameter     |  Type  |                            Description                            |
 | :-----------: | :----: | :---------------------------------------------------------------: |
-|    acct_no    | String | Institution account name (Unique within scope of the institution) |
+|     currency_type      | String | Received currency type  |
+|  cust_tx_id   | String |         Customer transaction id         |
 |    card_no    |  int   |                            Card ID                            |
-|   tx_amount   | String |                        Transaction amount                         |
-|     currency_amount      | String | received currency amount  |
-|     currency_type      | String | received currency type  |
-| exchange_rate | String |                           Exchange rate                           |
-|      loading_fee      | String |                          Transaction fee                          |
+|    acct_no    | String | Institution account name (Unique within scope of the institution) |
 | cust_tx_time  |  long  |                           Creation time                           |
-|  tx_id   | String |        transaction id         |
-|  exchange_fee   | String |     exchange fee for converting other coin to USDT   |
-|  tx_status   | int |   transaction status       |
-|    coin_type    |  int   |          coin type          |
+|      loading_fee      | String |                          Transaction fee                          |
+|     currency_amount      | String | Received currency amount  |
+|   tx_amount   | String |                        Deposit amount                         |
+| exchange_rate | String |                           Exchange rate of USDT/Fiat currency                          |
+|  tx_id   | String |        Transaction id         |
+|    coin_type    |  int   |          Coin type          |
+|  tx_status   | int |   Transaction status       |
+|  exchange_fee   | String |     Exchange fee for converting other coin to USDT   |
 
 
 ## 4. Public API
@@ -844,14 +852,13 @@ method：GET
 
 ```text
 url：/api/v1/calculation/crypto
-method：GET
+method：POST
 ```
 - Request:
 
 |  Parameter  | Type  | Whether Required |                        Description                         |
 | :---------: | :---: | :--------------: | :--------------------------------------------------------|
 |  currency_amount  |  String  |    Required     |  received currency amount     |
-|  currency_type  |  String  |    Required     |  received currency type     |
 |  card_type_id  |  String  |    Required     |  card type id    |
 |  coin_type  |  String  |    Required     |  the coin type you want to convert    |
 
@@ -891,7 +898,7 @@ method：GET
 
 ```text
 url：/api/v1/calculation/currency
-method：GET
+method：POST
 ```
 
 |  Parameter  | Type  | Whether Required |                        Description                         |
@@ -899,7 +906,6 @@ method：GET
 |  coin_amount  |  String  |    Required     |  received coin amount     |
 | coin_type  |  String  |    Required     |  received coin type     |
 |  card_type_id  |  String  |    Required     |  card type id    |
-|  currency_type  |  String  |    Required     |  the currency type you want to convert    |
 
 - Response:
 

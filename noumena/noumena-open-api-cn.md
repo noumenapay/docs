@@ -266,8 +266,9 @@ method：POST
   "code": 0,
   "msg": "string",
   "result": {
-  	"card_no": "xxxx",
-    "card_number": "430021******1144"
+ 	"card_no": "xxxx",
+	"card_number": "430021******1144",
+	"status": 2
   }
 }
 ```
@@ -276,6 +277,7 @@ method：POST
 | :--------: | :----: | :------------------------------ |
 |   card_no   | String |           分配的银行卡ID，查询时用card_no，避免真是卡号信息泄露。生成规则：机构id+5位随机数 +卡种id +卡最后四位           |
 |   card_number   | String |           分配的真实银行卡号, 只显示前6位和后4位           |
+|   status   | int |   状态：2. 开卡申请成功， 5. 申请失败，卡片正在制作中           |
 
 
 ### 2.2 提交激活卡需要的附件
@@ -800,12 +802,14 @@ method：GET
             {
                 "card_type_id": "50000001",
                 "currency_type": "USD",
-                "bank_id": "5000"
+                "bank_id": "5000",
+                "description": "card 1"
             },
             {
                 "card_type_id": "50000002",
                 "currency_type": "USD",
-                "bank_id": "5000"
+                "bank_id": "5000",
+                "description": "card 2"
             }
         ]
     }
@@ -817,6 +821,7 @@ method：GET
 | card_type_id |String |银行卡种类对应的id,比如 50000001|
 | currency_type |String |卡支持的法币类型|
 |   bank_id   | String |        银行ID           |
+|   description   | String |    卡种描述           |
 
 
 ### 4.6 费率查询

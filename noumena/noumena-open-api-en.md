@@ -257,7 +257,8 @@ method：POST
   "msg": "string",
   "result": {
     "card_no": "xxxx",
-    "card_number": "430021******1144"
+    "card_number": "430021******1144",
+    "status": 2
   }
 }
 ```
@@ -266,6 +267,7 @@ method：POST
 | :-----: | :----: | :-----------------: |
 | card_no | String | To prevent real card information from being exposed, use 'card_no' parameter to query  |
 | card_number | String | Actual card number, Expose only the first 6 and last 4 |
+|   status   | int |   status：2. apply card successfully, 5. apply failed, card is being made           |
 
 
 ### 2.2 submit attachment
@@ -776,12 +778,14 @@ method：GET
             {
                 "card_type_id": "50000001",
                 "currency_type": "USD",               
-                "bank_id": "5000"
+                "bank_id": "5000",
+                "description": "card 1"
             },
             {
                 "card_type_id": "50000002",
                 "currency_type": "USD",               
-                "bank_id": "5000"
+                "bank_id": "5000",
+                "description": "card 2"
             }
         ]
     }
@@ -793,6 +797,7 @@ method：GET
 |   bank_id   | String |        Bank ID              |
 |   currency_type   | String |    Currency type of the card             |
 | card_type_id |String | Card type id, for example 50000001|
+| description |String |description of card type |
 
 
 ### 4.6 Querying rate

@@ -1,12 +1,49 @@
 # noumena-OpenAPI 接口
 
-* [接口规范](#接口规范)
-* [1.Customers接口](#1-Customers)
-* [2.Debit Cards接口](#2-DebitCards)
-* [3.Transactions接口](#3-Transactions)
-* [4.公共接口](#4-公共接口)
-* [5.银行卡接口](#5-银行卡接口)
-* [6.错误码](#6-错误码)
+- [接口规范](#接口规范)
+- [1.机构](#1-机构)
+     - [1.1 支持的卡种类查询](#1.1-支持的卡种类查询)
+     - [1.2 查询机构余额](#1.2-查询机构余额)
+     - [1.3 机构信息查询](#1.3-机构信息查询)
+     - [1.4 上传公钥](#1.4-上传公钥)
+     - [1.5 费率查询](#1.5-费率查询)
+     - [1.6 数字货币计算接口](#1.6-数字货币计算接口)
+     - [1.7 法币计算接口](#1.7-法币计算接口)
+- [2.KYC](#2-KYC)
+     - [2.1 提交用户 KYC 数据](#2.1-提交用户-KYC-数据)
+     - [2.2 查询所有用户kyc记录](#2.2-查询所有用户kyc记录)
+     - [2.3 查询指定用户kyc记录](#2.3-查询指定用户kyc记录)
+- [3.开卡](#3-开卡)
+     - [3.1 提交用户开卡申请](#3.1-提交用户开卡申请)
+     - [3.2 提交激活卡需要的附件](#3.2-提交激活卡需要的附件)
+     - [3.3 用户激活卡片](#3.3-用户激活卡片)
+     - [3.4 查询所有卡片状态](#3.5-查询所有卡片状态)
+     - [3.5 查询指定用户所有卡片状态](#3.6-查询指定用户所有卡片状态)
+- [4.充值](#4-充值)
+     - [4.1 用户卡充值](#4.1-用户卡充值)
+     - [4.2 查询某笔卡充值交易状态](#4.2-查询某笔卡充值交易状态)
+     - [4.3 查询所有卡充值记录](#4.3-查询所有卡充值记录)
+     - [4.4 查询指定用户所有卡充值记录](#4.4-查询指定用户所有卡充值记录)
+- [5.银行卡查询](#5-银行卡查询)
+     - [5.1 查询卡是否激活](#5.1-查询卡是否激活)
+     - [5.2 查询卡余额](#5.2-查询卡余额)
+     - [5.3 查询卡账单](#5.3-查询卡账单)
+     - [5.4 查询虚拟银行卡信息](#5.4-查询虚拟银行卡信息)
+     - [5.5 用户请求重置密码（暂不支持）](5.5-用户请求重置密码（暂不支持）)
+- [6.公共接口](#6-公共接口)
+     - [6.1 发送邮箱验证码](#6.1-发送邮箱验证码)
+     - [6.2 校验邮箱验证码](#6.2-校验邮箱验证码)
+     - [6.3 发送手机验证码 (暂不支持)](#6.3-发送手机验证码-(暂不支持))
+     - [6.4 校验手机验证码(暂不支持)](#6.4-校验手机验证码(暂不支持))
+- [7.事件推送](#7-事件推送)    
+     - [7.1 KYC 事件](#7.1 KYC-事件)
+     - [7.2 开卡事件](#7.2-开卡事件)
+     - [7.3 卡激活事件](#7.3-卡激活事件)
+     - [7.4 卡充值事件](#7.4-卡充值事件)
+- [8.错误码](#8-错误码)
+     - [8.1 业务逻辑错误码](#8.1-业务逻辑错误码)
+     - [8.2 身份权限认证错误码](#8.2-身份权限认证错误码)
+     - [8.3 异常错误码](#8.3-异常错误码)
 
 ## 接口规范
 
@@ -82,11 +119,286 @@ amount=190&ont_id=did:ont:Ae9ujqUnAtH9yRiepRvLUE3t9R2NbCTZPG&to_address=AUol16gh
 
 请参考：[https://github.com/noumenapay/noumena-sdk-java](https://github.com/noumenapay/noumena-sdk-java)
 
-## 1.Customers
 
-提供机构相关接口，如用户创建并KYC、查询KYC等。
+## 1.机构
 
-### 1.1.提交用户 KYC 数据
+
+### 1.1 支持的卡种类查询
+
+```text
+url：/api/v1/institution/card/type
+method：GET
+```
+
+- 响应:
+
+```json
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "total": 2,
+        "records": [
+            {
+                "card_type_id": "50000001",
+                "currency_type": "USD",
+                "bank_id": "5000",
+                "description": "card 1",
+                "card_network": "visa"
+            },
+            {
+                "card_type_id": "50000002",
+                "currency_type": "USD",
+                "bank_id": "5000",
+                "description": "card 2",
+                "card_network": "visa"
+            }
+        ]
+    }
+}
+```
+
+| Parameter |  Type  |          Description          |
+| :--------: | :----: | :------------------------------ |
+| card_type_id |String |银行卡种类对应的id,比如 50000001|
+| currency_type |String |卡支持的法币类型|
+|   bank_id   | String |        银行ID           |
+|   description   | String |    卡种描述           |
+|   card_network   | String |    发卡机构：visa、master、unionpay           |
+
+
+
+### 1.2 查询机构余额
+
+- Request:
+
+```text
+url：/api/v1/institution/balance
+method：GET
+```
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": [
+        {
+            "balance": "872.5262",
+            "address": "0x57700ea3429bc5b3c5c215a530d19cbc685389cd",
+            "coin_type": "USDT"
+        }
+    ]
+}
+```
+
+|    Parameter    |  Type   |      Description  |
+| :---------: | :----:   | :--------------------------- |
+| balance    | String  |  数字货币余额         |
+| address    | String  | 数字货币地址         |
+| coin_type    | String  | 数字货币余额   |
+
+
+### 1.3 机构信息查询
+
+
+- Request:
+
+```text
+url：/api/v1/institution/info
+method：GET
+```
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "publickey":  ""
+    }
+}
+```
+
+| Parameter |  Type  |          Description          |
+| :--------: | :----: | :------------------------------ |
+|   publickey   | String |           机构公钥           |
+
+
+### 1.4 上传公钥
+
+- Request:
+
+```text
+url：/api/v1/institution/publickey
+method：POST
+```
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
+| public_key  |  String  |    Required     | public key     |
+
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": true
+}
+```
+
+
+### 1.5 费率查询
+
+```text
+url：/api/v1/institution/rates?card_type_id={card_type_id}
+method：GET
+```
+
+- 请求：
+
+| Parameter |  Type  |   Requirement  | Description   |
+| :------------: | :----: | :----------: |:---------- |
+| card_type_id |String |必填 |银行卡种类对应的id,比如 50000001|
+
+- 响应：
+
+```json
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "bank_atm_rate": "0.1",
+        "exchange_rate": "1.00505392692",
+        "open_card_fee_usdt": "1",
+        "loading_rate": [
+            {
+                "min": "0",
+                "max": "1000",
+                "step_rate": "0.05"
+            },
+            {
+                "min": "1000",
+                "max": "2000",
+                "step_rate": "0.03"
+            }
+        ],
+        "bank_atm_fee": "0",
+        "bank_transaction_rate": "0.2"
+    }
+}
+```
+
+| Parameter |  Type  |          Description          |
+| :--------: | :----: | :------------------------------ |
+|   open_card_fee_usdt   | String |           开卡的手续费（USDT）           |
+|   exchange_rate   | String |           USDT兑换相应法币的汇率           |
+|   loading_rate   | String |           给用户充值时付给 Noumena 的阶梯费率           |
+|   bank_transaction_rate   | String |          银行卡刷卡消费的手续费率           |
+|   bank_atm_rate   | String |          ATM取款时的手续费率           |
+|   bank_atm_fee   | String |          ATM取款时的固定手续费           |
+
+
+### 1.6 数字货币计算接口
+
+- Request:
+
+```text
+url：/api/v1/institution/calculation/crypto
+method：POST
+```
+- Request:
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :--------------------------------------------------------|
+|  currency_amount  |  String  |    Required     |  需要充值到账的法币金额     |
+|  card_type_id  |  String  |    Required     |  卡种ID    |
+|  coin_type  |  String  |    Required     |  需要换算的数字货币类型    |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "coin_type": "usdt",
+        "coin_amount": "106.23",
+        "exchange_rate": "1.00145966373",
+        "exchange_fee": "1.0623",
+        "exchange_fee_rate": "0.01",
+        "loading_fee": "5.3115",
+        "loading_fee_rate": "0.05"
+    }
+}
+```
+
+|    Parameter    |  Type   |      Description                                                     |
+| :---------: | :----:   | :--------------------------- |
+|  coin_amount    | String  |    需要的数字货币金额         |
+|  coin_type  |  String    |  需要的数字货币类型    |
+| exchange_fee    | String  |   其他币种兑换USDT的手续费           |
+| exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率           |
+|  loading_fee    | String  |       充值手续费       |
+|  loading_fee_rate    | String  |  充值手续费率     |
+| exchange_rate    | String  | USDT/USD 汇率             |
+
+
+
+### 1.7 法币计算接口
+
+- Request:
+
+```text
+url：/api/v1/institution/calculation/currency
+method：POST
+```
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
+|  coin_amount  |  String  |    Required     |  充值的数字货币金额     |
+| coin_type  |  String  |    Required     |  充值的数字货币类型     |
+|  card_type_id  |  String  |    Required     |  卡种ID    |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "currency_type": "usd",
+        "currency_amount": "94.13",
+        "exchange_rate": "1.00145966373",
+        "exchange_fee": "1",
+        "exchange_fee_rate": "0.01",
+        "loading_fee": "5",
+        "loading_fee_rate": "0.05"
+    }
+}
+```
+
+|    Parameter    |  Type   |      Description                                                     |
+| :---------: | :----:   | :--------------------------- |
+|  currency_amount    | String  |    充值到账的法币金额          |
+|  currency_type  |  String    |  充值到账的法币类型    |
+| exchange_fee    | String  |   其他币种兑换USDT的手续费           |
+| exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率          |
+|  loading_fee    | String  |       充值手续费       |
+|  loading_fee_rate    | String  |   充值手续费率       |
+| exchange_rate    | String  | USDT/USD 汇率              |
+
+
+
+## 2.KYC
+
+提供给机构使用的接口，如机构为用户创建KYC、查询KYC记录等。
+
+### 2.1 提交用户 KYC 数据
 
 可选邮件和短信验证码校验，校验通过更新验证码状态为已使用。
 
@@ -138,9 +450,9 @@ method：POST
 }
 ```
 
-> 如何获取 mail_token and mail_verification_code? 请看 "4.1.发送邮箱验证码". mail_verification_code 由用户自己填写.
+> 如何获取 mail_token and mail_verification_code? 请看 "6.1.发送邮箱验证码". mail_verification_code 由用户自己填写.
 
-### 1.2 查询所有用户kyc记录
+### 2.2 查询所有用户kyc记录
 
 ```text
 url：/api/v1/customers/accounts
@@ -188,7 +500,7 @@ method：GET
 | create_time |  long  |                      创建时间                       |
 
 
-### 1.3 查询指定用户kyc记录
+### 2.3 查询指定用户kyc记录
 
 ```text
 url：/api/v1/customers/accounts
@@ -240,11 +552,11 @@ method：GET
 
 
 
-## 2. Debit Cards
+## 3. 开卡
 
 提供机构给用户开卡，记录查询等接口。
 
-### 2.1 提交用户开卡申请
+### 3.1 提交用户开卡申请
 
 ```text
 url：/api/v1/debit-cards
@@ -280,7 +592,7 @@ method：POST
 |   status   | int |   状态：2. 开卡申请成功， 5. 申请失败，卡片正在制作中           |
 
 
-### 2.2 提交激活卡需要的附件
+### 3.2 提交激活卡需要的附件
 
 - Request:
 
@@ -305,7 +617,7 @@ method：POST
 }
 ```
 
-### 2.3 用户激活卡片
+### 3.3 用户激活卡片
 
 ```text
 url：/api/v1/debit-cards/status
@@ -333,36 +645,8 @@ method：PUT
 
 
 
-### 2.4.用户触发设置卡片取款密码邮件（暂不支持）
 
-B 机构调 Noumena 接口，Noumena 调 Bank，触发发送设置取款密码邮件到用户邮箱的动作
-
-```text
-url：/api/v1/debit-cards/deposit-pwd-emails
-method：POST
-```
-
-- 请求
-
-| Parameter |  Type  |   Requirement  |     Description         |
-| :------------: | :----: | :----------: |:---------- |
-|    card_no     | String |      必填    |银行卡号          |
-| acct_no | String | 必填    |机构端用户编号(机构端唯一) |
-
-
-- 响应：
-
-```json
-{
-  "code": 0,
-  "msg": "string",
-  "result": true
-}
-```
-
-
-
-### 2.5 查询所有卡片信息
+### 3.4 查询所有卡片状态
 
 ```text
 url：/api/v1/debit-cards
@@ -402,12 +686,12 @@ method：GET
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |     机构端用户编号(机构端唯一)      |
 |   card_no   |  int   |              银行卡号               |
-|   status    |  int   | 状态码: 0 冻结， 1 激活成功， 2未激活， 3. 待审核， 4. 审核失败 |
+|   status    |  int   | 状态码: 0 冻结， 1 激活成功， 2未激活， 3. 激活待审核， 4. 激活审核失败 |
 | create_time |  long  |              创建时间               |
 
 
 
-### 2.6 查询指定用户所有卡片信息
+### 3.5 查询指定用户所有卡片状态
 
 ```text
 url：/api/v1/debit-cards?acct_no={acct_no}
@@ -450,16 +734,13 @@ method：GET
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |     机构端用户编号(机构端唯一)      |
 |   card_no   |  int   |              银行卡ID               |
-|   status    |  int   | 状态码: 0 冻结， 1 激活成功， 2未激活， 3. 待审核， 4. 审核失败|
+|   status    |  int   | 状态码: 0 冻结， 1 激活成功， 2未激活， 3. 激活待审核， 4. 激活审核失败|
 | create_time |  long  |              创建时间               |
 
 
+## 4.充值
 
-
-
-## 3.Transactions
-
-### 3.1.用户卡充值
+### 4.1 用户卡充值
 
 ```text
 url：/api/v1/deposit-transactions
@@ -509,7 +790,7 @@ method：POST
 
 > 从机构扣的USDT费用 = exchange_fee + loading_fee + deposit_usdt。
 
-### 3.2.查询某笔卡充值交易状态
+### 4.2 查询某笔卡充值交易状态
 
 ```text
 url：/api/v1/deposit-transactions/{tx_id}/status
@@ -539,7 +820,7 @@ method：GET
 |   tx_status   | int |           0, 3 和 4:待处理中，1:充值成功, 5:充值失败           |
 
 
-### 3.3 查询所有卡充值记录
+### 4.3 查询所有卡充值记录
 
 ```text
 url：/api/v1/deposit-transactions
@@ -601,7 +882,7 @@ method：GET
 
 
 
-### 3.4 查询指定用户所有卡充值记录
+### 4.4 查询指定用户所有卡充值记录
 
 ```text
 url：/api/v1/deposit-transactions?acct_no={acct_no}
@@ -667,337 +948,7 @@ method：GET
 
 
 
-## 4.公共接口
-
-邮箱和手机验证码等接口。
-
-### 4.1.发送邮箱验证码
-
-```text
-url：/api/v1/emails/{email}/verification-codes
-method：POST
-```
-
-- 请求：
-
-| Parameter |  Type  |   Requirement  | Description   |
-| :------------: | :----: | :----------: |:---------- |
-| email | String |必填|email|
-
-- 响应：
-
-```json
-{
-  "code": 0,
-  "msg": "string",
-  "result": {
-  	"mail_token":"xxxxxx"
-  }
-}
-```
-
-| Parameter |  Type  |          Description          |
-| :--------: | :----: | :------------------------------ |
-|   mail_token   | String |           分配的验证token           |
-
-
-
-### 4.2.校验邮箱验证码
-
-```text
-url：/api/v1/emails/{email}/verification-codes?code={code}&mail_token={mail_token}
-method：PUT
-```
-
-- 请求：
-
-| Parameter |  Type  | Requirement  |Description |
-| :------------: | :----: | :----------: |:---------- |
-|     email      | String | 必填|email       |
-|      code      | String | 必填|code        |
-|   mail_token   | String |       必填|    分配的验证token           |
-
-- 响应：
-
-```json
-{
-  "code": 0,
-  "msg": "string",
-  "result": true
-}
-```
-
-### 4.3.发送手机验证码 (暂不支持)
-
-```text
-url：/api/v1/mobiles/{mobile}/verification-codes
-method：POST
-```
-
-- 请求：
-
-| Parameter |  Type  | Requirement  |Description |
-| :------------: | :----: | :----------: |:---------- |
-|     mobile     | String | 必填|区号+手机号 |
-
-- 响应：
-
-```json
-{
-  "code": 0,
-  "msg": "string",
-  "result": {
-  	"mobile_token":"xxxxxx"
-  }
-}
-```
-
-| Parameter |  Type  |          Description          |
-| :--------: | :----: | :------------------------------ |
-|   mobile_token   | String |           分配的验证token         |
-
-### 4.4.校验手机验证码(暂不支持)
-
-```text
-url：/api/v1/mobiles/{mobile}/verification-codes?code={code}&mobile_token={mobile_token}
-method：PUT
-```
-
-- 请求：
-
-| Parameter |  Type  | Requirement  |Description |
-| :------------: | :----: | :----------: |:---------- |
-|     mobile     | String | 必填|区号+手机号 |
-|      code      | String | 必填|code        |
-|   mobile_token   | String |       必填|    分配的验证token         |
-
-- 响应：
-
-```json
-{
-  "code": 0,
-  "msg": "string",
-  "result": true
-}
-```
-
-
-
-### 4.5 支持的卡种类查询
-
-```text
-url：/api/v1/card/type
-method：GET
-```
-
-- 响应:
-
-```json
-{
-    "code": 0,
-    "msg": "SUCCESS",
-    "result": {
-        "total": 2,
-        "records": [
-            {
-                "card_type_id": "50000001",
-                "currency_type": "USD",
-                "bank_id": "5000",
-                "description": "card 1"
-            },
-            {
-                "card_type_id": "50000002",
-                "currency_type": "USD",
-                "bank_id": "5000",
-                "description": "card 2"
-            }
-        ]
-    }
-}
-```
-
-| Parameter |  Type  |          Description          |
-| :--------: | :----: | :------------------------------ |
-| card_type_id |String |银行卡种类对应的id,比如 50000001|
-| currency_type |String |卡支持的法币类型|
-|   bank_id   | String |        银行ID           |
-|   description   | String |    卡种描述           |
-
-
-### 4.6 费率查询
-
-```text
-url：/api/v1/rates?card_type_id={card_type_id}
-method：GET
-```
-
-- 请求：
-
-| Parameter |  Type  |   Requirement  | Description   |
-| :------------: | :----: | :----------: |:---------- |
-| card_type_id |String |必填 |银行卡种类对应的id,比如 50000001|
-
-- 响应：
-
-```json
-{
-    "code": 0,
-    "msg": "SUCCESS",
-    "result": {
-        "bank_atm_rate": "0.1",
-        "exchange_rate": "1.00505392692",
-        "open_card_fee_usdt": "1",
-        "loading_rate": [
-            {
-                "min": "0",
-                "max": "1000",
-                "step_rate": "0.05"
-            },
-            {
-                "min": "1000",
-                "max": "2000",
-                "step_rate": "0.03"
-            }
-        ],
-        "bank_atm_fee": "0",
-        "bank_transaction_rate": "0.2"
-    }
-}
-```
-
-| Parameter |  Type  |          Description          |
-| :--------: | :----: | :------------------------------ |
-|   open_card_fee_usdt   | String |           开卡的手续费（USDT）           |
-|   exchange_rate   | String |           USDT兑换相应法币的汇率           |
-|   loading_rate   | String |           给用户充值时付给 Noumena 的阶梯费率           |
-|   bank_transaction_rate   | String |          银行卡刷卡消费的手续费率           |
-|   bank_atm_rate   | String |          ATM取款时的手续费率           |
-|   bank_atm_fee   | String |          ATM取款时的固定手续费           |
-
-
-### 4.7 数字货币计算接口
-
-- Request:
-
-```text
-url：/api/v1/calculation/crypto
-method：POST
-```
-- Request:
-
-|  Parameter  | Type  | Whether Required |                        Description                         |
-| :---------: | :---: | :--------------: | :--------------------------------------------------------|
-|  currency_amount  |  String  |    Required     |  需要充值到账的法币金额     |
-|  card_type_id  |  String  |    Required     |  卡种ID    |
-|  coin_type  |  String  |    Required     |  需要换算的数字货币类型    |
-
-- Response:
-
-```
-{
-    "code": 0,
-    "msg": "SUCCESS",
-    "result": {
-        "coin_type": "usdt",
-        "coin_amount": "106.23",
-        "exchange_rate": "1.00145966373",
-        "exchange_fee": "1.0623",
-        "exchange_fee_rate": "0.01",
-        "loading_fee": "5.3115",
-        "loading_fee_rate": "0.05"
-    }
-}
-```
-
-|    Parameter    |  Type   |      Description                                                     |
-| :---------: | :----:   | :--------------------------- |
-|  coin_amount    | String  |    需要的数字货币金额         |
-|  coin_type  |  String    |  需要的数字货币类型    |
-| exchange_fee    | String  |   其他币种兑换USDT的手续费           |
-| exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率           |
-|  loading_fee    | String  |       充值手续费       |
-|  loading_fee_rate    | String  |  充值手续费率     |
-| exchange_rate    | String  | USDT/USD 汇率             |
-
-
-
-### 4.8 法币计算接口
-
-- Request:
-
-```text
-url：/api/v1/calculation/currency
-method：POST
-```
-
-|  Parameter  | Type  | Whether Required |                        Description                         |
-| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
-|  coin_amount  |  String  |    Required     |  充值的数字货币金额     |
-| coin_type  |  String  |    Required     |  充值的数字货币类型     |
-|  card_type_id  |  String  |    Required     |  卡种ID    |
-
-- Response:
-
-```
-{
-    "code": 0,
-    "msg": "SUCCESS",
-    "result": {
-        "currency_type": "usd",
-        "currency_amount": "94.13",
-        "exchange_rate": "1.00145966373",
-        "exchange_fee": "1",
-        "exchange_fee_rate": "0.01",
-        "loading_fee": "5",
-        "loading_fee_rate": "0.05"
-    }
-}
-```
-
-|    Parameter    |  Type   |      Description                                                     |
-| :---------: | :----:   | :--------------------------- |
-|  currency_amount    | String  |    充值到账的法币金额          |
-|  currency_type  |  String    |  充值到账的法币类型    |
-| exchange_fee    | String  |   其他币种兑换USDT的手续费           |
-| exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率          |
-|  loading_fee    | String  |       充值手续费       |
-|  loading_fee_rate    | String  |   充值手续费率       |
-| exchange_rate    | String  | USDT/USD 汇率              |
-
-
-### 4.9 查询机构余额
-
-- Request:
-
-```text
-url：/api/v1/customers/balance
-method：GET
-```
-
-- Response:
-
-```
-{
-    "code": 0,
-    "msg": "SUCCESS",
-    "result": [
-        {
-            "balance": "872.5262",
-            "address": "0x57700ea3429bc5b3c5c215a530d19cbc685389cd",
-            "coin_type": "USDT"
-        }
-    ]
-}
-```
-
-|    Parameter    |  Type   |      Description  |
-| :---------: | :----:   | :--------------------------- |
-| balance    | String  |  数字货币余额         |
-| address    | String  | 数字货币地址         |
-| coin_type    | String  | 数字货币余额   |
-
-
-## 5.银行卡接口
+## 5.银行卡查询
 
 提供银行卡消费记录等接口
 
@@ -1128,9 +1079,309 @@ method：POST
 |   bank_tx_list[0].type   | int | 交易类型，1.消费、2.充值、3.取款、4.转账  |
 
 
-## 6. 错误码
+### 5.4 查询虚拟银行卡信息
 
-### 6.1 业务逻辑错误码
+- Request:
+
+```text
+url：/api/v1/bank/virtualcard
+method：GET
+```
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
+| card_no  |  String  |    Required     | card no     |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "encrypt_data": [
+            "3157a4325f87a1febced1871c3f7052b",
+            "048eeb04e3b652aa39294379fb5a90b68db0285d52ef5d988ce0ec382f88091c96c96fc3c446021f55cfabbe3c4bf10f697cb957ce2f98755fd42da8d61dd3b31a",
+            "6c92b79575b8c0318cafd0b9a89a32d93d5e53a2a881fa54296bda01a287e4185f89e9c6b2a08d8c6fbcfebc6e8ddefc15ab9899831f59b946557458654933cf"
+        ],
+        "public_key": "0232dc29734993897a418dd693f089edc425dde6c2d12f29eb907cd548d68e275a"
+    }
+}
+```
+|    Parameter    |  Type   |      Description                                                     |
+| :---------: | :----:   | :--------------------------- |
+|  encrypt_data    | String[]  |    加密后的数据          |
+|  public_key  |  String    |  公钥    |
+
+
+### 5.5 用户请求重置密码（暂不支持）
+
+机构调 Noumena 接口，Noumena 通知银行发送设置取款密码链接的邮件给用户。
+
+```text
+url：/api/v1/bank/reset-pwd
+method：POST
+```
+
+- 请求
+
+| Parameter |  Type  |   Requirement  |     Description         |
+| :------------: | :----: | :----------: |:---------- |
+|    card_no     | String |      必填    |银行卡号          |
+| acct_no | String | 必填    |机构端用户编号(机构端唯一) |
+
+
+- 响应：
+
+```json
+{
+  "code": 0,
+  "msg": "string",
+  "result": true
+}
+```
+
+
+## 6.公共接口
+
+邮箱和手机验证码等接口。
+
+### 6.1 发送邮箱验证码
+
+```text
+url：/api/v1/emails/{email}/verification-codes
+method：POST
+```
+
+- 请求：
+
+| Parameter |  Type  |   Requirement  | Description   |
+| :------------: | :----: | :----------: |:---------- |
+| email | String |必填|email|
+
+- 响应：
+
+```json
+{
+  "code": 0,
+  "msg": "string",
+  "result": {
+  	"mail_token":"xxxxxx"
+  }
+}
+```
+
+| Parameter |  Type  |          Description          |
+| :--------: | :----: | :------------------------------ |
+|   mail_token   | String |           分配的验证token           |
+
+
+
+### 6.2 校验邮箱验证码
+
+```text
+url：/api/v1/emails/{email}/verification-codes?code={code}&mail_token={mail_token}
+method：PUT
+```
+
+- 请求：
+
+| Parameter |  Type  | Requirement  |Description |
+| :------------: | :----: | :----------: |:---------- |
+|     email      | String | 必填|email       |
+|      code      | String | 必填|code        |
+|   mail_token   | String |       必填|    分配的验证token           |
+
+- 响应：
+
+```json
+{
+  "code": 0,
+  "msg": "string",
+  "result": true
+}
+```
+
+### 6.3 发送手机验证码 (暂不支持)
+
+```text
+url：/api/v1/mobiles/{mobile}/verification-codes
+method：POST
+```
+
+- 请求：
+
+| Parameter |  Type  | Requirement  |Description |
+| :------------: | :----: | :----------: |:---------- |
+|     mobile     | String | 必填|区号+手机号 |
+
+- 响应：
+
+```json
+{
+  "code": 0,
+  "msg": "string",
+  "result": {
+  	"mobile_token":"xxxxxx"
+  }
+}
+```
+
+| Parameter |  Type  |          Description          |
+| :--------: | :----: | :------------------------------ |
+|   mobile_token   | String |           分配的验证token         |
+
+
+
+
+### 6.4 校验手机验证码(暂不支持)
+
+```text
+url：/api/v1/mobiles/{mobile}/verification-codes?code={code}&mobile_token={mobile_token}
+method：PUT
+```
+
+- 请求：
+
+| Parameter |  Type  | Requirement  |Description |
+| :------------: | :----: | :----------: |:---------- |
+|     mobile     | String | 必填|区号+手机号 |
+|      code      | String | 必填|code        |
+|   mobile_token   | String |       必填|    分配的验证token         |
+
+- 响应：
+
+```json
+{
+  "code": 0,
+  "msg": "string",
+  "result": true
+}
+```
+
+
+
+## 7. 事件推送
+
+请先在机构端后台配置 Webhook 回调地址, 收到推送后验签。推送事件的数据结构为：
+
+| 名称| 类型|描述 |
+| --- | --- |--- |
+| action |String | 推送类型  |
+| id | int | 推送的唯一标识符 |
+| params | Object | 本次推送的消息内容，JSON 对象 |
+| create_time|long |  事件发生的时间，默认为UTC时间 |
+
+
+机构接受推送后，响应的数据结构如下，**如果机构返回成功将不再推送该事件**：
+
+| 名称| 类型|描述 |
+| --- | --- |--- |
+| code | int   |  0: success, other: failure |
+|msg  |String  | 错误码描述 |
+
+
+响应例子：
+
+```
+{
+   "code": 0,
+   "msg":"SUCCESS"
+}
+```
+
+### 7.1 KYC 事件
+
+| 名称| 类型|描述 |
+| --- | --- |--- |
+| action  |String| kyc-status |
+| params.acct_no |String | 机构下用户唯一ID |
+| params.card_type_id |String | 卡类型 |
+| params.status  |int| KYC状态, 1. 成功, 2. 失败 |
+
+示例：
+```
+{
+   "id":1,
+   "action":"kyc-status",
+   "create_time":1585293811000,
+   "params":{
+      "card_type_id":"50010003",
+      "acct_no":"032500004",
+      "status":1
+   }
+}
+```
+
+
+### 7.2 开卡事件
+
+| 名称| 类型|描述 |
+| --- | --- |--- |
+| action |String  |  card-application|
+| params.acct_no |String | 机构下用户唯一ID |
+| params.card_type_id |String | 卡类型 |
+| params.status|int  | 卡激活状态,  1.卡已制作完成，请申请 |
+
+示例：
+```
+{
+   "id":1,
+   "action":"card-application",
+   "create_time":1585293811000,
+   "params":{
+      "card_type_id":"50010003",
+      "acct_no":"032500004",
+      "status":1
+   }
+}
+```
+
+### 7.3 卡激活事件
+
+| 名称| 类型|描述 |
+| --- | --- |--- |
+| action|String  | card-status |
+| params.card_no |String | 卡ID |
+| params.status |int | 卡激活状态, 0.冻结, 1.卡激活成功, 4.卡激活审核失败 |
+
+示例：
+```
+{
+   "id":1,
+   "action":"card-status",
+   "create_time":1585293811000,
+   "params":{
+      "card_no":"123434234343",
+      "status":1
+   }
+}
+```
+
+### 7.4 卡充值事件
+
+| 名称| 类型|描述 |
+| --- | --- |--- |
+| action |String |  deposit-status|
+| params.tx_id |String | 交易ID |
+| params.status  |int| 卡充值状态, 1.成功, 2.失败, 5.取消 |
+
+示例：
+```
+{
+   "id":1,
+   "action":"deposit-status",
+   "create_time":1585293811000,
+   "params":{
+      "tx_id":"50010003",
+      "status":1
+   }
+}
+```
+
+## 8. 错误码
+
+### 8.1 业务逻辑错误码
 
 | 状态值 | 描述|
 | :--------------: | --------| 
@@ -1173,7 +1424,7 @@ method：POST
 |   111036 |   时间格式错误  |
 |   111037 |   查询的银行账单时间不允许超过6个月  |
 
-### 6.2 身份权限认证错误码
+### 8.2 身份权限认证错误码
 
 | 状态值 | 描述|
 | :--------------: | --------| 
@@ -1188,7 +1439,7 @@ method：POST
 |   112009 |   无效的 app key秘钥  |
 |   112010 |   请求头错误  |
 
-### 6.3 异常错误码
+### 8.3 异常错误码
 
 | 状态值 | 描述|
 | :--------------: | --------| 

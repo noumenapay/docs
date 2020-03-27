@@ -1,12 +1,48 @@
 # Noumena-OpenAPI Interface
 
-- [API Specifications](#api-specifications)
-- [1.Customers API](#1-customers)
-- [2.Debit Cards API](#2-debit-cards)
-- [3.Transactions API](#3-transactions)
-- [4.Public API](#4-public-api)
-- [5.Bank Account API](#5-bank-account-api)
-- [6.Error Codes](#6-error-codes)
+- [1.Institution](#1-Institution)
+     - [1.1 Querying Card type](#1.1-Querying-Card-type)
+     - [1.2 Get customer balance](#1.2-get-customer-balance)
+     - [1.3 Get institution information](#1.3-get-institution-information)
+     - [1.4 upload public key](#1.4-upload-public-key)
+     - [1.5 Querying rate](#1.5-Querying-rate)
+     - [1.6 Crypto calculation](#1.6-crypto-calculation)
+     - [1.7 Currency calculation](#1.7-currency-calculation)
+- [2.KYC](#2-KYC)
+     - [2.1 Submitting user's KYC data](#2.1-Submitting-user's-KYC-data)
+     - [2.2 Query all KYC records](#2.2-Query-all-KYC-records)
+     - [2.3 Query a specific user's KYC records](#2.3-Query-a-specific-user's-KYC-records)
+- [3.Cards](#3-cards)
+     - [3.1 Apply a card](#3.1-Apply-a-card)
+     - [3.2 Submit active card attachment](#3.2-submit-active-card-attachment)
+     - [3.3 User activating bank card](#3.3-User-activating-bank-card)
+     - [3.4 Query all active card status](#3.5-Query-all-active-card-status)
+     - [3.5 Query a specific user's card activation status](#3.6-Query-a-specific-user's-card-activation-status)
+- [4.Transactions](#4-transactions)
+     - [4.1 User deposit](#4.1-User-deposit)
+     - [4.2 Query a deposit transaction status](#4.2-Query-a-deposit-transaction-status)
+     - [4.3 Query all the deposit records](#4.3-Query-all-the-deposit-records)
+     - [4.4 Query a particular user's deposit records](#4.4-Query-a-particular-user's-deposit-records)
+- [5.Bank](#5-bank)
+     - [5.1 Querying card status](#5.1-Querying-card-status)
+     - [5.2 Check account balance](#5.2-Check-account-balance)
+     - [5.3 Check transaction records](#5.3-Check-transaction-records)
+     - [5.4 Get virtual card infomation](#5.4-Get-virtual-card-infomation)
+     - [5.5 User triggers a card withdrawal password reset Email (Currently not supported)](#5.5-User-triggers-a-card-withdrawal-password-reset-Email-(Currently-not-supported))
+- [6.Public API](#6-public-api)
+     - [6.1 Sending Email verification code](#6.1-Sending-Email-verification-code)
+     - [6.2 Email verification code validation](#6.2-Email-verification-code-validation)
+     - [6.3 Sending SMS verification code (Currently not supported)](#6.3-Sending-SMS-verification-code-(Currently-not-supported))
+     - [6.4 SMS verification code validation (Currently not supported)](#6.4-SMS-verification-code-validation-(Currently-not-supported))
+- [7.Webhook](#7-Webhook)    
+     - [7.1 KYC Event](#7.1 KYC-Event)
+     - [7.2 Card Apply Event](#7.2-Card-Apply-Event)
+     - [7.3 Card Activation Event](#7.3-Card-Activation-Event)
+     - [7.4 Deposit Event](#7.4-Deposit-Event)
+- [8.Error Codes](#8-error-codes)
+     - [8.1 Business Logic Error Codes](#8.1-Business-Logic-Error-Codes)
+     - [8.2 Identity Authentication Error Codes](#8.2-Identity-Authentication-Error-Codes)
+     - [8.3 Abnormal Status Error Codes](#8.3-Abnormal-Status-Error-Codes)
 
 ## API Specifications
 
@@ -80,11 +116,286 @@ amount=190&ont_id=did:ont:Ae9ujqUnAtH9yRiepRvLUE3t9R2NbCTZPG&to_address=AUol16gh
 
 For illustrative sample code, please refer to [https://github.com/noumenapay/noumena-sdk-java](https://github.com/noumenapay/noumena-sdk-java)
 
-## 1. Customers
+
+## 1.Institution
+
+
+### 1.1 Querying Card type
+
+```text
+url：/api/v1/institution/card/type
+method：GET
+```
+
+- Response:
+
+```json
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "total": 2,
+        "records": [
+            {
+                "card_type_id": "50000001",
+                "currency_type": "USD",               
+                "bank_id": "5000",
+                "description": "card 1",
+                "card_network": "visa"
+            },
+            {
+                "card_type_id": "50000002",
+                "currency_type": "USD",               
+                "bank_id": "5000",
+                "description": "card 2",
+                "card_network": "visa"
+            }
+        ]
+    }
+}
+```
+
+| Parameter |  Type  |          Description          |
+| :--------: | :----: | :------------------------------ |
+|   bank_id   | String |        Bank ID              |
+|   currency_type   | String |    Currency type of the card             |
+| card_type_id |String | Card type id, for example 50000001|
+| description |String |description of card type |
+|   card_network   | String |    card network           |
+
+
+### 1.2 Get customer balance
+
+- Request:
+
+```text
+url：/api/v1/institution/balance
+method：GET
+```
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": [
+        {
+            "balance": "872.5262",
+            "address": "0x57700ea3429bc5b3c5c215a530d19cbc685389cd",
+            "coin_type": "USDT"
+        }
+    ]
+}
+```
+
+|    Parameter    |  Type   |      Description  |
+| :---------: | :----:   | :--------------------------- |
+| balance    | String  |  coin balance         |
+| address    | String  | coin address         |
+| coin_type    | String  |  coin type         |
+
+
+### 1.3 Get institution information
+
+
+- Request:
+
+```text
+url：/api/v1/institution/info
+method：GET
+```
+
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "publickey":  ""
+    }
+}
+```
+
+| Parameter |  Type  |          Description          |
+| :--------: | :----: | :------------------------------ |
+|   publickey   | String |           public key           |
+
+### 1.4 Upload public key
+
+- Request:
+
+```text
+url：/api/v1/institution/publickey
+method：POST
+```
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
+| public_key  |  String  |    Required     | public key     |
+
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": true
+}
+```
+
+### 1.5 Querying rate
+
+```text
+url：/api/v1/institution/rates?card_type_id={card_type_id}
+method：GET
+```
+
+- Request：
+
+| Parameter |  Type  |   Requirement  | Description   |
+| :------------: | :----: | :----------: |:---------- |
+| card_type_id | String |Required| Card type id, for example 50000001|
+
+- Response：
+
+```json
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "bank_atm_rate": "0.1",
+        "exchange_rate": "1.00505392692",
+        "open_card_fee_usdt": "1",
+        "loading_rate": [
+            {
+                "min": "0",
+                "max": "1000",
+                "step_rate": "0.05"
+            },
+            {
+                "min": "1000",
+                "max": "2000",
+                "step_rate": "0.03"
+            }
+        ],
+        "bank_atm_fee": 0,
+        "bank_transaction_rate": "0.2"
+    }
+}
+```
+
+| Parameter |  Type  |          Description          |
+| :--------: | :----: | :------------------------------ |
+|   open_card_fee_usdt   | String |           Open card fee in USDT          |
+|   exchange_rate   | String |   exchange rate of  USDT to fiat currency         |
+|   loading_rate   | String |           Loading step rate for deposit to user        |
+|   bank_transaction_rate   | String |          Bank transaction rate for consumption          |
+|   bank_atm_rate   | String |          ATM withdraw rate           |
+|   bank_atm_fee| String |          ATM withdraw fixed fee|
+
+
+### 1.6 Crypto calculation
+
+- Request:
+
+```text
+url：/api/v1/institution/calculation/crypto
+method：POST
+```
+- Request:
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :--------------------------------------------------------|
+|  currency_amount  |  String  |    Required     |  received currency amount     |
+|  card_type_id  |  String  |    Required     |  card type id    |
+|  coin_type  |  String  |    Required     |  the coin type you want to convert    |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "coin_type": "usdt",
+        "coin_amount": "106.23",
+        "exchange_rate": "1.00145966373",
+        "exchange_fee": "1.0623",
+        "exchange_fee_rate": "0.01",
+        "loading_fee": "5.3115",
+        "loading_fee_rate": "0.05"
+    }
+}
+```
+
+|    Parameter    |  Type   |      Description                                                     |
+| :---------: | :----:   | :--------------------------- |
+|  coin_amount    | String  |    required coin amount          |
+|  coin_type  |  String    |  the coin type you received    |
+| exchange_fee    | String  |   exchange fee for converting other coin to USDT           |
+| exchange_fee_rate    | String  |   exchange fee rate for converting other coin to USDT           |
+|  loading_fee    | String  |       loading fee of transaction       |
+|  loading_fee_rate    | String  |       loading fee rate of transaction       |
+| exchange_rate    | String  | exchange rate of USDT/USD             |
+
+
+
+### 1.7 Currency calculation
+
+- Request:
+
+```text
+url：/api/v1/institution/calculation/currency
+method：POST
+```
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
+|  coin_amount  |  String  |    Required     |  received coin amount     |
+| coin_type  |  String  |    Required     |  received coin type     |
+|  card_type_id  |  String  |    Required     |  card type id    |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "currency_type": "usd",
+        "currency_amount": "94.13",
+        "exchange_rate": "1.00145966373",
+        "exchange_fee": "1",
+        "exchange_fee_rate": "0.01",
+        "loading_fee": "5",
+        "loading_fee_rate": "0.05"
+    }
+}
+```
+
+|    Parameter    |  Type   |      Description                                                     |
+| :---------: | :----:   | :--------------------------- |
+|  currency_amount    | String  |    received currency amount          |
+|  currency_type  |  String    |  the currency type you received    |
+| exchange_fee    | String  |   exchange fee for converting other coin to USDT           |
+| exchange_fee_rate    | String  |   exchange fee rate for converting other coin to USDT           |
+|  loading_fee    | String  |       loading fee of transaction       |
+|  loading_fee_rate    | String  |       loading fee rate of transaction       |
+| exchange_rate    | String  | exchange rate of USDT/USD             |
+
+
+
+
+
+## 2. KYC
 
 This API contains methods that can be used by an institution to carry out user-related operations such as user creation and KYC, along with fetching relevant KYC details for users, etc.
 
-### 1.1 Submitting user's KYC data
+### 2.1 Submitting user's KYC data
 
 Email verification feature is optional. The verification code status is updated to used when verification is successfully carried out.
 
@@ -137,10 +448,10 @@ method：POST
 }
 ```
 
-> How to get mail_token and mail_verification_code? Please see "4.1. Sending Email verification code". mail_verification_code is filled by user.
+> How to get mail_token and mail_verification_code? Please see "6.1. Sending Email verification code". mail_verification_code is filled by user.
 
 
-### 1.2 Query all KYC records
+### 2.2 Query all KYC records
 
 - Request:
 
@@ -186,7 +497,7 @@ method：GET
 | reason | String |      Reason for verification failure. Blank for status other than failure       |
 | create_time |  long   |                                                   Creation time                                                    |
 
-### 1.3 Query a specific user's KYC records
+### 2.3 Query a specific user's KYC records
 
 - Request:
 
@@ -231,11 +542,11 @@ method：GET
 | create_time |  long   |                                                   Creation time                                                    |
 
 
-## 2. Debit Cards
+## 3. Cards
 
 This API contains methods related to
 
-### 2.1 Apply a card
+### 3.1 Apply a card
 
 - Request:
 
@@ -270,7 +581,7 @@ method：POST
 |   status   | int |   status：2. apply card successfully, 5. apply failed, card is being made           |
 
 
-### 2.2 submit attachment
+### 3.2 Submit active card attachment
 
 - Request:
 
@@ -296,7 +607,7 @@ method：POST
 ```
 
 
-### 2.3 User activating bank card
+### 3.3 User activating bank card
 
 ```text
 url：/api/v1/debit-cards/status
@@ -320,33 +631,9 @@ method：PUT
 }
 ```
 
-### 2.4 User triggers a card withdrawal password reset Email (Currently not supported)
 
-An institution invokes the Noumena API triggering the action that sends the bank card withdrawal password reset Email to the user's Email account.
 
-- Request:
-
-```text
-url：/api/v1/debit-cards/deposit-pwd-emails?acct_no={acct_no}
-method：POST
-```
-
-| Parameter |  Type  | Whether Required |                            Description                            |
-| :-------: | :----: | :--------------: | :---------------------------------------------------------------: |
-|  acct_no  | String |     Required     | Institution account name (Unique within scope of the institution) |
-|  card_no  | String |     Required     |                           Bank card no.                           |
-
-- Response:
-
-```json
-{
-  "code": 0,
-  "msg": "string",
-  "result": true
-}
-```
-
-### 2.5 Query all active card records
+### 3.4 Query all active card status
 
 ```text
 url：/api/v1/debit-cards
@@ -388,7 +675,7 @@ method：GET
 |   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active, 3 - Under review, 4 - Verification failed |
 | create_time |  long  |                            Creation time                             |
 
-### 2.6 Query a specific user's card activation records
+### 3.5 Query a specific user's card activation status
 
 - Request:
 
@@ -433,9 +720,9 @@ method：GET
 |   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active, 3 - Under review, 4 - Verification failed |
 | create_time |  long  |                            Creation time                             |
 
-## 3. Transactions
+## 4. Transactions
 
-### 3.1. User deposit
+### 4.1. User deposit
 
 - Request:
 
@@ -486,7 +773,7 @@ method：POST
 > USDT amount charged from customer = exchange_fee + loading_fee + deposit_usdt.
 
 
-### 3.2. Query a deposit transaction status
+### 4.2 Query a deposit transaction status
 
 ```text
 url：/api/v1/deposit-transactions/{tx_id}/status
@@ -515,7 +802,7 @@ method：GET
 | :------------: | :----------: |:---------- |
 |     tx_status      | int | 0, 3 and 4:process pending，1: deposit successful, 5：deposit failed  |
 
-### 3.3 Query all the deposit records
+### 4.3 Query all the deposit records
 
 ```text
 url：/api/v1/deposit-transactions
@@ -580,7 +867,7 @@ method：GET
 
 
 
-### 3.4 Query a particular user's deposit records
+### 4.4 Query a particular user's deposit records
 
 ```text
 url：/api/v1/deposit-transactions?acct_no={acct_no}
@@ -645,333 +932,8 @@ method：GET
 |  exchange_fee   | String |     Exchange fee for converting other coin to USDT   |
 
 
-## 4. Public API
 
-### 4.1. Sending Email verification code
-
-- Request:
-
-```text
-url：/api/v1/emails/{email}/verification-codes
-method：POST
-```
-
-| Parameter |  Type  | Whether Required |  Description  |
-| :-------: | :----: | :--------------: | :-----------: |
-|   email   | String |     Required     | Email address |
-
-- Response:
-
-```json
-{
-  "code": 0,
-  "msg": "string",
-  "result": {
-  	"mail_token":"xxxxxx"
-  }
-}
-```
-
-|   Parameter    |  Type  | Description                  |
-| :--------: | :----: | :--------------------------- |
-| mail_token | String | Allocated verification token |
-
-
-### 4.2. Email verification code validation
-
-```text
-url：/api/v1/emails/{email}/verification-codes?code={code}&mail_token={mail_token}
-method：PUT
-```
-
-- Request:
-
-| Parameter  |  Type  | Whether Required |        Description        |
-| :--------: | :----: | :--------------: | :-----------------------: |
-|   email    | String |     Required     |          E-mail           |
-|    code    | String |     Required     |           Code            |
-| mail_token | String |     Required     | Allocated verification ID |
-
-- Response:
-
-```json
-{
-  "code": 0,
-  "msg": "string",
-  "result": true
-}
-```
-
-### 4.3. Sending SMS verification code (Currently not supported)
-
-- Request:
-
-```text
-url：/api/v1/mobiles/{mobile}/verification-codes
-method：POST
-```
-
-| Parameter |  Type  | Whether Required |        Description        |
-| :-------: | :----: | :--------------: | :-----------------------: |
-|  mobile   | String |     Required     | Area code + Mobile number |
-
-- Response:
-
-```json
-{
-  "code": 0,
-  "msg": "string",
-  "result": {
-    "mobile_token": "xxxxxx"
-  }
-}
-```
-
-|    Parameter     |  Type  |         Description          |
-| :----------: | :----: | :--------------------------: |
-| mobile_token | String | Allocated verification token |
-
-### 4.4. SMS verification code validation (Currently not supported)
-
-```text
-url：/api/v1/mobiles/{mobile}/verification-codes?code={code}&mobile_token={mobile_token}
-method：PUT
-```
-
-- Request:
-
-|  Parameter   |  Type  | Whether Required |        Description        |
-| :----------: | :----: | :--------------: | :-----------------------: |
-|    mobile    | String |     Required     | Area code + Mobile number |
-|     code     | String |     Required     |           Code            |
-| mobile_token | String |     Required     | Allocated verification ID |
-
-- Response:
-
-```json
-{
-  "code": 0,
-  "msg": "string",
-  "result": true
-}
-```
-
-
-
-
-### 4.5 Querying Card type
-
-```text
-url：/api/v1/card/type
-method：GET
-```
-
-- Response:
-
-```json
-{
-    "code": 0,
-    "msg": "SUCCESS",
-    "result": {
-        "total": 2,
-        "records": [
-            {
-                "card_type_id": "50000001",
-                "currency_type": "USD",               
-                "bank_id": "5000",
-                "description": "card 1"
-            },
-            {
-                "card_type_id": "50000002",
-                "currency_type": "USD",               
-                "bank_id": "5000",
-                "description": "card 2"
-            }
-        ]
-    }
-}
-```
-
-| Parameter |  Type  |          Description          |
-| :--------: | :----: | :------------------------------ |
-|   bank_id   | String |        Bank ID              |
-|   currency_type   | String |    Currency type of the card             |
-| card_type_id |String | Card type id, for example 50000001|
-| description |String |description of card type |
-
-
-### 4.6 Querying rate
-
-```text
-url：/api/v1/rates?card_type_id={card_type_id}
-method：GET
-```
-
-- Request：
-
-| Parameter |  Type  |   Requirement  | Description   |
-| :------------: | :----: | :----------: |:---------- |
-| card_type_id | String |Required| Card type id, for example 50000001|
-
-- Response：
-
-```json
-{
-    "code": 0,
-    "msg": "SUCCESS",
-    "result": {
-        "bank_atm_rate": "0.1",
-        "exchange_rate": "1.00505392692",
-        "open_card_fee_usdt": "1",
-        "loading_rate": [
-            {
-                "min": "0",
-                "max": "1000",
-                "step_rate": "0.05"
-            },
-            {
-                "min": "1000",
-                "max": "2000",
-                "step_rate": "0.03"
-            }
-        ],
-        "bank_atm_fee": 0,
-        "bank_transaction_rate": "0.2"
-    }
-}
-```
-
-| Parameter |  Type  |          Description          |
-| :--------: | :----: | :------------------------------ |
-|   open_card_fee_usdt   | String |           Open card fee in USDT          |
-|   exchange_rate   | String |   exchange rate of  USDT to fiat currency         |
-|   loading_rate   | String |           Loading step rate for deposit to user        |
-|   bank_transaction_rate   | String |          Bank transaction rate for consumption          |
-|   bank_atm_rate   | String |          ATM withdraw rate           |
-|   bank_atm_fee| String |          ATM withdraw fixed fee|
-
-
-### 4.7 crypto calculation
-
-- Request:
-
-```text
-url：/api/v1/calculation/crypto
-method：POST
-```
-- Request:
-
-|  Parameter  | Type  | Whether Required |                        Description                         |
-| :---------: | :---: | :--------------: | :--------------------------------------------------------|
-|  currency_amount  |  String  |    Required     |  received currency amount     |
-|  card_type_id  |  String  |    Required     |  card type id    |
-|  coin_type  |  String  |    Required     |  the coin type you want to convert    |
-
-- Response:
-
-```
-{
-    "code": 0,
-    "msg": "SUCCESS",
-    "result": {
-        "coin_type": "usdt",
-        "coin_amount": "106.23",
-        "exchange_rate": "1.00145966373",
-        "exchange_fee": "1.0623",
-        "exchange_fee_rate": "0.01",
-        "loading_fee": "5.3115",
-        "loading_fee_rate": "0.05"
-    }
-}
-```
-
-|    Parameter    |  Type   |      Description                                                     |
-| :---------: | :----:   | :--------------------------- |
-|  coin_amount    | String  |    required coin amount          |
-|  coin_type  |  String    |  the coin type you received    |
-| exchange_fee    | String  |   exchange fee for converting other coin to USDT           |
-| exchange_fee_rate    | String  |   exchange fee rate for converting other coin to USDT           |
-|  loading_fee    | String  |       loading fee of transaction       |
-|  loading_fee_rate    | String  |       loading fee rate of transaction       |
-| exchange_rate    | String  | exchange rate of USDT/USD             |
-
-
-
-### 4.8 currency calculation
-
-- Request:
-
-```text
-url：/api/v1/calculation/currency
-method：POST
-```
-
-|  Parameter  | Type  | Whether Required |                        Description                         |
-| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
-|  coin_amount  |  String  |    Required     |  received coin amount     |
-| coin_type  |  String  |    Required     |  received coin type     |
-|  card_type_id  |  String  |    Required     |  card type id    |
-
-- Response:
-
-```
-{
-    "code": 0,
-    "msg": "SUCCESS",
-    "result": {
-        "currency_type": "usd",
-        "currency_amount": "94.13",
-        "exchange_rate": "1.00145966373",
-        "exchange_fee": "1",
-        "exchange_fee_rate": "0.01",
-        "loading_fee": "5",
-        "loading_fee_rate": "0.05"
-    }
-}
-```
-
-|    Parameter    |  Type   |      Description                                                     |
-| :---------: | :----:   | :--------------------------- |
-|  currency_amount    | String  |    received currency amount          |
-|  currency_type  |  String    |  the currency type you received    |
-| exchange_fee    | String  |   exchange fee for converting other coin to USDT           |
-| exchange_fee_rate    | String  |   exchange fee rate for converting other coin to USDT           |
-|  loading_fee    | String  |       loading fee of transaction       |
-|  loading_fee_rate    | String  |       loading fee rate of transaction       |
-| exchange_rate    | String  | exchange rate of USDT/USD             |
-
-### 4.9 get customer balance
-
-- Request:
-
-```text
-url：/api/v1/customers/balance
-method：GET
-```
-
-- Response:
-
-```
-{
-    "code": 0,
-    "msg": "SUCCESS",
-    "result": [
-        {
-            "balance": "872.5262",
-            "address": "0x57700ea3429bc5b3c5c215a530d19cbc685389cd",
-            "coin_type": "USDT"
-        }
-    ]
-}
-```
-
-|    Parameter    |  Type   |      Description  |
-| :---------: | :----:   | :--------------------------- |
-| balance    | String  |  coin balance         |
-| address    | String  | coin address         |
-| coin_type    | String  |  coin type         |
-
-## 5. Bank account API
+## 5. Bank
 
 This API provides details such as transaction records and other account related information.
 
@@ -1100,9 +1062,304 @@ method：POST
 |      bank_tx_list[0].credit      | String | Credit amount(USD)                                                      |
 |       bank_tx_list[0].type       |  int   | Transaction type, 1. Debit, 2. Deposit, 3. Withdrawal, 4. Transfer |
 
-## 6. Error Codes
+### 5.4 Get virtual card infomation
 
-### 6.1. Business Logic Error Codes
+- Request:
+
+```text
+url：/api/v1/bank/virtualcard
+method：GET
+```
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :-------------------------------------------------------- |
+| card_no  |  String  |    Required     | card no     |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "encrypt_data": [
+            "3157a4325f87a1febced1871c3f7052b",
+            "048eeb04e3b652aa39294379fb5a90b68db0285d52ef5d988ce0ec382f88091c96c96fc3c446021f55cfabbe3c4bf10f697cb957ce2f98755fd42da8d61dd3b31a",
+            "6c92b79575b8c0318cafd0b9a89a32d93d5e53a2a881fa54296bda01a287e4185f89e9c6b2a08d8c6fbcfebc6e8ddefc15ab9899831f59b946557458654933cf"
+        ],
+        "public_key": "0232dc29734993897a418dd693f089edc425dde6c2d12f29eb907cd548d68e275a"
+    }
+}
+```
+|    Parameter    |  Type   |      Description                                                     |
+| :---------: | :----:   | :--------------------------- |
+|  encrypt_data    | String[]  |    encrypted data          |
+|  public_key  |  String    |  public key    |
+
+
+
+### 5.5 User triggers a card withdrawal password reset Email (Currently not supported)
+
+An institution invokes the Noumena API triggering the action that sends the bank card withdrawal password reset Email to the user's account.
+
+- Request:
+
+```text
+url：/api/v1/debit-cards/deposit-pwd-emails?acct_no={acct_no}
+method：POST
+```
+
+| Parameter |  Type  | Whether Required |                            Description                            |
+| :-------: | :----: | :--------------: | :---------------------------------------------------------------: |
+|  acct_no  | String |     Required     | Institution account name (Unique within scope of the institution) |
+|  card_no  | String |     Required     |                           Bank card no.                           |
+
+- Response:
+
+```json
+{
+  "code": 0,
+  "msg": "string",
+  "result": true
+}
+```
+
+## 6. Public API
+
+### 6.1 Sending Email verification code
+
+- Request:
+
+```text
+url：/api/v1/emails/{email}/verification-codes
+method：POST
+```
+
+| Parameter |  Type  | Whether Required |  Description  |
+| :-------: | :----: | :--------------: | :-----------: |
+|   email   | String |     Required     | Email address |
+
+- Response:
+
+```json
+{
+  "code": 0,
+  "msg": "string",
+  "result": {
+  	"mail_token":"xxxxxx"
+  }
+}
+```
+
+|   Parameter    |  Type  | Description                  |
+| :--------: | :----: | :--------------------------- |
+| mail_token | String | Allocated verification token |
+
+
+### 6.2 Email verification code validation
+
+```text
+url：/api/v1/emails/{email}/verification-codes?code={code}&mail_token={mail_token}
+method：PUT
+```
+
+- Request:
+
+| Parameter  |  Type  | Whether Required |        Description        |
+| :--------: | :----: | :--------------: | :-----------------------: |
+|   email    | String |     Required     |          E-mail           |
+|    code    | String |     Required     |           Code            |
+| mail_token | String |     Required     | Allocated verification ID |
+
+- Response:
+
+```json
+{
+  "code": 0,
+  "msg": "string",
+  "result": true
+}
+```
+
+### 6.3 Sending SMS verification code (Currently not supported)
+
+- Request:
+
+```text
+url：/api/v1/mobiles/{mobile}/verification-codes
+method：POST
+```
+
+| Parameter |  Type  | Whether Required |        Description        |
+| :-------: | :----: | :--------------: | :-----------------------: |
+|  mobile   | String |     Required     | Area code + Mobile number |
+
+- Response:
+
+```json
+{
+  "code": 0,
+  "msg": "string",
+  "result": {
+    "mobile_token": "xxxxxx"
+  }
+}
+```
+
+|    Parameter     |  Type  |         Description          |
+| :----------: | :----: | :--------------------------: |
+| mobile_token | String | Allocated verification token |
+
+### 6.4. SMS verification code validation (Currently not supported)
+
+```text
+url：/api/v1/mobiles/{mobile}/verification-codes?code={code}&mobile_token={mobile_token}
+method：PUT
+```
+
+- Request:
+
+|  Parameter   |  Type  | Whether Required |        Description        |
+| :----------: | :----: | :--------------: | :-----------------------: |
+|    mobile    | String |     Required     | Area code + Mobile number |
+|     code     | String |     Required     |           Code            |
+| mobile_token | String |     Required     | Allocated verification ID |
+
+- Response:
+
+```json
+{
+  "code": 0,
+  "msg": "string",
+  "result": true
+}
+```
+
+
+
+
+## 7. Webhook
+
+
+After configure the Webhook in the Dashboard, please verify signature when you received events. The data structure of the event is:
+
+| Parameter| Type|Description |
+| --- | --- |--- |
+| action |String | Event type  |
+| id | int | Event id |
+| params | Object | Event content |
+| create_time|long |  UTC time |
+
+
+The data structure of response should as follows. **If you response ```code``` as successful, the event will not be send again**:
+
+| Parameter| Type|Description |
+| --- | --- |--- |
+| code | int   |  0: Successful, other: Failure |
+|msg  |String  | code message |
+
+
+Example：
+
+```
+{
+   "code": 0,
+   "msg":"SUCCESS"
+}
+```
+
+### 7.1 KYC Event
+
+| Parameter| Type|Description |
+| --- | --- |--- |
+| action  |String| kyc-status |
+| params.acct_no |String | Institution account name (Unique within scope of the institution) |
+| params.card_type_id |String | Card type id |
+| params.status  |int| KYC status, 1. Successful, 2. Failure |
+
+Event example:
+```
+{
+   "id":1,
+   "action":"kyc-status",
+   "create_time":1585293811000,
+   "params":{
+      "card_type_id":"50010003",
+      "acct_no":"032500004",
+      "status":1
+   }
+}
+```
+
+
+### 7.2 Card Apply Event
+
+| Parameter| Type|Description |
+| --- | --- |--- |
+| action |String  |  card-application|
+| params.acct_no |String | Institution account name (Unique within scope of the institution) |
+| params.card_type_id |String | card type id |
+| params.status|int  | Card apply status,  1.The card has been made, ready for apply |
+
+Event example:
+```
+{
+   "id":1,
+   "action":"card-application",
+   "create_time":1585293811000,
+   "params":{
+      "card_type_id":"50010003",
+      "acct_no":"032500004",
+      "status":1
+   }
+}
+```
+
+### 7.3 Card Activation Event
+
+| Parameter| Type|Description |
+| --- | --- |--- |
+| action|String  | card-status |
+| params.card_no |String | Institution account name (Unique within scope of the institution) |
+| params.status |int | Card activation status, 0.Frozen, 1.Activated successfully, 4.Activation Failure |
+
+Event example:
+```
+{
+   "id":1,
+   "action":"card-status",
+   "create_time":1585293811000,
+   "params":{
+      "card_no":"123434234343",
+      "status":1
+   }
+}
+```
+
+### 7.4 卡充值事件
+
+| Parameter| Type|Description |
+| --- | --- |--- |
+| action |String |  deposit-status|
+| params.tx_id |String | Transaction ID |
+| params.status  |int| status, 1.Successful, 2.Failure, 5.Canceled |
+
+Event example:
+```
+{
+   "id":1,
+   "action":"deposit-status",
+   "create_time":1585293811000,
+   "params":{
+      "tx_id":"50010003",
+      "status":1
+   }
+}
+```
+
+## 8. Error Codes
+
+### 8.1 Business Logic Error Codes
 
 | Status Code | Description                                                 |
 | :---------: | ----------------------------------------------------------- |
@@ -1145,7 +1402,7 @@ method：POST
 |   111036    | Invalid time format                                         |
 |   111037    | Max. bank statement period limited to six months            |
 
-### 6.2 Identity Authentication Error Codes
+### 8.2 Identity Authentication Error Codes
 
 | Status Code | Description                 |
 | :---------: | --------------------------- |
@@ -1160,7 +1417,7 @@ method：POST
 |   112009    | Invalid app key secret      |
 |   112010    | Invalid request header      |
 
-### 6.3 Abnormal Status Error Codes
+### 8.3 Abnormal Status Error Codes
 
 | Status Code | Description           |
 | :---------: | --------------------- |

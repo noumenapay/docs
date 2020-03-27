@@ -406,7 +406,7 @@ method：POST
 url：/api/v1/customers/accounts
 method：POST
 ```
-> 目前已支持的 card_type_id （银行卡类型 ID ） 请用4.5的接口查询
+
 
 - 请求：
 

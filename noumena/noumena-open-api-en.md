@@ -405,7 +405,7 @@ Email verification feature is optional. The verification code status is updated 
 url：/api/v1/customers/accounts
 method：POST
 ```
-> How to fill Card_type_id (bank card type ID) ? Please use the 4.5 interface to query.
+
 
 
 |       Parameter        |  Type  | Whether Required |                                          Description                                          |

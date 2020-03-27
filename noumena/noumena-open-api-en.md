@@ -1,48 +1,48 @@
 # Noumena-OpenAPI Interface
 
-- [1.Institution](#1-Institution)
-     - [1.1 Querying Card type](#1.1-Querying-Card-type)
-     - [1.2 Get customer balance](#1.2-get-customer-balance)
-     - [1.3 Get institution information](#1.3-get-institution-information)
-     - [1.4 upload public key](#1.4-upload-public-key)
-     - [1.5 Querying rate](#1.5-Querying-rate)
-     - [1.6 Crypto calculation](#1.6-crypto-calculation)
-     - [1.7 Currency calculation](#1.7-currency-calculation)
-- [2.KYC](#2-KYC)
-     - [2.1 Submitting user's KYC data](#2.1-Submitting-user's-KYC-data)
-     - [2.2 Query all KYC records](#2.2-Query-all-KYC-records)
-     - [2.3 Query a specific user's KYC records](#2.3-Query-a-specific-user's-KYC-records)
-- [3.Cards](#3-cards)
-     - [3.1 Apply a card](#3.1-Apply-a-card)
-     - [3.2 Submit active card attachment](#3.2-submit-active-card-attachment)
-     - [3.3 User activating bank card](#3.3-User-activating-bank-card)
-     - [3.4 Query all active card status](#3.5-Query-all-active-card-status)
-     - [3.5 Query a specific user's card activation status](#3.6-Query-a-specific-user's-card-activation-status)
-- [4.Transactions](#4-transactions)
-     - [4.1 User deposit](#4.1-User-deposit)
-     - [4.2 Query a deposit transaction status](#4.2-Query-a-deposit-transaction-status)
-     - [4.3 Query all the deposit records](#4.3-Query-all-the-deposit-records)
-     - [4.4 Query a particular user's deposit records](#4.4-Query-a-particular-user's-deposit-records)
-- [5.Bank](#5-bank)
-     - [5.1 Querying card status](#5.1-Querying-card-status)
-     - [5.2 Check account balance](#5.2-Check-account-balance)
-     - [5.3 Check transaction records](#5.3-Check-transaction-records)
-     - [5.4 Get virtual card infomation](#5.4-Get-virtual-card-infomation)
-     - [5.5 User triggers a card withdrawal password reset Email (Currently not supported)](#5.5-User-triggers-a-card-withdrawal-password-reset-Email-(Currently-not-supported))
-- [6.Public API](#6-public-api)
-     - [6.1 Sending Email verification code](#6.1-Sending-Email-verification-code)
-     - [6.2 Email verification code validation](#6.2-Email-verification-code-validation)
-     - [6.3 Sending SMS verification code (Currently not supported)](#6.3-Sending-SMS-verification-code-(Currently-not-supported))
-     - [6.4 SMS verification code validation (Currently not supported)](#6.4-SMS-verification-code-validation-(Currently-not-supported))
-- [7.Webhook](#7-Webhook)    
-     - [7.1 KYC Event](#7.1 KYC-Event)
-     - [7.2 Card Apply Event](#7.2-Card-Apply-Event)
-     - [7.3 Card Activation Event](#7.3-Card-Activation-Event)
-     - [7.4 Deposit Event](#7.4-Deposit-Event)
-- [8.Error Codes](#8-error-codes)
-     - [8.1 Business Logic Error Codes](#8.1-Business-Logic-Error-Codes)
-     - [8.2 Identity Authentication Error Codes](#8.2-Identity-Authentication-Error-Codes)
-     - [8.3 Abnormal Status Error Codes](#8.3-Abnormal-Status-Error-Codes)
+- [1.Institution](#Institution)
+     - [1.1 Querying Card type](#Querying-Card-type)
+     - [1.2 Get customer balance](#get-customer-balance)
+     - [1.3 Get institution information](#get-institution-information)
+     - [1.4 upload public key](#upload-public-key)
+     - [1.5 Querying rate](#Querying-rate)
+     - [1.6 Crypto calculation](#crypto-calculation)
+     - [1.7 Currency calculation](#currency-calculation)
+- [2.KYC](#KYC)
+     - [2.1 Submitting user's KYC data](#Submitting-user's-KYC-data)
+     - [2.2 Query all KYC records](#Query-all-KYC-records)
+     - [2.3 Query a specific user's KYC records](#Query-a-specific-user's-KYC-records)
+- [3.Cards](#cards)
+     - [3.1 Apply a card](#Apply-a-card)
+     - [3.2 Submit active card attachment](#submit-active-card-attachment)
+     - [3.3 User activating bank card](#User-activating-bank-card)
+     - [3.4 Query all active card status](#Query-all-active-card-status)
+     - [3.5 Query a specific user's card activation status](#Query-a-specific-user's-card-activation-status)
+- [4.Transactions](#transactions)
+     - [4.1 User deposit](#User-deposit)
+     - [4.2 Query a deposit transaction status](#Query-a-deposit-transaction-status)
+     - [4.3 Query all the deposit records](#Query-all-the-deposit-records)
+     - [4.4 Query a particular user's deposit records](#Query-a-particular-user's-deposit-records)
+- [5.Bank](#bank)
+     - [5.1 Querying card status](#Querying-card-status)
+     - [5.2 Check account balance](#Check-account-balance)
+     - [5.3 Check transaction records](#Check-transaction-records)
+     - [5.4 Get virtual card infomation](#Get-virtual-card-infomation)
+     - [5.5 User triggers a card withdrawal password reset Email (Currently not supported)](#User-triggers-a-card-withdrawal-password-reset-Email-(Currently-not-supported))
+- [6.Verification Code API](#Verification-Code-API)
+     - [6.1 Sending Email verification code](#Sending-Email-verification-code)
+     - [6.2 Email verification code validation](#Email-verification-code-validation)
+     - [6.3 Sending SMS verification code (Currently not supported)](#Sending-SMS-verification-code-(Currently-not-supported))
+     - [6.4 SMS verification code validation (Currently not supported)](#SMS-verification-code-validation-(Currently-not-supported))
+- [7.Webhook](#Webhook)    
+     - [7.1 KYC Event](#KYC-Event)
+     - [7.2 Card Apply Event](#Card-Apply-Event)
+     - [7.3 Card Activation Event](#Card-Activation-Event)
+     - [7.4 Deposit Event](#Deposit-Event)
+- [8.Error Codes](#error-codes)
+     - [8.1 Business Logic Error Codes](#Business-Logic-Error-Codes)
+     - [8.2 Identity Authentication Error Codes](#Identity-Authentication-Error-Codes)
+     - [8.3 Abnormal Status Error Codes](#Abnormal-Status-Error-Codes)
 
 ## API Specifications
 
@@ -117,10 +117,10 @@ amount=190&ont_id=did:ont:Ae9ujqUnAtH9yRiepRvLUE3t9R2NbCTZPG&to_address=AUol16gh
 For illustrative sample code, please refer to [https://github.com/noumenapay/noumena-sdk-java](https://github.com/noumenapay/noumena-sdk-java)
 
 
-## 1.Institution
+## Institution
 
 
-### 1.1 Querying Card type
+### Querying Card type
 
 ```text
 url：/api/v1/institution/card/type
@@ -164,7 +164,7 @@ method：GET
 |   card_network   | String |    card network           |
 
 
-### 1.2 Get customer balance
+### Get customer balance
 
 - Request:
 
@@ -196,7 +196,7 @@ method：GET
 | coin_type    | String  |  coin type         |
 
 
-### 1.3 Get institution information
+### Get institution information
 
 
 - Request:
@@ -223,7 +223,7 @@ method：GET
 | :--------: | :----: | :------------------------------ |
 |   publickey   | String |           public key           |
 
-### 1.4 Upload public key
+### Upload public key
 
 - Request:
 
@@ -247,7 +247,7 @@ method：POST
 }
 ```
 
-### 1.5 Querying rate
+### Querying rate
 
 ```text
 url：/api/v1/institution/rates?card_type_id={card_type_id}
@@ -298,7 +298,7 @@ method：GET
 |   bank_atm_fee| String |          ATM withdraw fixed fee|
 
 
-### 1.6 Crypto calculation
+### Crypto calculation
 
 - Request:
 
@@ -344,7 +344,7 @@ method：POST
 
 
 
-### 1.7 Currency calculation
+### Currency calculation
 
 - Request:
 
@@ -391,11 +391,11 @@ method：POST
 
 
 
-## 2. KYC
+## KYC
 
 This API contains methods that can be used by an institution to carry out user-related operations such as user creation and KYC, along with fetching relevant KYC details for users, etc.
 
-### 2.1 Submitting user's KYC data
+### Submitting user's KYC data
 
 Email verification feature is optional. The verification code status is updated to used when verification is successfully carried out.
 
@@ -451,7 +451,7 @@ method：POST
 > How to get mail_token and mail_verification_code? Please see "6.1. Sending Email verification code". mail_verification_code is filled by user.
 
 
-### 2.2 Query all KYC records
+### Query all KYC records
 
 - Request:
 
@@ -497,7 +497,7 @@ method：GET
 | reason | String |      Reason for verification failure. Blank for status other than failure       |
 | create_time |  long   |                                                   Creation time                                                    |
 
-### 2.3 Query a specific user's KYC records
+### Query a specific user's KYC records
 
 - Request:
 
@@ -542,11 +542,11 @@ method：GET
 | create_time |  long   |                                                   Creation time                                                    |
 
 
-## 3. Cards
+## Cards
 
 This API contains methods related to
 
-### 3.1 Apply a card
+### Apply a card
 
 - Request:
 
@@ -581,7 +581,7 @@ method：POST
 |   status   | int |   status：2. apply card successfully, 5. apply failed, card is being made           |
 
 
-### 3.2 Submit active card attachment
+### Submit active card attachment
 
 - Request:
 
@@ -607,7 +607,7 @@ method：POST
 ```
 
 
-### 3.3 User activating bank card
+### User activating bank card
 
 ```text
 url：/api/v1/debit-cards/status
@@ -633,7 +633,7 @@ method：PUT
 
 
 
-### 3.4 Query all active card status
+### Query all active card status
 
 ```text
 url：/api/v1/debit-cards
@@ -675,7 +675,7 @@ method：GET
 |   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active, 3 - Under review, 4 - Verification failed |
 | create_time |  long  |                            Creation time                             |
 
-### 3.5 Query a specific user's card activation status
+### Query a specific user's card activation status
 
 - Request:
 
@@ -720,9 +720,9 @@ method：GET
 |   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active, 3 - Under review, 4 - Verification failed |
 | create_time |  long  |                            Creation time                             |
 
-## 4. Transactions
+## Transactions
 
-### 4.1. User deposit
+### User deposit
 
 - Request:
 
@@ -773,7 +773,7 @@ method：POST
 > USDT amount charged from customer = exchange_fee + loading_fee + deposit_usdt.
 
 
-### 4.2 Query a deposit transaction status
+### Query a deposit transaction status
 
 ```text
 url：/api/v1/deposit-transactions/{tx_id}/status
@@ -802,7 +802,7 @@ method：GET
 | :------------: | :----------: |:---------- |
 |     tx_status      | int | 0, 3 and 4:process pending，1: deposit successful, 5：deposit failed  |
 
-### 4.3 Query all the deposit records
+### Query all the deposit records
 
 ```text
 url：/api/v1/deposit-transactions
@@ -867,7 +867,7 @@ method：GET
 
 
 
-### 4.4 Query a particular user's deposit records
+### Query a particular user's deposit records
 
 ```text
 url：/api/v1/deposit-transactions?acct_no={acct_no}
@@ -933,11 +933,11 @@ method：GET
 
 
 
-## 5. Bank
+## Bank
 
 This API provides details such as transaction records and other account related information.
 
-### 5.1 Querying card status
+### Querying card status
 
 ```text
 url：/api/v1/bank/account-status
@@ -961,7 +961,7 @@ method：POST
 ```
 
 
-### 5.2 Check account balance
+### Check account balance
 
 ```text
 url：/api/v1/bank/balance
@@ -996,7 +996,7 @@ method：POST
 |  current_balance  | String | Current balance（USD） |
 | available_balance | String | Usable balance（USD）  |
 
-### 5.3 Check transaction records 
+### Check transaction records 
 
 ```text
 url：/api/v1/bank/transaction-record
@@ -1062,7 +1062,7 @@ method：POST
 |      bank_tx_list[0].credit      | String | Credit amount(USD)                                                      |
 |       bank_tx_list[0].type       |  int   | Transaction type, 1. Debit, 2. Deposit, 3. Withdrawal, 4. Transfer |
 
-### 5.4 Get virtual card infomation
+### Get virtual card infomation
 
 - Request:
 
@@ -1098,7 +1098,7 @@ method：GET
 
 
 
-### 5.5 User triggers a card withdrawal password reset Email (Currently not supported)
+### User triggers a card withdrawal password reset Email (Currently not supported)
 
 An institution invokes the Noumena API triggering the action that sends the bank card withdrawal password reset Email to the user's account.
 
@@ -1124,9 +1124,9 @@ method：POST
 }
 ```
 
-## 6. Public API
+## Verification Code API
 
-### 6.1 Sending Email verification code
+### Sending Email verification code
 
 - Request:
 
@@ -1156,7 +1156,7 @@ method：POST
 | mail_token | String | Allocated verification token |
 
 
-### 6.2 Email verification code validation
+### Email verification code validation
 
 ```text
 url：/api/v1/emails/{email}/verification-codes?code={code}&mail_token={mail_token}
@@ -1181,7 +1181,7 @@ method：PUT
 }
 ```
 
-### 6.3 Sending SMS verification code (Currently not supported)
+### Sending SMS verification code (Currently not supported)
 
 - Request:
 
@@ -1210,7 +1210,7 @@ method：POST
 | :----------: | :----: | :--------------------------: |
 | mobile_token | String | Allocated verification token |
 
-### 6.4. SMS verification code validation (Currently not supported)
+### SMS verification code validation (Currently not supported)
 
 ```text
 url：/api/v1/mobiles/{mobile}/verification-codes?code={code}&mobile_token={mobile_token}
@@ -1238,7 +1238,7 @@ method：PUT
 
 
 
-## 7. Webhook
+## Webhook
 
 
 After configure the Webhook in the Dashboard, please verify signature when you received events. The data structure of the event is:
@@ -1268,7 +1268,7 @@ Example：
 }
 ```
 
-### 7.1 KYC Event
+### KYC Event
 
 | Parameter| Type|Description |
 | --- | --- |--- |
@@ -1292,7 +1292,7 @@ Event example:
 ```
 
 
-### 7.2 Card Apply Event
+### Card Apply Event
 
 | Parameter| Type|Description |
 | --- | --- |--- |
@@ -1315,7 +1315,7 @@ Event example:
 }
 ```
 
-### 7.3 Card Activation Event
+### Card Activation Event
 
 | Parameter| Type|Description |
 | --- | --- |--- |
@@ -1336,7 +1336,7 @@ Event example:
 }
 ```
 
-### 7.4 卡充值事件
+### 卡充值事件
 
 | Parameter| Type|Description |
 | --- | --- |--- |
@@ -1357,9 +1357,9 @@ Event example:
 }
 ```
 
-## 8. Error Codes
+## Error Codes
 
-### 8.1 Business Logic Error Codes
+### Business Logic Error Codes
 
 | Status Code | Description                                                 |
 | :---------: | ----------------------------------------------------------- |
@@ -1402,7 +1402,7 @@ Event example:
 |   111036    | Invalid time format                                         |
 |   111037    | Max. bank statement period limited to six months            |
 
-### 8.2 Identity Authentication Error Codes
+### Identity Authentication Error Codes
 
 | Status Code | Description                 |
 | :---------: | --------------------------- |
@@ -1417,7 +1417,7 @@ Event example:
 |   112009    | Invalid app key secret      |
 |   112010    | Invalid request header      |
 
-### 8.3 Abnormal Status Error Codes
+### Abnormal Status Error Codes
 
 | Status Code | Description           |
 | :---------: | --------------------- |

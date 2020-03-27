@@ -1,11 +1,11 @@
 # Noumena-OpenAPI Interface
 
 - [1.Institution](#Institution)
-     - [1.1 Querying Card type](#Querying-Card-type)
-     - [1.2 Get customer balance](#get-customer-balance)
-     - [1.3 Get institution information](#get-institution-information)
-     - [1.4 upload public key](#upload-public-key)
-     - [1.5 Querying rate](#Querying-rate)
+     - [1.1 Query Card type](#Query-Card-type)
+     - [1.2 Query customer balance](#Query-customer-balance)
+     - [1.3 Query institution information](#Query-institution-information)
+     - [1.4 Upload public key](#Upload-public-key)
+     - [1.5 Query rate](#Query-rate)
      - [1.6 Crypto calculation](#crypto-calculation)
      - [1.7 Currency calculation](#currency-calculation)
 - [2.KYC](#KYC)
@@ -24,10 +24,10 @@
      - [4.3 Query all the deposit records](#Query-all-the-deposit-records)
      - [4.4 Query a particular user's deposit records](#Query-a-particular-user's-deposit-records)
 - [5.Bank](#bank)
-     - [5.1 Querying card status](#Querying-card-status)
-     - [5.2 Check account balance](#Check-account-balance)
-     - [5.3 Check transaction records](#Check-transaction-records)
-     - [5.4 Get virtual card infomation](#Get-virtual-card-infomation)
+     - [5.1 Query card status](#Query-card-status)
+     - [5.2 Query account balance](#Query-account-balance)
+     - [5.3 Query transaction records](#Query-transaction-records)
+     - [5.4 Query virtual card information](#Query-virtual-card-information)
      - [5.5 User triggers a card withdrawal password reset Email (Currently not supported)](#User-triggers-a-card-withdrawal-password-reset-Email-(Currently-not-supported))
 - [6.Verification Code API](#Verification-Code-API)
      - [6.1 Sending Email verification code](#Sending-Email-verification-code)
@@ -120,7 +120,7 @@ For illustrative sample code, please refer to [https://github.com/noumenapay/nou
 ## Institution
 
 
-### Querying Card type
+### Query Card type
 
 ```text
 url：/api/v1/institution/card/type
@@ -164,7 +164,7 @@ method：GET
 |   card_network   | String |    card network           |
 
 
-### Get customer balance
+### Query customer balance
 
 - Request:
 
@@ -196,7 +196,7 @@ method：GET
 | coin_type    | String  |  coin type         |
 
 
-### Get institution information
+### Query institution information
 
 
 - Request:
@@ -247,7 +247,7 @@ method：POST
 }
 ```
 
-### Querying rate
+### Query rate
 
 ```text
 url：/api/v1/institution/rates?card_type_id={card_type_id}
@@ -937,7 +937,7 @@ method：GET
 
 This API provides details such as transaction records and other account related information.
 
-### Querying card status
+### Query card status
 
 ```text
 url：/api/v1/bank/account-status
@@ -961,7 +961,7 @@ method：POST
 ```
 
 
-### Check account balance
+### Query account balance
 
 ```text
 url：/api/v1/bank/balance
@@ -996,7 +996,7 @@ method：POST
 |  current_balance  | String | Current balance（USD） |
 | available_balance | String | Usable balance（USD）  |
 
-### Check transaction records 
+### Query transaction records 
 
 ```text
 url：/api/v1/bank/transaction-record
@@ -1062,7 +1062,7 @@ method：POST
 |      bank_tx_list[0].credit      | String | Credit amount(USD)                                                      |
 |       bank_tx_list[0].type       |  int   | Transaction type, 1. Debit, 2. Deposit, 3. Withdrawal, 4. Transfer |
 
-### Get virtual card infomation
+### Query virtual card information
 
 - Request:
 
@@ -1336,7 +1336,7 @@ Event example:
 }
 ```
 
-### 卡充值事件
+### Deposit Event
 
 | Parameter| Type|Description |
 | --- | --- |--- |

@@ -9,20 +9,20 @@
      - [1.6 Crypto calculation](#crypto-calculation)
      - [1.7 Currency calculation](#currency-calculation)
 - [2.KYC](#KYC)
-     - [2.1 Submitting user's KYC data](#Submitting-user's-KYC-data)
+     - [2.1 Submitting user KYC data](#Submitting-user-KYC-data)
      - [2.2 Query all KYC records](#Query-all-KYC-records)
-     - [2.3 Query a specific user's KYC records](#Query-a-specific-user's-KYC-records)
+     - [2.3 Query a specific user KYC records](#Query-a-specific-user-KYC-records)
 - [3.Cards](#cards)
      - [3.1 Apply a card](#Apply-a-card)
      - [3.2 Submit active card attachment](#submit-active-card-attachment)
      - [3.3 User activating bank card](#User-activating-bank-card)
      - [3.4 Query all active card status](#Query-all-active-card-status)
-     - [3.5 Query a specific user's card activation status](#Query-a-specific-user's-card-activation-status)
+     - [3.5 Query a specific user card activation status](#Query-a-specific-user-card-activation-status)
 - [4.Transactions](#transactions)
      - [4.1 User deposit](#User-deposit)
      - [4.2 Query a deposit transaction status](#Query-a-deposit-transaction-status)
      - [4.3 Query all the deposit records](#Query-all-the-deposit-records)
-     - [4.4 Query a particular user's deposit records](#Query-a-particular-user's-deposit-records)
+     - [4.4 Query a particular user deposit records](#Query-a-particular-user-deposit-records)
 - [5.Bank](#bank)
      - [5.1 Query card status](#Query-card-status)
      - [5.2 Query account balance](#Query-account-balance)
@@ -395,7 +395,7 @@ method：POST
 
 This API contains methods that can be used by an institution to carry out user-related operations such as user creation and KYC, along with fetching relevant KYC details for users, etc.
 
-### Submitting user's KYC data
+### Submitting user KYC data
 
 Email verification feature is optional. The verification code status is updated to used when verification is successfully carried out.
 
@@ -497,7 +497,7 @@ method：GET
 | reason | String |      Reason for verification failure. Blank for status other than failure       |
 | create_time |  long   |                                                   Creation time                                                    |
 
-### Query a specific user's KYC records
+### Query a specific user KYC records
 
 - Request:
 
@@ -675,7 +675,7 @@ method：GET
 |   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active, 3 - Under review, 4 - Verification failed |
 | create_time |  long  |                            Creation time                             |
 
-### Query a specific user's card activation status
+### Query a specific user card activation status
 
 - Request:
 
@@ -867,7 +867,7 @@ method：GET
 
 
 
-### Query a particular user's deposit records
+### Query a particular user deposit records
 
 ```text
 url：/api/v1/deposit-transactions?acct_no={acct_no}

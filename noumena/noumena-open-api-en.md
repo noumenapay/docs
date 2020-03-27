@@ -1028,6 +1028,7 @@ method：POST
               {
                   "transaction_date": "20/11/2019",
                   "posting_date": "20/11/2019",
+                  "tx_id": "54675678678",
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
                   "credit": "",
@@ -1036,6 +1037,7 @@ method：POST
               {
                   "transaction_date": "28/11/2019",
                   "posting_date": "28/11/2019",
+                  "tx_id": "54675678677",
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
                   "credit": "",
@@ -1057,6 +1059,7 @@ method：POST
 |         bank_tx_list[n]          | Object | Transaction list                                                   |
 | bank_tx_list[0].transaction_date | String | Transaction date                                                   |
 |   bank_tx_list[0].posting_date   | String | Transaction record submission date                                 |
+|   bank_tx_list[0].tx_id   | String | Transaction ID                                 |
 |   bank_tx_list[0].description    | String | Description                                                        |
 |      bank_tx_list[0].debit       | String | Debit amount(USD)                                                       |
 |      bank_tx_list[0].credit      | String | Credit amount(USD)                                                      |

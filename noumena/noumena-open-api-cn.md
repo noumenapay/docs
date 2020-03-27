@@ -1044,6 +1044,7 @@ method：POST
               {
                   "transaction_date": "20/11/2019",
                   "posting_date": "20/11/2019",
+                  "tx_id": "54675678678",                  
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
                   "credit": "",
@@ -1052,6 +1053,7 @@ method：POST
               {
                   "transaction_date": "28/11/2019",
                   "posting_date": "28/11/2019",
+                  "tx_id": "54675678677",
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
                   "credit": "",
@@ -1073,6 +1075,7 @@ method：POST
 |   bank_tx_list[n]   | Object | 交易列表  |
 |   bank_tx_list[0].transaction_date   | String | 交易日期  |
 |   bank_tx_list[0].posting_date   | String | 交易提交日期  |
+|   bank_tx_list[0].tx_id   | String | 交易ID |
 |   bank_tx_list[0].description   | String | 描述  |
 |   bank_tx_list[0].debit   | String | 消费金额(USD)  |
 |   bank_tx_list[0].credit   | String | 存入金额(USD)  |

@@ -1,4 +1,4 @@
-# noumena-OpenAPI 接口
+# Noumena API
 
 - [接口规范](#接口规范)
 - [1.机构](#机构)
@@ -11,8 +11,8 @@
      - [1.7 法币计算接口](#法币计算接口)
 - [2.KYC](#KYC)
      - [2.1 提交用户 KYC 数据](#提交用户-KYC-数据)
-     - [2.2 查询所有用户kyc记录](#查询所有用户kyc记录)
-     - [2.3 查询指定用户kyc记录](#查询指定用户kyc记录)
+     - [2.2 查询所有用户 KYC 记录](#查询所有用户-KYC-记录)
+     - [2.3 查询指定用户 KYC 记录](#查询指定用户-KYC-记录)
 - [3.开卡](#开卡)
      - [3.1 提交用户开卡申请](#提交用户开卡申请)
      - [3.2 提交激活卡需要的附件](#提交激活卡需要的附件)
@@ -452,7 +452,7 @@ method：POST
 
 > 如何获取 mail_token and mail_verification_code? 请看 "6.1.发送邮箱验证码". mail_verification_code 由用户自己填写.
 
-### 查询所有用户kyc记录
+### 查询所有用户 KYC 记录
 
 ```text
 url：/api/v1/customers/accounts
@@ -500,7 +500,7 @@ method：GET
 | create_time |  long  |                      创建时间                       |
 
 
-### 查询指定用户kyc记录
+### 查询指定用户 KYC 记录
 
 ```text
 url：/api/v1/customers/accounts

@@ -1,4 +1,4 @@
-# Noumena-OpenAPI Interface
+# Noumena API
 
 - [1.Institution](#Institution)
      - [1.1 Query Card type](#Query-Card-type)

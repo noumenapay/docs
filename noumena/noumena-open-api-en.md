@@ -748,13 +748,13 @@ method：POST
     "msg": "SUCCESS",
     "result": {
         "tx_id": "2020022511324811001637548",
-        "currency_type": "USD",
-        "deposit_usdt": "0.9188",
-        "currency_amount": "0.92",
-        "exchange_rate": "1.00239251357",
         "exchange_fee_rate": "0",
         "exchange_fee": "0",
-        "loading_fee": "0.0812"
+        "loading_fee": "0.0812",
+        "deposit_usdt": "0.9188",
+        "currency_type": "USD",
+        "currency_amount": "0.92",
+        "exchange_rate": "1.00239251357"
     }
 }
 ```
@@ -762,15 +762,16 @@ method：POST
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
 |     tx_id      | String | Noumena transaction ID  |
+|     exchange_fee_rate      | String | Fee rate for exchanging digital coin to USDT   |
+|     exchange_fee      | String | Fee for exchanging digital coin to USDT, Unit: USDT  |
+|     loading_fee      | String | Deposit fee，Unit: USDT   |
+|     deposit_usdt      | String | The amount of USDT deposited for the user after charging loading_fee and exchange_fee, Unit: USDT   |
 |     currency_amount      | String | received currency amount  |
 |     currency_type      | String | received currency type  |
 |     exchange_rate      | String |  exchange rate of USDT/Fiat currency  |
-|     loading_fee      | String | Deposit fee，Unit: USDT   |
-|     exchange_fee      | String | Fee for exchanging digital coin to USDT, Unit: USDT  |
-|     exchange_fee_rate      | String | Fee rate for exchanging digital coin to USDT   |
-|     deposit_usdt      | String | The amount of USDT deposited for the user after charging loading_fee and exchange_fee, Unit: USDT   |
 
-> USDT amount charged from customer = exchange_fee + loading_fee + deposit_usdt.
+
+> If coin_type is USDT, USDT amount charged from institution balance = exchange_fee + loading_fee + deposit_usdt.
 
 
 ### Query a deposit transaction status
@@ -784,7 +785,7 @@ method：GET
 
 | Parameter |  Type  | Whether Required | Description    |
 | :-------: | :----: | :--------------: | :------------- |
-|   tx_id   | String |     Required     | Noumena Transaction ID |
+|   tx_id   | String |     Required     | Noumena Transaction ID or cust_tx_id|
 
 - Response：
 
@@ -793,14 +794,39 @@ method：GET
   "code": 0,
   "msg": "string",
   "result": {
-  	"tx_status": 0
+                "cust_tx_id": "1223",
+                "acct_no": "03030062",
+                "card_no": "8993152800000013334",
+                "cust_tx_time": 1584350913000,
+                "tx_id": "2020031609283339501898843",
+                "coin_type": "USDT",
+                "tx_amount": "61.86",     
+                "exchange_fee": "0",
+                "loading_fee": "1.8558",
+                "currency_type": "USD",                
+                "currency_amount": "60",
+                "exchange_rate": "1.00239251357",
+                "tx_status": 3
   }
 }
 ```
 
-| Parameter |  Type    | Description |
-| :------------: | :----------: |:---------- |
-|     tx_status      | int | 0, 3 and 4:process pending，1: deposit successful, 5：deposit failed  |
+|     Parameter     |  Type  |                            Description                            |
+| :-----------: | :----: | :---------------------------------------------------------------: |
+|  cust_tx_id   | String |         Customer transaction id         |
+|    acct_no    | String | Institution account name (Unique within scope of the institution) |
+|    card_no    |  int   |                            Card ID                            |
+| cust_tx_time  |  long  |                           Creation time                           |
+|  tx_id   | String |        Transaction id         |
+|  exchange_fee   | String |     Exchange fee for converting other coin to USDT   |
+|      loading_fee      | String |                          Transaction fee                          |
+|    coin_type    |  int   |          Coin type          |
+|   tx_amount   | String |                        Deposit amount                         |
+|     currency_type      | String | Received currency type  |
+|     currency_amount      | String | Received currency amount  |
+| exchange_rate | String |                           Exchange rate of USDT/Fiat currency                          |
+|  tx_status   | int |   Transaction status. 0, 3 and 4:process pending，1: deposit successful, 2 and 5：deposit failed        |
+
 
 ### Query all the deposit records
 
@@ -827,43 +853,40 @@ method：GET
         "total": 1,
         "records": [
             {
-                "currency_type": "CNY",
                 "cust_tx_id": "1223",
-                "card_no": "8993152800000013334",
                 "acct_no": "03030062",
+                "card_no": "8993152800000013334",
                 "cust_tx_time": 1584350913000,
-                "loading_fee": "1.8558",
-                "currency_amount": "60",
-                "tx_amount": "61.86",
-                "exchange_rate": "1",
                 "tx_id": "2020031609283339501898843",
                 "coin_type": "USDT",
-                "tx_status": 3,
-                "exchange_fee": "0"
+                "tx_amount": "61.86",     
+                "exchange_fee": "0",
+                "loading_fee": "1.8558",
+                "currency_type": "USD",                
+                "currency_amount": "60",
+                "exchange_rate": "1.00239251357",
+                "tx_status": 3
             }
         ]
     }
 }
 ```
 
-
 |     Parameter     |  Type  |                            Description                            |
 | :-----------: | :----: | :---------------------------------------------------------------: |
-|     currency_type      | String | Received currency type  |
 |  cust_tx_id   | String |         Customer transaction id         |
-|    card_no    |  int   |                            Card ID                            |
 |    acct_no    | String | Institution account name (Unique within scope of the institution) |
+|    card_no    |  int   |                            Card ID                            |
 | cust_tx_time  |  long  |                           Creation time                           |
-|      loading_fee      | String |                          Transaction fee                          |
-|     currency_amount      | String | Received currency amount  |
-|   tx_amount   | String |                        Deposit amount                         |
-| exchange_rate | String |                           Exchange rate of USDT/Fiat currency                          |
 |  tx_id   | String |        Transaction id         |
-|    coin_type    |  int   |          Coin type          |
-|  tx_status   | int |   Transaction status       |
 |  exchange_fee   | String |     Exchange fee for converting other coin to USDT   |
-
-|     currency_type      | String | 到账法币类型  |
+|      loading_fee      | String |                          Transaction fee                          |
+|    coin_type    |  int   |          Coin type          |
+|   tx_amount   | String |                        Deposit amount                         |
+|     currency_type      | String | Received currency type  |
+|     currency_amount      | String | Received currency amount  |
+| exchange_rate | String |                           Exchange rate of USDT/Fiat currency                          |
+|  tx_status   | int |   Transaction status. 0, 3 and 4:process pending，1: deposit successful, 2 and 5：deposit failed        |
 
 
 
@@ -917,19 +940,20 @@ method：GET
 
 |     Parameter     |  Type  |                            Description                            |
 | :-----------: | :----: | :---------------------------------------------------------------: |
-|     currency_type      | String | Received currency type  |
 |  cust_tx_id   | String |         Customer transaction id         |
-|    card_no    |  int   |                            Card ID                            |
 |    acct_no    | String | Institution account name (Unique within scope of the institution) |
+|    card_no    |  int   |                            Card ID                            |
 | cust_tx_time  |  long  |                           Creation time                           |
-|      loading_fee      | String |                          Transaction fee                          |
-|     currency_amount      | String | Received currency amount  |
-|   tx_amount   | String |                        Deposit amount                         |
-| exchange_rate | String |                           Exchange rate of USDT/Fiat currency                          |
 |  tx_id   | String |        Transaction id         |
-|    coin_type    |  int   |          Coin type          |
-|  tx_status   | int |   Transaction status       |
 |  exchange_fee   | String |     Exchange fee for converting other coin to USDT   |
+|      loading_fee      | String |                          Transaction fee                          |
+|    coin_type    |  int   |          Coin type          |
+|   tx_amount   | String |                        Deposit amount                         |
+|     currency_type      | String | Received currency type  |
+|     currency_amount      | String | Received currency amount  |
+| exchange_rate | String |                           Exchange rate of USDT/Fiat currency                          |
+|  tx_status   | int |   Transaction status. 0, 3 and 4:process pending，1: deposit successful, 2 and 5：deposit failed        |
+
 
 
 

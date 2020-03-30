@@ -766,13 +766,13 @@ method：POST
     "msg": "SUCCESS",
     "result": {
         "tx_id": "2020022511324811001637548",
-        "currency_type": "USD",
-        "deposit_usdt": "0.9188",
-        "currency_amount": "0.92",
-        "exchange_rate": "1.00239251357",
         "exchange_fee_rate": "0",
         "exchange_fee": "0",
-        "loading_fee": "0.0812"
+        "loading_fee": "0.0812",        
+        "deposit_usdt": "0.9188",
+        "currency_type": "USD",
+        "currency_amount": "0.92",
+        "exchange_rate": "1.00239251357"
     }
 }
 ```
@@ -780,15 +780,16 @@ method：POST
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
 |     tx_id      | String | Noumena 交易流水id  |
+|     deposit_usdt      | String | 扣除手续费后,为用户充值的USDT数量，单位是USDT   |
+|     exchange_fee_rate      | String | 充值币种兑换成USDT的费率   |
+|     exchange_fee      | String | 充值币种兑换成USDT的费用，单位是USDT  |
+|     loading_fee      | String | 充值手续费，单位是USDT   |
 |     currency_amount      | String | 到账法币数量  |
 |     currency_type      | String | 到账法币类型  |
 |     exchange_rate      | String | USDT/法币汇率  |
-|     loading_fee      | String | 充值手续费，单位是USDT   |
-|     exchange_fee      | String | 充值币种兑换成USDT的费用，单位是USDT  |
-|     exchange_fee_rate      | String | 充值币种兑换成USDT的费率   |
-|     deposit_usdt      | String | 扣除手续费后,为用户充值的USDT数量，单位是USDT   |
 
-> 从机构扣的USDT费用 = exchange_fee + loading_fee + deposit_usdt。
+
+> 如果coin_type是USDT，从机构扣的USDT费用 = exchange_fee + loading_fee + deposit_usdt。
 
 ### 查询某笔卡充值交易状态
 
@@ -801,7 +802,7 @@ method：GET
 
 | Parameter |  Type  |Requirement  | Description |
 | :------------: | :----: | :----------: |:---------- |
-|     tx_id      | String | 必填|Noumena 交易流水id  |
+|     tx_id      | String | 必填|Noumena 交易流水 tx_id 或 cust_tx_id  |
 
 - 响应：
 
@@ -810,14 +811,38 @@ method：GET
   "code": 0,
   "msg": "string",
   "result": {
-  	"tx_status":0
+                "cust_tx_id": "1223",
+                "acct_no": "03030062",
+                "card_no": "8993152800000013334",
+                "cust_tx_time": 1584350913000,
+                "tx_id": "2020031609283339501898843",
+                "coin_type": "USDT",
+                "tx_amount": "61.86",     
+                "exchange_fee": "0",
+                "loading_fee": "1.8558",
+                "currency_type": "USD",                
+                "currency_amount": "60",
+                "exchange_rate": "1.00239251357",
+                "tx_status": 3
   }
 }
 ```
 
-| Parameter |  Type  |          Description          |
+|  Parameter   |  Type  |        Description         |
 | :--------: | :----: | :------------------------------ |
-|   tx_status   | int |           0, 3 和 4:待处理中，1:充值成功, 5:充值失败           |
+|  cust_tx_id   | String |         机构流水号         |
+|    acct_no    | String | 机构端用户编号(机构端唯一) |
+|    card_no    |  int   |          银行卡ID         |
+|  cust_tx_time  |  long  |          创建时间          |
+|  tx_id   | String |        交易id         |
+|    coin_type    |  int   |          充值币种          |
+|   tx_amount   | String |          充值金额          |
+|  exchange_fee   | String |     充值币种兑换成USDT的费用，单位是USDT   |
+|      loading_fee      | String |  充值手续费，单位是USDT          |
+|     currency_type      | String | 到账法币类型  |
+|     currency_amount      | String | 到账法币数量  |
+| exchange_rate | String |            USDT/法币汇率            |
+|  tx_status   | int |   交易状态。0、3、4:待处理中，1:充值成功，2充值失败，5:充值失败        |
 
 
 ### 查询所有卡充值记录
@@ -845,19 +870,19 @@ method：GET
         "total": 1,
         "records": [
             {
-                "currency_type": "CNY",
                 "cust_tx_id": "1223",
-                "card_no": "8993152800000013334",
                 "acct_no": "03030062",
+                "card_no": "8993152800000013334",
                 "cust_tx_time": 1584350913000,
-                "loading_fee": "1.8558",
-                "currency_amount": "60",
-                "tx_amount": "61.86",
-                "exchange_rate": "1",
                 "tx_id": "2020031609283339501898843",
                 "coin_type": "USDT",
-                "tx_status": 3,
-                "exchange_fee": "0"
+                "tx_amount": "61.86",     
+                "exchange_fee": "0",
+                "loading_fee": "1.8558",
+                "currency_type": "USD",                
+                "currency_amount": "60",
+                "exchange_rate": "1.00239251357",
+                "tx_status": 3
             }
         ]
     }
@@ -866,19 +891,20 @@ method：GET
 
 |  Parameter   |  Type  |        Description         |
 | :--------: | :----: | :------------------------------ |
-|     currency_type      | String | 到账法币类型  |
 |  cust_tx_id   | String |         机构流水号         |
-|    card_no    |  int   |          银行卡ID         |
 |    acct_no    | String | 机构端用户编号(机构端唯一) |
+|    card_no    |  int   |          银行卡ID         |
 |  cust_tx_time  |  long  |          创建时间          |
-|      loading_fee      | String |  充值手续费，单位是USDT          |
-|     currency_amount      | String | 到账法币数量  |
-|   tx_amount   | String |          充值金额          |
-| exchange_rate | String |            USDT/法币汇率            |
 |  tx_id   | String |        交易id         |
 |    coin_type    |  int   |          充值币种          |
-|  tx_status   | int |   交易状态       |
+|   tx_amount   | String |          充值金额          |
 |  exchange_fee   | String |     充值币种兑换成USDT的费用，单位是USDT   |
+|      loading_fee      | String |  充值手续费，单位是USDT          |
+|     currency_type      | String | 到账法币类型  |
+|     currency_amount      | String | 到账法币数量  |
+| exchange_rate | String |            USDT/法币汇率            |
+|  tx_status   | int |   交易状态。0、3、4:待处理中，1:充值成功，2、5:充值失败         |
+
 
 
 
@@ -911,19 +937,19 @@ method：GET
         "total": 1,
         "records": [
             {
-                "currency_type": "CNY",
                 "cust_tx_id": "1223",
-                "card_no": "8993152800000013334",
                 "acct_no": "03030062",
+                "card_no": "8993152800000013334",
                 "cust_tx_time": 1584350913000,
-                "loading_fee": "1.8558",
-                "currency_amount": "60",
-                "tx_amount": "61.86",
-                "exchange_rate": "1",
                 "tx_id": "2020031609283339501898843",
                 "coin_type": "USDT",
-                "tx_status": 3,
-                "exchange_fee": "0"
+                "tx_amount": "61.86",     
+                "exchange_fee": "0",
+                "loading_fee": "1.8558",
+                "currency_type": "USD",                
+                "currency_amount": "60",
+                "exchange_rate": "1.00239251357",
+                "tx_status": 3
             }
         ]
     }
@@ -932,19 +958,19 @@ method：GET
 
 |  Parameter   |  Type  |        Description         |
 | :--------: | :----: | :------------------------------ |
-|     currency_type      | String | 到账法币类型  |
 |  cust_tx_id   | String |         机构流水号         |
-|    card_no    |  int   |          银行卡ID         |
 |    acct_no    | String | 机构端用户编号(机构端唯一) |
+|    card_no    |  int   |          银行卡ID         |
 |  cust_tx_time  |  long  |          创建时间          |
-|      loading_fee      | String |  充值手续费，单位是USDT          |
-|     currency_amount      | String | 到账法币数量  |
-|   tx_amount   | String |          充值金额          |
-| exchange_rate | String |            USDT/法币汇率            |
 |  tx_id   | String |        交易id         |
 |    coin_type    |  int   |          充值币种          |
-|  tx_status   | int |   交易状态       |
+|   tx_amount   | String |          充值金额          |
 |  exchange_fee   | String |     充值币种兑换成USDT的费用，单位是USDT   |
+|      loading_fee      | String |  充值手续费，单位是USDT          |
+|     currency_type      | String | 到账法币类型  |
+|     currency_amount      | String | 到账法币数量  |
+| exchange_rate | String |            USDT/法币汇率            |
+|  tx_status   | int |   交易状态。0、3、4:待处理中，1:充值成功，2充值失败，5:充值失败        |
 
 
 

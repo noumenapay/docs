@@ -1302,7 +1302,18 @@ method：PUT
 | create_time|long |  事件发生的时间，默认为UTC时间 |
 
 
-机构接受推送后，响应的数据结构如下，**如果机构返回成功将不再推送该事件**：
+推送的请求头数据结构为：
+
+| 名称| 类型|描述 |
+| --- | --- |--- |
+| Signature |String | 签名  |
+| Timestamp | String | 时间戳 |
+
+如何验签请见：[noumena推送验签流程](https://github.com/noumenapay/noumena-sdk-java/blob/master/src/test/java/com/noumena/open/api/test/NotificationTest.java)
+
+
+
+机构接受推送后，响应的数据结构如下，**如果机构返回正确数据结构，我们将不再推送该事件**：
 
 | 名称| 类型|描述 |
 | --- | --- |--- |
@@ -1313,6 +1324,10 @@ method：PUT
 响应例子：
 
 ```
+
+--header Timestamp：1585310160226
+--header Signature：UqAwtsx9HF3s5yJh/c8luvUITZNXE/f3aujwndnXLBU=
+
 {
    "code": 0,
    "msg":"SUCCESS"

@@ -1278,7 +1278,19 @@ After configure the Webhook in the Dashboard, please verify signature when you r
 | create_time|long |  UTC time |
 
 
-The data structure of response should as follows. **If you response ```code``` as successful, the event will not be send again**:
+The data structure of header：
+
+| Parameter| Type|Description |
+| --- | --- |--- |
+| Signature |String | Signature  |
+| Timestamp | String | Timestamp |
+
+How to verify signature ? [Example](https://github.com/noumenapay/noumena-sdk-java/blob/master/src/test/java/com/noumena/open/api/test/NotificationTest.java)
+
+
+The data structure of response should as follows. **If you response correct data structure, the event will not be send again**:
+
+
 
 | Parameter| Type|Description |
 | --- | --- |--- |
@@ -1286,9 +1298,12 @@ The data structure of response should as follows. **If you response ```code``` a
 |msg  |String  | code message |
 
 
-Example：
+Response Example:
 
 ```
+--header Timestamp：1585310160226
+--header Signature：UqAwtsx9HF3s5yJh/c8luvUITZNXE/f3aujwndnXLBU=
+
 {
    "code": 0,
    "msg":"SUCCESS"

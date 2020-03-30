@@ -589,7 +589,7 @@ method：POST
 | :--------: | :----: | :------------------------------ |
 |   card_no   | String |           分配的银行卡ID，查询时用card_no，避免真是卡号信息泄露。生成规则：机构id+5位随机数 +卡种id +卡最后四位           |
 |   card_number   | String |           分配的真实银行卡号, 只显示前6位和后4位           |
-|   status   | int |   状态：2. 开卡申请成功， 5. 申请失败，卡片正在制作中           |
+|   status   | int |   状态：2. 开卡申请成功(未激活)， 5. 申请失败，卡片正在制作中           |
 
 
 ### 提交激活卡需要的附件
@@ -686,7 +686,7 @@ method：GET
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |     机构端用户编号(机构端唯一)      |
 |   card_no   |  int   |              银行卡号               |
-|   status    |  int   | 状态码: 0 冻结， 1 激活成功， 2未激活， 3. 激活待审核， 4. 激活审核失败 |
+|   status    |  int   | 状态码: 0 冻结， 1 激活成功， 2未激活， 3. 激活待审核， 4. 激活审核失败, 5. 申请失败，卡片正在制作中 |
 | create_time |  long  |              创建时间               |
 
 
@@ -734,7 +734,7 @@ method：GET
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |     机构端用户编号(机构端唯一)      |
 |   card_no   |  int   |              银行卡ID               |
-|   status    |  int   | 状态码: 0 冻结， 1 激活成功， 2未激活， 3. 激活待审核， 4. 激活审核失败|
+|   status    |  int   | 状态码: 0 冻结， 1 激活成功， 2未激活， 3. 激活待审核， 4. 激活审核失败, 5. 申请失败，卡片正在制作中|
 | create_time |  long  |              创建时间               |
 
 
@@ -1362,21 +1362,19 @@ method：PUT
 
 | 名称| 类型|描述 |
 | --- | --- |--- |
-| action |String  |  card-application|
+| action |String  |  card-application-ready|
 | params.acct_no |String | 机构下用户唯一ID |
 | params.card_type_id |String | 卡类型 |
-| params.status|int  | 卡激活状态,  1.卡已制作完成，请申请 |
 
 示例：
 ```
 {
    "id":1,
-   "action":"card-application",
+   "action":"card-application-ready",
    "create_time":1585293811000,
    "params":{
       "card_type_id":"50010003",
-      "acct_no":"032500004",
-      "status":1
+      "acct_no":"032500004"
    }
 }
 ```

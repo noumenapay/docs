@@ -578,7 +578,7 @@ method：POST
 | :-----: | :----: | :-----------------: |
 | card_no | String | To prevent real card information from being exposed, use 'card_no' parameter to query  |
 | card_number | String | Actual card number, Expose only the first 6 and last 4 |
-|   status   | int |   status：2. apply card successfully, 5. apply failed, card is being made           |
+|   status   | int |   status：2. apply card successfully(Not active), 5. apply card failed, card is being made           |
 
 
 ### Submit active card attachment
@@ -672,7 +672,7 @@ method：GET
 | :---------: | :----: | :------------------------------------------------------------------: |
 |   acct_no   | String |  Institution account name (Unique within scope of the institution)   |
 |   card_no   |  int   |                             Card ID                              |
-|   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active, 3 - Under review, 4 - Verification failed |
+|   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active, 3 - Under review, 4 - Verification failed, 5 - Apply card failed, card is being made |
 | create_time |  long  |                            Creation time                             |
 
 ### Query a specific user card activation status
@@ -717,7 +717,7 @@ method：GET
 | :---------: | :----: | :------------------------------------------------------------------: |
 |   acct_no   | String |  Institution account name (Unique within scope of the institution)   |
 |   card_no   |  int   |                             Card ID                              |
-|   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active, 3 - Under review, 4 - Verification failed |
+|   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active, 3 - Under review, 4 - Verification failed, 5 - Apply card failed, card is being made |
 | create_time |  long  |                            Creation time                             |
 
 ## Transactions
@@ -1341,18 +1341,16 @@ Event example:
 | action |String  |  card-application|
 | params.acct_no |String | Institution account name (Unique within scope of the institution) |
 | params.card_type_id |String | card type id |
-| params.status|int  | Card apply status,  1.The card has been made, ready for apply |
 
 Event example:
 ```
 {
    "id":1,
-   "action":"card-application",
+   "action":"card-application-ready",
    "create_time":1585293811000,
    "params":{
       "card_type_id":"50010003",
-      "acct_no":"032500004",
-      "status":1
+      "acct_no":"032500004"
    }
 }
 ```

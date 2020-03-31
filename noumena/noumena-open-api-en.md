@@ -267,9 +267,10 @@ method：GET
     "code": 0,
     "msg": "SUCCESS",
     "result": {
-        "bank_atm_rate": "0.1",
         "exchange_rate": "1.00505392692",
-        "open_card_fee_usdt": "1",
+        "card_application_fee": "1",
+        "min_deposit":"0",
+        "max_deposit":"10000",
         "loading_rate": [
             {
                 "min": "0",
@@ -283,6 +284,7 @@ method：GET
             }
         ],
         "bank_atm_fee": 0,
+        "bank_atm_rate": "0.1",
         "bank_transaction_rate": "0.2"
     }
 }
@@ -290,7 +292,9 @@ method：GET
 
 | Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
-|   open_card_fee_usdt   | String |           Open card fee in USDT          |
+|   card_application_fee   | String |           Card application fee in USDT          |
+|   min_deposit   | String |          Maximum deposit amount in one transaction          |
+|   max_deposit   | String |           Minimum deposit amount in one transaction           |
 |   exchange_rate   | String |   exchange rate of  USDT to fiat currency         |
 |   loading_rate   | String |           Loading step rate for deposit to user        |
 |   bank_transaction_rate   | String |          Bank transaction rate for consumption          |

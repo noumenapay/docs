@@ -272,9 +272,10 @@ method：GET
     "code": 0,
     "msg": "SUCCESS",
     "result": {
-        "bank_atm_rate": "0.1",
         "exchange_rate": "1.00505392692",
-        "open_card_fee_usdt": "1",
+        "card_application_fee": "1",
+        "min_deposit":"0",
+        "max_deposit":"10000",
         "loading_rate": [
             {
                 "min": "0",
@@ -288,6 +289,7 @@ method：GET
             }
         ],
         "bank_atm_fee": "0",
+        "bank_atm_rate": "0.1",
         "bank_transaction_rate": "0.2"
     }
 }
@@ -295,7 +297,9 @@ method：GET
 
 | Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
-|   open_card_fee_usdt   | String |           开卡的手续费（USDT）           |
+|   card_application_fee   | String |           开卡的手续费（USDT）           |
+|   min_deposit   | String |           单笔最小充值金额           |
+|   max_deposit   | String |           单笔最大充值金额           |
 |   exchange_rate   | String |           USDT兑换相应法币的汇率           |
 |   loading_rate   | String |           给用户充值时付给 Noumena 的阶梯费率           |
 |   bank_transaction_rate   | String |          银行卡刷卡消费的手续费率           |

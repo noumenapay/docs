@@ -40,6 +40,7 @@
      - [7.2 开卡事件](#开卡事件)
      - [7.3 卡激活事件](#卡激活事件)
      - [7.4 卡充值事件](#卡充值事件)
+     - [7.5 查询推送失败的事件](#查询推送失败的事件)
 - [8.错误码](#错误码)
      - [8.1 业务逻辑错误码](#业务逻辑错误码)
      - [8.2 身份权限认证错误码](#身份权限认证错误码)
@@ -1124,6 +1125,7 @@ method：GET
 |  Parameter  | Type  | Whether Required |                        Description                         |
 | :---------: | :---: | :--------------: | :-------------------------------------------------------- |
 | card_no  |  String  |    Required     | card no     |
+| publickey  |  String  |  Optional     | 我们会使用这个公钥替代默认的公钥加密数据   |
 
 - Response:
 
@@ -1338,6 +1340,8 @@ method：PUT
 }
 ```
 
+
+
 ### KYC 事件
 
 | 名称| 类型|描述 |
@@ -1350,15 +1354,18 @@ method：PUT
 示例：
 ```
 {
-   "id":1,
-   "action":"kyc-status",
-   "create_time":1585293811000,
-   "params":{
-      "card_type_id":"50010003",
-      "acct_no":"032500004",
-      "status":1
-   }
+    "events": [{
+       "id":1,
+       "action":"kyc-status",
+       "create_time":1585293811000,
+       "params":{
+          "card_type_id":"50010003",
+          "acct_no":"032500004",
+          "status":1
+       }
+    }]
 }
+
 ```
 
 
@@ -1373,13 +1380,14 @@ method：PUT
 示例：
 ```
 {
-   "id":1,
-   "action":"card-application-ready",
-   "create_time":1585293811000,
-   "params":{
-      "card_type_id":"50010003",
-      "acct_no":"032500004"
-   }
+    "events": [{
+       "id":1,
+       "action":"card-application-ready",
+       "create_time":1585293811000,
+       "params":{
+          "card_type_id":"50010003",
+          "acct_no":"032500004"
+    }]
 }
 ```
 
@@ -1394,13 +1402,14 @@ method：PUT
 示例：
 ```
 {
-   "id":1,
-   "action":"card-status",
-   "create_time":1585293811000,
-   "params":{
-      "card_no":"123434234343",
-      "status":1
-   }
+    "events": [{
+       "id":1,
+       "action":"card-status",
+       "create_time":1585293811000,
+       "params":{
+          "card_no":"123434234343",
+          "status":1
+    }]
 }
 ```
 
@@ -1415,15 +1424,54 @@ method：PUT
 示例：
 ```
 {
-   "id":1,
-   "action":"deposit-status",
-   "create_time":1585293811000,
-   "params":{
-      "tx_id":"50010003",
-      "status":1
-   }
+    "events": [{
+       "id":1,
+       "action":"deposit-status",
+       "create_time":1585293811000,
+       "params":{
+          "tx_id":"2020031609283339501898843",
+          "status":1
+    }]
 }
 ```
+
+
+### 查询推送失败的事件
+
+我们每隔一分钟推送一次事件，每个事件我们最多推送5次。查询推送失败的事件请用此接口：
+
+```text
+url：/api/v1/events
+method：GET
+```
+
+- 请求：
+
+| Parameter |  Type  | Requirement  |Description |
+| :------------: | :----: | :----------: |:---------- |
+|    action     | String | 选填| 事件名称，默认值是所有类型action |
+|  page_num   | int  |    选填|页数     |
+|  page_size  | int  |  选填|页的大小   |
+
+
+- 响应：
+
+```
+{
+    "events": [{
+       "id":1,
+       "action":"kyc-status",
+       "create_time":1585293811000,
+       "params":{
+          "card_type_id":"50010003",
+          "acct_no":"032500004",
+          "status":1
+       }
+    }]
+}
+
+```
+
 
 ## 错误码
 

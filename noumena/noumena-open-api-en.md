@@ -34,11 +34,12 @@
      - [6.2 Email verification code validation](#Email-verification-code-validation)
      - [6.3 Sending SMS verification code (Currently not supported)](#Sending-SMS-verification-code-(Currently-not-supported))
      - [6.4 SMS verification code validation (Currently not supported)](#SMS-verification-code-validation-(Currently-not-supported))
-- [7.Webhook](#Webhook)    
+- [7.Webhook](#Webhook)   
      - [7.1 KYC Event](#KYC-Event)
      - [7.2 Card Apply Event](#Card-Apply-Event)
      - [7.3 Card Activation Event](#Card-Activation-Event)
      - [7.4 Deposit Event](#Deposit-Event)
+     - [7.5 Query push failure events](#Query-push-failure-events)
 - [8.Error Codes](#error-codes)
      - [8.1 Business Logic Error Codes](#Business-Logic-Error-Codes)
      - [8.2 Identity Authentication Error Codes](#Identity-Authentication-Error-Codes)
@@ -1105,6 +1106,7 @@ method：GET
 |  Parameter  | Type  | Whether Required |                        Description                         |
 | :---------: | :---: | :--------------: | :-------------------------------------------------------- |
 | card_no  |  String  |    Required     | card no     |
+| publickey  |  String  |  Optional     | We will use the  publickey to encrypt data，or use default publickey |
 
 - Response:
 
@@ -1314,6 +1316,8 @@ Response Example:
 }
 ```
 
+
+
 ### KYC Event
 
 | Parameter| Type|Description |
@@ -1326,14 +1330,16 @@ Response Example:
 Event example:
 ```
 {
-   "id":1,
-   "action":"kyc-status",
-   "create_time":1585293811000,
-   "params":{
-      "card_type_id":"50010003",
-      "acct_no":"032500004",
-      "status":1
-   }
+    "events": [{
+       "id":1,
+       "action":"kyc-status",
+       "create_time":1585293811000,
+       "params":{
+          "card_type_id":"50010003",
+          "acct_no":"032500004",
+          "status":1
+       }
+    }]
 }
 ```
 
@@ -1349,13 +1355,14 @@ Event example:
 Event example:
 ```
 {
-   "id":1,
-   "action":"card-application-ready",
-   "create_time":1585293811000,
-   "params":{
-      "card_type_id":"50010003",
-      "acct_no":"032500004"
-   }
+    "events": [{
+       "id":1,
+       "action":"card-application-ready",
+       "create_time":1585293811000,
+       "params":{
+          "card_type_id":"50010003",
+          "acct_no":"032500004"
+    }]
 }
 ```
 
@@ -1370,13 +1377,14 @@ Event example:
 Event example:
 ```
 {
-   "id":1,
-   "action":"card-status",
-   "create_time":1585293811000,
-   "params":{
-      "card_no":"123434234343",
-      "status":1
-   }
+    "events": [{
+       "id":1,
+       "action":"card-status",
+       "create_time":1585293811000,
+       "params":{
+          "card_no":"123434234343",
+          "status":1
+    }]
 }
 ```
 
@@ -1391,14 +1399,51 @@ Event example:
 Event example:
 ```
 {
-   "id":1,
-   "action":"deposit-status",
-   "create_time":1585293811000,
-   "params":{
-      "tx_id":"50010003",
-      "status":1
-   }
+    "events": [{
+       "id":1,
+       "action":"deposit-status",
+       "create_time":1585293811000,
+       "params":{
+          "tx_id":"2020031609283339501898843",
+          "status":1
+    }]
 }
+```
+
+
+### Query push failure events
+
+We push events every minute, and up to 5 times for each event.
+
+```text
+url：/api/v1/events
+method：GET
+```
+
+- Request：
+
+| Parameter |  Type  | Requirement  |Description |
+| :------------: | :----: | :----------: |:---------- |
+|    action     | String | Optional| action name，default is all actions |
+|  page_num   | int  |    Optional|Page number      |
+|  page_size  | int  |  Optional|Page size   |
+
+
+- Response：
+```
+{
+    "events": [{
+       "id":1,
+       "action":"kyc-status",
+       "create_time":1585293811000,
+       "params":{
+          "card_type_id":"50010003",
+          "acct_no":"032500004",
+          "status":1
+       }
+    }]
+}
+
 ```
 
 ## Error Codes

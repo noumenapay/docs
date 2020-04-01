@@ -39,8 +39,8 @@
      - [7.2 Card Apply Event](#Card-Apply-Event)
      - [7.3 Card Activation Event](#Card-Activation-Event)
      - [7.4 Deposit Event](#Deposit-Event)
-     - [7.5 Query expired events](#Query-expired-events)
-     - [7.6 Update expired events](#Update-expired-events)
+     - [7.5 Query push failure events](#Query-push-failure-events)
+     - [7.6 Update push failure events](#Update-push-failure-events)
 - [8.Error Codes](#error-codes)
      - [8.1 Business Logic Error Codes](#Business-Logic-Error-Codes)
      - [8.2 Identity Authentication Error Codes](#Identity-Authentication-Error-Codes)
@@ -1438,7 +1438,7 @@ events[n] element convert string to json:
 ```
 
 
-### Query push failure  events
+### Query push failure events
 
 We push events every minute, and up to push 5 times for each event.
 
@@ -1479,9 +1479,9 @@ method：GET
 ```
 
 
-### Update expired events
+### Update push failure events
 
-After the update is successful, event was marked as pushed successfully, and can no longer be found through ```Query expired events```.
+After the update is successful, event was marked as pushed successfully, and can no longer be found through ```Query push failure events```.
 
 ```text
 url：/api/v1/events

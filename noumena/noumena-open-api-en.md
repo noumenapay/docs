@@ -295,8 +295,8 @@ method：GET
 | Parameter |  Type  |          Description          |
 | :--------: | :----: | :------------------------------ |
 |   card_application_fee   | String |           Card application fee in USDT          |
-|   min_deposit   | String |          Maximum deposit amount in one transaction          |
-|   max_deposit   | String |           Minimum deposit amount in one transaction           |
+|   min_deposit   | String |          Maximum deposit amount(Fiat currency) in one transaction          |
+|   max_deposit   | String |           Minimum deposit amount(Fiat currency) in one transaction         |
 |   exchange_rate   | String |   exchange rate of  USDT to fiat currency         |
 |   loading_rate   | String |           Loading step rate for deposit to user        |
 |   bank_transaction_rate   | String |          Bank transaction rate for consumption          |

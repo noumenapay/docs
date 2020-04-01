@@ -1280,10 +1280,10 @@ After configure the Webhook in the Dashboard, please verify signature when you r
 | Parameter| Type|Description |
 | --- | --- |--- |
 | action |String | Event type  |
-| id | String | Event id |
-| params | Object | Event content |
-| create_time|long |  UTC time |
-
+| events | String[]|  events |
+| events[n].params | Object | Event content |
+| events[n].params.create_time|long |  UTC time |
+| events[n].params.id | String | Event id |
 
 The data structure of header：
 
@@ -1324,23 +1324,30 @@ Response Example:
 | Parameter| Type|Description |
 | --- | --- |--- |
 | action  |String| kyc-status |
-| params.acct_no |String | Institution account name (Unique within scope of the institution) |
-| params.card_type_id |String | Card type id |
-| params.status  |int| KYC status, 1. Successful, 2. Failure |
+| events[n].acct_no |String | Institution account name (Unique within scope of the institution) |
+| events[n].card_type_id |String | Card type id |
+| events[n].status  |int| KYC status, 1. Successful, 2. Failure |
+
 
 Event example:
 ```
 {
-    "events": [{
-       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
-       "action": "kyc-status",
+    "action": "kyc-status",
+    "events": [
+        "{\"id\":\"bc76488ddda4\",\"create_time\":1585293811000,\"params\":{\"card_type_id\":\"50010003\",\"acct_no\":\"032500004\",\"status\":1}}
+    ]
+}
+
+
+events[n] element convert string to json:
+{
+       "id": "bc76488ddda4",
        "create_time": 1585293811000,
        "params":{
-          "card_type_id": "50010003",
-          "acct_no": "032500004",
-          "status": 1
+           "card_type_id": "50010003",
+           "acct_no": "032500004",
+           "status": 1
        }
-    }]
 }
 ```
 
@@ -1350,20 +1357,26 @@ Event example:
 | Parameter| Type|Description |
 | --- | --- |--- |
 | action |String  |  card-application|
-| params.acct_no |String | Institution account name (Unique within scope of the institution) |
-| params.card_type_id |String | card type id |
+| events[n].acct_no |String | Institution account name (Unique within scope of the institution) |
+| events[n].card_type_id |String | card type id |
 
 Event example:
 ```
 {
-    "events": [{
-       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
-       "action": "card-application-ready",
+    "action": "card-application-ready",
+    "events": [
+        "{\"id\":\"bc76488ddda4\",\"create_time\":1585293811000,\"params\":{\"card_type_id\":\"50010003\",\"acct_no\":\"032500004\"}}"
+    ]
+}
+
+events[n] element convert string to json:
+{
+       "id": "bc76488ddda4",
        "create_time": 1585293811000,
        "params":{
-          "card_type_id": "50010003",
-          "acct_no": "032500004"
-    }]
+           "card_type_id": "50010003",
+           "acct_no": "032500004"
+       }
 }
 ```
 
@@ -1372,20 +1385,27 @@ Event example:
 | Parameter| Type|Description |
 | --- | --- |--- |
 | action|String  | card-status |
-| params.card_no |String | Institution account name (Unique within scope of the institution) |
-| params.status |int | Card activation status, 0.Frozen, 1.Activated successfully, 4.Activation Failure |
+| events[n].card_no |String | Institution account name (Unique within scope of the institution) |
+| events[n].status |int | Card activation status, 0.Frozen, 1.Activated successfully, 4.Activation Failure |
 
 Event example:
 ```
 {
-    "events": [{
-       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
-       "action": "card-status",
+    "action": "card-status",
+    "events": [
+        "{\"id\":\"bc76488ddda4\",\"create_time\":1585293811000,\"params\":{\"card_no\":\"123434234343\",\"status\":1}}"
+    ]
+}
+
+
+events[n] element convert string to json:
+{
+       "id": "bc76488ddda4",
        "create_time": 1585293811000,
        "params":{
-          "card_no": "123434234343",
-          "status": 1
-    }]
+           "card_no": "123434234343",
+           "status": 1
+       }
 }
 ```
 
@@ -1394,25 +1414,31 @@ Event example:
 | Parameter| Type|Description |
 | --- | --- |--- |
 | action |String |  deposit-status|
-| params.tx_id |String | Transaction ID |
-| params.status  |int| status, 1.Successful, 2.Failure, 5.Canceled |
+| events[n].params.tx_id |String | Transaction ID |
+| events[n].params.status  |int| status, 1.Successful, 2.Failure, 5.Canceled |
 
 Event example:
 ```
 {
-    "events": [{
-       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
-       "action": "deposit-status",
+    "action": "deposit-status",
+    "events": [
+        "{\"id\":\"bc76488ddda4\",\"create_time\":1585293811000,\"params\":{\"tx_id\":\"2020031609283339501898843\",\"status\":1}}"
+    ]
+}
+
+events[n] element convert string to json:
+{
+       "id": "bc76488ddda4",
        "create_time": 1585293811000,
        "params":{
-          "tx_id": "2020031609283339501898843",
-          "status": 1
-    }]
+           "tx_id": "2020031609283339501898843",
+           "status": 1
+       }
 }
 ```
 
 
-### Query expired events
+### Query push failure  events
 
 We push events every minute, and up to push 5 times for each event.
 

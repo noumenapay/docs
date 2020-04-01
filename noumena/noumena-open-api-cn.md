@@ -40,8 +40,8 @@
      - [7.2 开卡事件](#开卡事件)
      - [7.3 卡激活事件](#卡激活事件)
      - [7.4 卡充值事件](#卡充值事件)
-     - [7.5 查询过期的事件](#查询过期的事件)
-     - [7.6 更新过期的事件](#更新过期的事件)
+     - [7.5 查询推送失败的事件](#查询推送失败的事件)
+     - [7.6 更新推送失败的事件](#更新推送失败的事件)
 - [8.错误码](#错误码)
      - [8.1 业务逻辑错误码](#业务逻辑错误码)
      - [8.2 身份权限认证错误码](#身份权限认证错误码)
@@ -1304,9 +1304,11 @@ method：PUT
 | 名称| 类型|描述 |
 | --- | --- |--- |
 | action |String | 推送类型  |
-| id | String | 推送的唯一标识符 |
-| params | Object | 本次推送的消息内容，JSON 对象 |
-| create_time|long |  事件发生的时间，默认为UTC时间 |
+| events | String[] | 推送的消息数组 |
+| events[n].params | Object | 本次推送的消息内容，JSON 对象 |
+| events[n].id | String | 推送的唯一标识符 |
+| events[n].create_time|long |  事件发生的时间，默认为UTC时间 |
+
 
 
 推送的请求头数据结构为：
@@ -1348,25 +1350,30 @@ method：PUT
 | 名称| 类型|描述 |
 | --- | --- |--- |
 | action  |String| kyc-status |
-| params.acct_no |String | 机构下用户唯一ID |
-| params.card_type_id |String | 卡类型 |
-| params.status  |int| KYC状态, 1. 成功, 2. 失败 |
+| events[n].acct_no |String | 机构下用户唯一ID |
+| events[n].card_type_id |String | 卡类型 |
+| events[n].status  |int| KYC状态, 1. 成功, 2. 失败 |
 
 示例：
 ```
 {
-    "events": [{
-       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
-       "action": "kyc-status",
-       "create_time": 1585293811000,
-       "params":{
-          "card_type_id": "50010003",
-          "acct_no": "032500004",
-          "status": 1
-       }
-    }]
+    "action": "kyc-status",
+    "events": [
+        "{\"id\":\"bc76488ddda4\",\"create_time\":1585293811000,\"params\":{\"card_type_id\":\"50010003\",\"acct_no\":\"032500004\",\"status\":1}}"
+    ]
 }
 
+
+events 数组元素从 string 转成 json:
+{
+       "id": "bc76488ddda4",
+       "create_time": 1585293811000,
+       "params":{
+           "card_type_id": "50010003",
+           "acct_no": "032500004",
+           "status": 1
+       }
+}
 ```
 
 
@@ -1375,20 +1382,26 @@ method：PUT
 | 名称| 类型|描述 |
 | --- | --- |--- |
 | action |String  |  card-application-ready|
-| params.acct_no |String | 机构下用户唯一ID |
-| params.card_type_id |String | 卡类型 |
+| events[n].acct_no |String | 机构下用户唯一ID |
+| events[n].card_type_id |String | 卡类型 |
 
 示例：
 ```
 {
-    "events": [{
-       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
-       "action": "card-application-ready",
+    "action": "card-application-ready",
+    "events": [
+        "{\"id\":\"bc76488ddda4\",\"create_time\":1585293811000,\"params\":{\"card_type_id\":\"50010003\",\"acct_no\":\"032500004\"}}"
+    ]
+}
+
+events 数组元素从 string 转成 json:
+{
+       "id": "bc76488ddda4",
        "create_time": 1585293811000,
        "params":{
-          "card_type_id": "50010003",
-          "acct_no": "032500004"
-    }]
+           "card_type_id": "50010003",
+           "acct_no": "032500004"
+       }
 }
 ```
 
@@ -1397,20 +1410,27 @@ method：PUT
 | 名称| 类型|描述 |
 | --- | --- |--- |
 | action|String  | card-status |
-| params.card_no |String | 卡ID |
-| params.status |int | 卡激活状态, 0.冻结, 1.卡激活成功, 4.卡激活审核失败 |
+| events[n].card_no |String | 卡ID |
+| events[n].status |int | 卡激活状态, 0.冻结, 1.卡激活成功, 4.卡激活审核失败 |
 
 示例：
 ```
 {
-    "events": [{
-       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
-       "action": "card-status",
+    "action": "card-status",
+    "events": [
+        "{\"id\":\"bc76488ddda4\",\"create_time\":1585293811000,\"params\":{\"card_no\":\"123434234343\",\"status\":1}}"
+    ]
+}
+
+
+events 数组元素从 string 转成 json:
+{
+       "id": "bc76488ddda4",
        "create_time": 1585293811000,
        "params":{
-          "card_no": "123434234343",
-          "status": 1
-    }]
+           "card_no": "123434234343",
+           "status": 1
+       }
 }
 ```
 
@@ -1419,27 +1439,33 @@ method：PUT
 | 名称| 类型|描述 |
 | --- | --- |--- |
 | action |String |  deposit-status|
-| params.tx_id |String | 交易ID |
-| params.status  |int| 卡充值状态, 1.成功, 2.失败, 5.取消 |
+| events[n].tx_id |String | 交易ID |
+| events[n].status  |int| 卡充值状态, 1.成功, 2.失败, 5.取消 |
 
 示例：
 ```
 {
-    "events": [{
-       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
-       "action": "deposit-status",
+    "action": "deposit-status",
+    "events": [
+        "{\"id\":\"bc76488ddda4\",\"create_time\":1585293811000,\"params\":{\"tx_id\":\"2020031609283339501898843\",\"status\":1}}"
+    ]
+}
+
+events element convert string to json:
+{
+       "id": "bc76488ddda4",
        "create_time": 1585293811000,
        "params":{
-          "tx_id": "2020031609283339501898843",
-          "status": 1
-    }]
+           "tx_id": "2020031609283339501898843",
+           "status": 1
+       }
 }
 ```
 
 
-### 查询过期的事件
+### 查询推送失败的事件
 
-我们每隔一分钟推送一次事件，每个事件我们最多推送5次。查询过期的事件请用此接口：
+我们每隔一分钟推送一次事件，每个事件我们最多推送5次，推送5次都失败表示该事件推送失败，将不会再推送。查询推送失败的事件请用此接口：
 
 ```text
 url：/api/v1/events
@@ -1479,9 +1505,9 @@ method：GET
 ```
 
 
-### 更新过期的事件
+### 更新推送失败的事件
 
-更新成功后，标记为推送成功，无法再通过```查询过期的事件```查到。
+更新成功后，标记为推送成功，无法再通过```查询推送失败的事件```接口查到。
 
 ```text
 url：/api/v1/events

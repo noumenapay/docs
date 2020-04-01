@@ -1280,7 +1280,7 @@ After configure the Webhook in the Dashboard, please verify signature when you r
 | Parameter| Type|Description |
 | --- | --- |--- |
 | action |String | Event type  |
-| id | int | Event id |
+| id | String | Event id |
 | params | Object | Event content |
 | create_time|long |  UTC time |
 

@@ -1304,7 +1304,7 @@ method：PUT
 | 名称| 类型|描述 |
 | --- | --- |--- |
 | action |String | 推送类型  |
-| id | int | 推送的唯一标识符 |
+| id | String | 推送的唯一标识符 |
 | params | Object | 本次推送的消息内容，JSON 对象 |
 | create_time|long |  事件发生的时间，默认为UTC时间 |
 

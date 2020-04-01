@@ -39,7 +39,8 @@
      - [7.2 Card Apply Event](#Card-Apply-Event)
      - [7.3 Card Activation Event](#Card-Activation-Event)
      - [7.4 Deposit Event](#Deposit-Event)
-     - [7.5 Query push failure events](#Query-push-failure-events)
+     - [7.5 Query expired events](#Query-expired-events)
+     - [7.6 Update expired events](#Update-expired-events)
 - [8.Error Codes](#error-codes)
      - [8.1 Business Logic Error Codes](#Business-Logic-Error-Codes)
      - [8.2 Identity Authentication Error Codes](#Identity-Authentication-Error-Codes)
@@ -1331,13 +1332,13 @@ Event example:
 ```
 {
     "events": [{
-       "id":1,
-       "action":"kyc-status",
-       "create_time":1585293811000,
+       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
+       "action": "kyc-status",
+       "create_time": 1585293811000,
        "params":{
-          "card_type_id":"50010003",
-          "acct_no":"032500004",
-          "status":1
+          "card_type_id": "50010003",
+          "acct_no": "032500004",
+          "status": 1
        }
     }]
 }
@@ -1356,12 +1357,12 @@ Event example:
 ```
 {
     "events": [{
-       "id":1,
-       "action":"card-application-ready",
-       "create_time":1585293811000,
+       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
+       "action": "card-application-ready",
+       "create_time": 1585293811000,
        "params":{
-          "card_type_id":"50010003",
-          "acct_no":"032500004"
+          "card_type_id": "50010003",
+          "acct_no": "032500004"
     }]
 }
 ```
@@ -1378,12 +1379,12 @@ Event example:
 ```
 {
     "events": [{
-       "id":1,
-       "action":"card-status",
-       "create_time":1585293811000,
+       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
+       "action": "card-status",
+       "create_time": 1585293811000,
        "params":{
-          "card_no":"123434234343",
-          "status":1
+          "card_no": "123434234343",
+          "status": 1
     }]
 }
 ```
@@ -1400,20 +1401,20 @@ Event example:
 ```
 {
     "events": [{
-       "id":1,
-       "action":"deposit-status",
-       "create_time":1585293811000,
+       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
+       "action": "deposit-status",
+       "create_time": 1585293811000,
        "params":{
-          "tx_id":"2020031609283339501898843",
-          "status":1
+          "tx_id": "2020031609283339501898843",
+          "status": 1
     }]
 }
 ```
 
 
-### Query push failure events
+### Query expired events
 
-We push events every minute, and up to 5 times for each event.
+We push events every minute, and up to push 5 times for each event.
 
 ```text
 url：/api/v1/events
@@ -1432,18 +1433,61 @@ method：GET
 - Response：
 ```
 {
-    "events": [{
-       "id":1,
-       "action":"kyc-status",
-       "create_time":1585293811000,
-       "params":{
-          "card_type_id":"50010003",
-          "acct_no":"032500004",
-          "status":1
-       }
-    }]
+  "code": 0,
+  "msg": "string",
+  "result": {
+        "total": 2,
+        "records": [{
+           "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
+           "action": "kyc-status",
+           "create_time": 1585293811000,
+           "params":{
+              "card_type_id": "50010003",
+              "acct_no": "032500004",
+              "status":1
+           }
+        }]
+  }     
 }
 
+```
+
+
+### Update expired events
+
+After the update is successful, event was marked as pushed successfully, and can no longer be found through ```Query expired events```.
+
+```text
+url：/api/v1/events
+method：PUT
+```
+
+- Request：
+
+| Parameter |  Type  | Requirement  |Description |
+| :------------: | :----: | :----------: |:---------- |
+|    event_id     | String[] | Required|  event id |
+
+
+```json
+{
+  "event_id": [
+      "bc7648da4f9c466aa8bad56c3c8ddda4",
+      "cc7648da4f9c466aa8bad56c3c8ddda3"
+  ]
+}
+```
+
+
+
+- Response：
+
+```json
+{
+  "code": 0,
+  "msg": "string",
+  "result": true
+}
 ```
 
 ## Error Codes

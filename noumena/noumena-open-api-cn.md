@@ -40,7 +40,8 @@
      - [7.2 开卡事件](#开卡事件)
      - [7.3 卡激活事件](#卡激活事件)
      - [7.4 卡充值事件](#卡充值事件)
-     - [7.5 查询推送失败的事件](#查询推送失败的事件)
+     - [7.5 查询过期的事件](#查询过期的事件)
+     - [7.6 更新过期的事件](#更新过期的事件)
 - [8.错误码](#错误码)
      - [8.1 业务逻辑错误码](#业务逻辑错误码)
      - [8.2 身份权限认证错误码](#身份权限认证错误码)
@@ -1336,7 +1337,7 @@ method：PUT
 
 {
    "code": 0,
-   "msg":"SUCCESS"
+   "msg": "SUCCESS"
 }
 ```
 
@@ -1355,13 +1356,13 @@ method：PUT
 ```
 {
     "events": [{
-       "id":1,
-       "action":"kyc-status",
-       "create_time":1585293811000,
+       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
+       "action": "kyc-status",
+       "create_time": 1585293811000,
        "params":{
-          "card_type_id":"50010003",
-          "acct_no":"032500004",
-          "status":1
+          "card_type_id": "50010003",
+          "acct_no": "032500004",
+          "status": 1
        }
     }]
 }
@@ -1381,12 +1382,12 @@ method：PUT
 ```
 {
     "events": [{
-       "id":1,
-       "action":"card-application-ready",
-       "create_time":1585293811000,
+       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
+       "action": "card-application-ready",
+       "create_time": 1585293811000,
        "params":{
-          "card_type_id":"50010003",
-          "acct_no":"032500004"
+          "card_type_id": "50010003",
+          "acct_no": "032500004"
     }]
 }
 ```
@@ -1403,12 +1404,12 @@ method：PUT
 ```
 {
     "events": [{
-       "id":1,
-       "action":"card-status",
-       "create_time":1585293811000,
+       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
+       "action": "card-status",
+       "create_time": 1585293811000,
        "params":{
-          "card_no":"123434234343",
-          "status":1
+          "card_no": "123434234343",
+          "status": 1
     }]
 }
 ```
@@ -1425,20 +1426,20 @@ method：PUT
 ```
 {
     "events": [{
-       "id":1,
-       "action":"deposit-status",
-       "create_time":1585293811000,
+       "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
+       "action": "deposit-status",
+       "create_time": 1585293811000,
        "params":{
-          "tx_id":"2020031609283339501898843",
-          "status":1
+          "tx_id": "2020031609283339501898843",
+          "status": 1
     }]
 }
 ```
 
 
-### 查询推送失败的事件
+### 查询过期的事件
 
-我们每隔一分钟推送一次事件，每个事件我们最多推送5次。查询推送失败的事件请用此接口：
+我们每隔一分钟推送一次事件，每个事件我们最多推送5次。查询过期的事件请用此接口：
 
 ```text
 url：/api/v1/events
@@ -1458,18 +1459,61 @@ method：GET
 
 ```
 {
-    "events": [{
-       "id":1,
-       "action":"kyc-status",
-       "create_time":1585293811000,
-       "params":{
-          "card_type_id":"50010003",
-          "acct_no":"032500004",
-          "status":1
-       }
-    }]
+  "code": 0,
+  "msg": "string",
+  "result": {
+        "total": 2,
+        "records": [{
+           "id": "bc7648da4f9c466aa8bad56c3c8ddda4",
+           "action": "kyc-status",
+           "create_time": 1585293811000,
+           "params":{
+              "card_type_id": "50010003",
+              "acct_no": "032500004",
+              "status":1
+           }
+        }]
+  }     
 }
 
+```
+
+
+### 更新过期的事件
+
+更新成功后，标记为推送成功，无法再通过```查询过期的事件```查到。
+
+```text
+url：/api/v1/events
+method：PUT
+```
+
+- 请求：
+
+| Parameter |  Type  | Requirement  |Description |
+| :------------: | :----: | :----------: |:---------- |
+|    event_id     | String[] | 必填| 事件id |
+
+
+```json
+{
+  "event_id": [
+      "bc7648da4f9c466aa8bad56c3c8ddda4",
+      "cc7648da4f9c466aa8bad56c3c8ddda3"
+  ]
+}
+```
+
+
+
+- 响应：
+
+```json
+{
+  "code": 0,
+  "msg": "string",
+  "result": true
+}
 ```
 
 

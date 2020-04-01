@@ -1282,8 +1282,8 @@ After configure the Webhook in the Dashboard, please verify signature when you r
 | action |String | Event type  |
 | events | String[]|  events |
 | events[n].params | Object | Event content |
-| events[n].params.create_time|long |  UTC time |
-| events[n].params.id | String | Event id |
+| events[n].create_time|long |  UTC time |
+| events[n].id | String | Event id |
 
 The data structure of header：
 
@@ -1324,9 +1324,9 @@ Response Example:
 | Parameter| Type|Description |
 | --- | --- |--- |
 | action  |String| kyc-status |
-| events[n].acct_no |String | Institution account name (Unique within scope of the institution) |
-| events[n].card_type_id |String | Card type id |
-| events[n].status  |int| KYC status, 1. Successful, 2. Failure |
+| events[n].params.acct_no |String | Institution account name (Unique within scope of the institution) |
+| events[n].params.card_type_id |String | Card type id |
+| events[n].params.status  |int| KYC status, 1. Successful, 2. Failure |
 
 
 Event example:
@@ -1357,8 +1357,8 @@ events[n] element convert string to json:
 | Parameter| Type|Description |
 | --- | --- |--- |
 | action |String  |  card-application|
-| events[n].acct_no |String | Institution account name (Unique within scope of the institution) |
-| events[n].card_type_id |String | card type id |
+| events[n].params.acct_no |String | Institution account name (Unique within scope of the institution) |
+| events[n].params.card_type_id |String | card type id |
 
 Event example:
 ```
@@ -1385,8 +1385,8 @@ events[n] element convert string to json:
 | Parameter| Type|Description |
 | --- | --- |--- |
 | action|String  | card-status |
-| events[n].card_no |String | Institution account name (Unique within scope of the institution) |
-| events[n].status |int | Card activation status, 0.Frozen, 1.Activated successfully, 4.Activation Failure |
+| events[n].params.card_no |String | Institution account name (Unique within scope of the institution) |
+| events[n].params.status |int | Card activation status, 0.Frozen, 1.Activated successfully, 4.Activation Failure |
 
 Event example:
 ```

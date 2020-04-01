@@ -1350,9 +1350,9 @@ method：PUT
 | 名称| 类型|描述 |
 | --- | --- |--- |
 | action  |String| kyc-status |
-| events[n].acct_no |String | 机构下用户唯一ID |
-| events[n].card_type_id |String | 卡类型 |
-| events[n].status  |int| KYC状态, 1. 成功, 2. 失败 |
+| events[n].params.acct_no |String | 机构下用户唯一ID |
+| events[n].params.card_type_id |String | 卡类型 |
+| events[n].params.status  |int| KYC状态, 1. 成功, 2. 失败 |
 
 示例：
 ```
@@ -1382,8 +1382,8 @@ events 数组元素从 string 转成 json:
 | 名称| 类型|描述 |
 | --- | --- |--- |
 | action |String  |  card-application-ready|
-| events[n].acct_no |String | 机构下用户唯一ID |
-| events[n].card_type_id |String | 卡类型 |
+| events[n].params.acct_no |String | 机构下用户唯一ID |
+| events[n].params.card_type_id |String | 卡类型 |
 
 示例：
 ```
@@ -1410,8 +1410,8 @@ events 数组元素从 string 转成 json:
 | 名称| 类型|描述 |
 | --- | --- |--- |
 | action|String  | card-status |
-| events[n].card_no |String | 卡ID |
-| events[n].status |int | 卡激活状态, 0.冻结, 1.卡激活成功, 4.卡激活审核失败 |
+| events[n].params.card_no |String | 卡ID |
+| events[n].params.status |int | 卡激活状态, 0.冻结, 1.卡激活成功, 4.卡激活审核失败 |
 
 示例：
 ```
@@ -1439,8 +1439,8 @@ events 数组元素从 string 转成 json:
 | 名称| 类型|描述 |
 | --- | --- |--- |
 | action |String |  deposit-status|
-| events[n].tx_id |String | 交易ID |
-| events[n].status  |int| 卡充值状态, 1.成功, 2.失败, 5.取消 |
+| events[n].params.tx_id |String | 交易ID |
+| events[n].params.status  |int| 卡充值状态, 1.成功, 2.失败, 5.取消 |
 
 示例：
 ```

@@ -429,7 +429,7 @@ method：POST
 |         doc_no         | String |     Required     |                                        Document number                                        |
 |        doc_type        | String |     Required     | Document type. passport：Passport，idcard：National ID card |
 |       front_doc        | String |     Required     |                              Front face picture. Base64 encoding. File size should be less than 2M  |
-|        back_doc        | String |     Required     |                              Back face picture. Base64 encoding. File size should be less than 2M              |
+|        back_doc        | String |     Optional     |                              Back face picture. Required if doc_type is idcard. Base64 encoding. File size should be less than 2M              |
 |        mix_doc         | String |     Required     |                            Photo with certificate in hand. Base64 encoding. File size should be less than 2M |
 |      country_code      | String |     Required     | International country code，for example "+86". Max. character length: 5 |
 |         mobile         | String |     Required     |                           Mobile number, Max. character length: 32                            |

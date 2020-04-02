@@ -431,7 +431,7 @@ method：POST
 | doc_no | String |必填 |证件号码，字符长度最大128位|
 | doc_type | String |必填 |证件类型: passport: 护照，idcard：身份证，字符长度最大8位|
 | front_doc | String |必填 |正面照。base64编码, 照片文件大小应小于2M|
-| back_doc | String |必填 |反面照。base64编码，照片文件大小应小于2M|
+| back_doc | String |选填 |反面照，doc_type是idcard时必须填写。base64编码，照片文件大小应小于2M|
 | mix_doc | String |必填 |手持证件照。base64编码，照片文件大小应小于2M|
 |   country_code | String |必填 |手机国际区号，如“+86”。字符长度最大5位|
 |   mobile | String |必填 |手机号，字符长度最大32位|

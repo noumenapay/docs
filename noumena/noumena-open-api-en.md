@@ -1440,7 +1440,7 @@ events[n] element convert string to json:
 
 ### Query push failure events
 
-We push events every minute, and up to push 5 times for each event.
+We push events every minute, and up to push 5 times for each event. Failure to push 5 times means the event failed and will not be pushed again, please use ```Query push failure events```.
 
 ```text
 url：/api/v1/events

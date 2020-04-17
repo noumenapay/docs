@@ -436,7 +436,7 @@ method：POST
 |          mail          | String |     Required     |                           Email address,don't support 163.com email host. Max. character length: 64                            |
 |        address         | String |     Required     |                          Postal address, the bank card will send tothis address. Max. character length: 256                           |
 |        zipcode         | String |     Required     |                              Zip code, Max. character length: 20                              |
-|      maiden_name       | String |     Required      |                         Legal maiden name, Max. character length: 255                         |
+|      maiden_name       | String |     Required      |                         Your Mother name or put any relative Friend name, Max. character length: 255                         |
 | card_type_id |String |Required | Bank card type id, for example: 10010001|   
 |        kyc_info        | String |     Optional     |                                     Other KYC information                                     |
 | mail_verification_code | String |     Optional     |                                    Email verification code                                    |

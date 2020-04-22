@@ -188,7 +188,11 @@ method：GET
     "result": [
         {
             "balance": "872.5262",
-            "address": "0x57700ea3429bc5b3c5c215a530d19cbc685389cd",
+            "address": [
+                "0x78fdf93079152d506f42042005a0ea89db595c28",
+                "0x6e033252529baab12b8074e2066c96ed35593335",
+                "0xd29d36bb71e4fb2f81fec84828369a668721b2a2"
+            ],
             "coin_type": "USDT"
         }
     ]
@@ -1031,7 +1035,9 @@ method：POST
         "card_number": "438521******2001",
         "card_type": "EGEN BLUE",
         "current_balance": "121.12454",
-        "available_balance": "10.23"
+        "current_balance_usd": "121.12454",
+        "available_balance": "10.23",
+        "available_balance_usd": "10.23"
     }
 }
 ```
@@ -1040,8 +1046,10 @@ method：POST
 | :--------: | :----: | :------------------------------ |
 |   card_number   | String |         真实银行卡号           |
 |   card_type   | String |         银行卡类型           |
-|   current_balance   | String |      当前余额（USD）           |
-|   available_balance   | String |   可用余额（USD）           |
+|   current_balance   | String |      当前余额（卡支持的货币）           |
+|   current_balance_usd   | String |      当前余额（USD）           |
+|   available_balance   | String |   可用余额（卡支持的货币）           |
+|   available_balance_usd   | String |   可用余额（USD）           |
 
 
 ### 查询卡账单 
@@ -1070,8 +1078,11 @@ method：POST
       	  "month_year":"022020",
           "statement_cycle_date": "28/11/2019",
           "opening_balance": "0.00",
+          "opening_balance_usd": "0.00",
           "closing_balance": "150.55",
+          "closing_balance_usd": "150.55",
           "available_balance": "N/A",
+          "available_balance_usd": "N/A",
           "bank_tx_list": [
               {
                   "transaction_date": "20/11/2019",
@@ -1079,7 +1090,9 @@ method：POST
                   "tx_id": "54675678678",                  
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
+                  "debit_usd": "2.50",
                   "credit": "",
+                  "credit_usd": "",
                   "type": 1
               },
               {
@@ -1088,7 +1101,9 @@ method：POST
                   "tx_id": "54675678677",
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
+                  "debit_usd": "2.50",
                   "credit": "",
+                  "credit_usd": "",
                   "type": 1
               }
           ]
@@ -1101,16 +1116,21 @@ method：POST
 | :--------: | :----: | :------------------------------ |
 |   month_year   | String |  日期，MMyyyy |
 |   statement_cycle_date   | String |  报表生成日期 |
-|   opening_balance   | String | 起始余额(USD)  |
-|   closing_balance   | String | 截止余额(USD)  |
-|   available_balance   | String | 可用余额(USD)  |
+|   opening_balance   | String | 起始余额(卡支持的货币)  |
+|   opening_balance_usd   | String | 起始余额(USD)  |
+|   closing_balance   | String | 截止余额(卡支持的货币)  |
+|   closing_balance_usd    | String | 截止余额(USD)  |
+|   available_balance   | String | 可用余额(卡支持的货币)  |
+|   available_balance_usd   | String | 可用余额(USD)  |
 |   bank_tx_list[n]   | Object | 交易列表  |
 |   bank_tx_list[0].transaction_date   | String | 交易日期  |
 |   bank_tx_list[0].posting_date   | String | 交易提交日期  |
 |   bank_tx_list[0].tx_id   | String | 交易ID |
 |   bank_tx_list[0].description   | String | 描述  |
-|   bank_tx_list[0].debit   | String | 消费金额(USD)  |
-|   bank_tx_list[0].credit   | String | 存入金额(USD)  |
+|   bank_tx_list[0].debit   | String | 消费金额(卡支持的货币)  |
+|   bank_tx_list[0].debit_usd   | String | 消费金额(USD)  |
+|   bank_tx_list[0].credit   | String | 存入金额(卡支持的货币)   |
+|   bank_tx_list[0].credit_usd   | String | 存入金额(USD)  |
 |   bank_tx_list[0].type   | int | 交易类型，1.消费、2.充值、3.取款、4.转账  |
 
 

@@ -184,7 +184,11 @@ method：GET
     "result": [
         {
             "balance": "872.5262",
-            "address": "0x57700ea3429bc5b3c5c215a530d19cbc685389cd",
+            "address": [
+                "0x78fdf93079152d506f42042005a0ea89db595c28",
+                "0x6e033252529baab12b8074e2066c96ed35593335",
+                "0xd29d36bb71e4fb2f81fec84828369a668721b2a2"
+            ],
             "coin_type": "USDT"
         }
     ]
@@ -436,7 +440,7 @@ method：POST
 |          mail          | String |     Required     |                           Email address,don't support 163.com email host. Max. character length: 64                            |
 |        address         | String |     Required     |                          Postal address, the bank card will send tothis address. Max. character length: 256                           |
 |        zipcode         | String |     Required     |                              Zip code, Max. character length: 20                              |
-|      maiden_name       | String |     Required      |                         Your Mother name or put any relative Friend name, Max. character length: 255                         |
+|      maiden_name       | String |     Required      |                        Your Mother name or put any relative Friend name, Max. character length: 255                         |
 | card_type_id |String |Required | Bank card type id, for example: 10010001|   
 |        kyc_info        | String |     Optional     |                                     Other KYC information                                     |
 | mail_verification_code | String |     Optional     |                                    Email verification code                                    |
@@ -1014,7 +1018,9 @@ method：POST
         "card_number": "438521******2001",
         "card_type": "EGEN BLUE",
         "current_balance": "148.05",
-        "available_balance": "138.05"
+        "current_balance_usd": "148.05",
+        "available_balance": "138.05",
+        "available_balance_usd": "138.05"
     }
 }
 ```
@@ -1023,8 +1029,10 @@ method：POST
 | :---------------: | :----: | :-------------- |
 |      card_number      | String | Actual card number     |
 |     card_type     | String | Card type       |
-|  current_balance  | String | Current balance（USD） |
-| available_balance | String | Usable balance（USD）  |
+|  current_balance  | String | Current balance (card currency) |
+|  current_balance_usd  | String | Current balance(USD) |
+| available_balance | String | Usable balance (card currency)  |
+| available_balance_usd | String | Usable balance (USD)  |
 
 ### Query transaction records 
 
@@ -1052,8 +1060,11 @@ method：POST
       	  "month_year":"022020",
           "statement_cycle_date": "28/11/2019",
           "opening_balance": "0.00",
+          "opening_balance_usd": "0.00",
           "closing_balance": "150.55",
+          "closing_balance_usd": "150.55",
           "available_balance": "N/A",
+          "available_balance_usd": "N/A",
           "bank_tx_list": [
               {
                   "transaction_date": "20/11/2019",
@@ -1061,7 +1072,9 @@ method：POST
                   "tx_id": "54675678678",
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
+                  "debit_usd": "2.50",                  
                   "credit": "",
+                  "credit_usd": "",                  
                   "type": 1
               },
               {
@@ -1070,7 +1083,9 @@ method：POST
                   "tx_id": "54675678677",
                   "description": "MONTHLY FEE",
                   "debit": "2.50",
+                  "debit_usd": "2.50",                  
                   "credit": "",
+                  "credit_usd": "", 
                   "type": 1
               }
           ]
@@ -1083,16 +1098,21 @@ method：POST
 | :------------------------------: | :----: | :----------------------------------------------------------------- |
 |       month_year                 | String  | query Date,format:MMyyyy                                      |
 |       statement_cycle_date       | String | Date for generating statement                                      |
-|         opening_balance          | String | Opening balance(USD)                                                    |
-|         closing_balance          | String | Closing balance(USD)                                                    |
-|        available_balance         | String | Usable balance(USD)                                                     |
+|         opening_balance          | String | Opening balance(card currency)                                                    |
+|         opening_balance_usd           | String | Opening balance(USD)                                                    |
+|         closing_balance          | String | Closing balance(card currency)                                                    |
+|         closing_balance_usd           | String | Closing balance(USD)                                                    |
+|        available_balance         | String | Usable balance(card currency)                                                     |
+|        available_balance_usd         | String | Usable balance(USD)                                                     |
 |         bank_tx_list[n]          | Object | Transaction list                                                   |
 | bank_tx_list[0].transaction_date | String | Transaction date                                                   |
 |   bank_tx_list[0].posting_date   | String | Transaction record submission date                                 |
 |   bank_tx_list[0].tx_id   | String | Transaction ID                                 |
 |   bank_tx_list[0].description    | String | Description                                                        |
-|      bank_tx_list[0].debit       | String | Debit amount(USD)                                                       |
-|      bank_tx_list[0].credit      | String | Credit amount(USD)                                                      |
+|      bank_tx_list[0].debit       | String | Debit amount(card currency)                                                       |
+|      bank_tx_list[0].debit_usd       | String | Debit amount(USD)                                                       |
+|      bank_tx_list[0].credit      | String | Credit amount(card currency)                                                      |
+|      bank_tx_list[0].credit_usd      | String | Credit amount(USD)                                                      |
 |       bank_tx_list[0].type       |  int   | Transaction type, 1. Debit, 2. Deposit, 3. Withdrawal, 4. Transfer |
 
 ### Query virtual card information

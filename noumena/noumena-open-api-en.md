@@ -19,10 +19,13 @@
      - [3.4 Query all active card status](#Query-all-active-card-status)
      - [3.5 Query a specific user card activation status](#Query-a-specific-user-card-activation-status)
 - [4.Transactions](#transactions)
-     - [4.1 User deposit](#User-deposit)
-     - [4.2 Query a deposit transaction status](#Query-a-deposit-transaction-status)
-     - [4.3 Query all the deposit records](#Query-all-the-deposit-records)
-     - [4.4 Query a particular user deposit records](#Query-a-particular-user-deposit-records)
+     - [4.1 User deposit with stablecoin](#User-deposit-with-stablecoin)
+     - [4.2 User deposit with non-stablecoin](#User-deposit-with-non-stablecoin)
+     - [4.3 Query Exchange Price](Query-Exchange-Price)
+     - [4.4 Query a deposit transaction status](#Query-a-deposit-transaction-status)
+     - [4.5 Query all the deposit records](#Query-all-the-deposit-records)
+     - [4.6 Query a particular user deposit records](#Query-a-particular-user-deposit-records)
+     
 - [5.Bank](#bank)
      - [5.1 Query card status](#Query-card-status)
      - [5.2 Query account balance](#Query-account-balance)
@@ -593,6 +596,8 @@ method：POST
 
 ### Submit active card attachment
 
+This API only for the card that must submit attachments before activation. Submit one attachment of "poa_doc" and "active_doc".
+
 - Request:
 
 ```text
@@ -603,8 +608,8 @@ method：POST
 |  Parameter  | Type  | Whether Required |                        Description                         |
 | :---------: | :---: | :--------------: | :-------------------------------------------------------- |
 |  card_no  |  String  |    Required     | card no     |
-|  poa_doc  |  String  |    Optional     | picture of proof of address     |
-|  active_doc  |  String  |    Optional     | picture of holding passport and bank card  |
+|  poa_doc  |  String  |    Optional     | Picture of proof of address. File size should be less than 2M. If you submited poa_doc in KYC don't need do again.    |
+|  active_doc  |  String  |    Optional     | Picture of holding passport and bank card. File size should be less than 2M  |
 
 - Response:
 
@@ -732,7 +737,7 @@ method：GET
 
 ## Transactions
 
-### User deposit
+### User deposit with stablecoin
 
 - Request:
 
@@ -745,8 +750,8 @@ method：POST
 | :--------: | :----: | :--------------: | :---------------------------------------------------------------: |
 |  card_no   | String |     Required     |                           Bank card no.                           |
 |  acct_no   | String |     Required     | Institution account name (Unique within scope of the institution) |
-|   amount   | String |     Required     |             Deposit amount in corresponding currency              |
-| coin_type  | String |     Required     |             Only USDT supported in version v1.0.0              |
+|   amount   | String |     Required     |             Deposit amount in corresponding coin_type              |
+| coin_type  | String |     Required     |             Only USDT supported yet              |
 | cust_tx_id | String |     Required     |                    Institution transaction ID                     |
 |  remarks   | String |     Optional     |                        Transaction remarks                        |
 
@@ -776,13 +781,92 @@ method：POST
 |     exchange_fee      | String | Fee for exchanging digital coin to USDT, Unit: USDT  |
 |     loading_fee      | String | Deposit fee，Unit: USDT   |
 |     deposit_usdt      | String | The amount of USDT deposited for the user after charging loading_fee and exchange_fee, Unit: USDT   |
-|     currency_amount      | String | received currency amount  |
-|     currency_type      | String | received currency type  |
+|     currency_amount      | String | User received currency amount  |
+|     currency_type      | String | It is card supported currency type |
 |     exchange_rate      | String |  exchange rate of USDT/Fiat currency  |
 
 
 > If coin_type is USDT, USDT amount charged from institution balance = exchange_fee + loading_fee + deposit_usdt.
 
+
+### User deposit with non-stablecoin
+
+- Request:
+
+```text
+url：/api/v1/deposit-transactions/coin
+method：POST
+```
+
+| Parameter  |  Type  | Whether Required |                            Description                            |
+| :--------: | :----: | :--------------: | :---------------------------------------------------------------: |
+|  card_no   | String |     Required     |                           Bank card no.                           |
+|  acct_no   | String |     Required     | Institution account name (Unique within scope of the institution) |
+|   amount   | String |     Required     |             Deposit amount in corresponding coin_type              |
+| coin_type  | String |     Required     |             Only BTC and ETH supported yet              |
+| cust_tx_id | String |     Required     |                    Institution transaction ID                     |
+|  remarks   | String |     Optional     |                        Transaction remarks                        |
+
+- Response:
+
+```json
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "tx_id": "2020022511324811001637548",
+        "exchange_fee_rate": "0.002",
+        "exchange_fee": "0.01"
+    }
+}
+```
+
+| Parameter |  Type    | Description |
+| :------------: | :----------: |:---------- |
+|     tx_id      | String | Noumena transaction ID  |
+|     exchange_fee_rate      | String | Fee rate for exchanging digital coin to USDT   |
+|     exchange_fee      | String | Fee for exchanging digital coin to USDT, Unit: ```coin_type```  |
+
+
+### Query Exchange Price
+
+```text
+url：/api/v1/deposit-transactions/price
+method：GET
+```
+
+- Request：
+
+
+- Response：
+
+```json
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "total": 2,
+        "records": [
+            {
+                "symbol": "BTC/USDT",
+                "price": "7553.5492732425",
+                "update_time": "2020-04-26 07:19:30"
+            },
+            {
+                "symbol": "ETH/USDT",
+                "price": "193.9202409808",
+                "update_time": "2020-04-26 07:19:30"
+            }
+        ]
+    }
+}
+```
+
+|  Parameter   |  Type  |        Description         |
+| :--------: | :----: | :------------------------------ |
+|  symbol   | String |         	Exchange symbol        |
+|    price    | String | price |
+|    update_time    | String | update time |
 
 ### Query a deposit transaction status
 

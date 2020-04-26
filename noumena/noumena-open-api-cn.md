@@ -20,10 +20,12 @@
      - [3.4 查询所有卡片状态](#查询所有卡片状态)
      - [3.5 查询指定用户所有卡片状态](#查询指定用户所有卡片状态)
 - [4.充值](#充值)
-     - [4.1 用户卡充值](#用户卡充值)
-     - [4.2 查询某笔卡充值交易状态](#查询某笔卡充值交易状态)
-     - [4.3 查询所有卡充值记录](#查询所有卡充值记录)
-     - [4.4 查询指定用户所有卡充值记录](#查询指定用户所有卡充值记录)
+     - [4.1 用稳定币给用户卡充值](#用稳定币给用户卡充值)
+     - [4.2 用非稳定币给用户卡充值](#用非稳定币给用户卡充值)
+     - [4.3 查询币对价格](#查询币对价格)
+     - [4.4 查询某笔卡充值交易状态](#查询某笔卡充值交易状态)
+     - [4.5 查询所有卡充值记录](#查询所有卡充值记录)
+     - [4.6 查询指定用户所有卡充值记录](#查询指定用户所有卡充值记录)
 - [5.银行卡查询](#银行卡查询)
      - [5.1 查询卡是否激活](#查询卡是否激活)
      - [5.2 查询卡余额](#查询卡余额)
@@ -599,10 +601,12 @@ method：POST
 | :--------: | :----: | :------------------------------ |
 |   card_no   | String |           分配的银行卡ID，查询时用card_no，避免真是卡号信息泄露。生成规则：机构id+5位随机数 +卡种id +卡最后四位           |
 |   card_number   | String |           分配的真实银行卡号, 只显示前6位和后4位           |
-|   status   | int |   状态：2. 开卡申请成功(未激活)， 5. 申请失败，卡片正在制作中           |
+|   status   | int |   状态：2. 开卡申请成功(未激活)， 5. 申请失败(卡片正在制作中)           |
 
 
 ### 提交激活卡需要的附件
+
+只有激活时需要提交附件的卡类型，才需要调用这个接口。
 
 - Request:
 
@@ -614,7 +618,7 @@ method：POST
 |  Parameter  | Type  | Whether Required |                        Description                         |
 | :---------: | :---: | :--------------: | :-------------------------------------------------------- |
 |  card_no  |  String  |    必填     | 卡号    |
-|  poa_doc  |  String  |    选填     |   地址证明照。base64编码，照片文件大小应小于2M  |
+|  poa_doc  |  String  |    选填     |   地址证明照。base64编码，照片文件大小应小于2M。如果已在KYC时提交，无需再提交。  |
 |  active_doc  |  String  |    选填     | 手持护照和银行卡照。base64编码，照片文件大小应小于2M  |
 
 - Response:
@@ -696,7 +700,7 @@ method：GET
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |     机构端用户编号(机构端唯一)      |
 |   card_no   |  int   |              银行卡号               |
-|   status    |  int   | 状态码: 0 冻结， 1 激活成功， 2未激活， 3. 激活待审核， 4. 激活审核失败, 5. 申请失败，卡片正在制作中 |
+|   status    |  int   | 状态码: 0 冻结， 1 激活成功， 2未激活， 3. 激活待审核， 4. 激活审核失败,  5. 申请失败(卡片正在制作中) |
 | create_time |  long  |              创建时间               |
 
 
@@ -744,13 +748,13 @@ method：GET
 | :--------: | :----: | :------------------------------ |
 |   acct_no   | String |     机构端用户编号(机构端唯一)      |
 |   card_no   |  int   |              银行卡ID               |
-|   status    |  int   | 状态码: 0 冻结， 1 激活成功， 2未激活， 3. 激活待审核， 4. 激活审核失败, 5. 申请失败，卡片正在制作中|
+|   status    |  int   | 状态码: 0 冻结， 1 激活成功， 2未激活， 3. 激活待审核， 4. 激活审核失败, 5. 申请失败(卡片正在制作中)|
 | create_time |  long  |              创建时间               |
 
 
 ## 充值
 
-### 用户卡充值
+### 用稳定币给用户卡充值
 
 ```text
 url：/api/v1/deposit-transactions
@@ -764,7 +768,7 @@ method：POST
 |     card_no     | String | 必填|银行卡ID                   |
 |     acct_no     | String | 必填|机构端用户编号(机构端唯一) |
 |     amount      | String | 必填|充值对应币种的金额         |
-|    coin_type    | String | 必填|币种。一期只支持USDT       |
+|    coin_type    | String | 必填|币种。只支持USDT       |
 |   cust_tx_id    | String | 必填|机构的交易流水号           |
 |     remark     | String | 选填|交易备注                   |
 
@@ -800,6 +804,89 @@ method：POST
 
 
 > 如果coin_type是USDT，从机构扣的USDT费用 = exchange_fee + loading_fee + deposit_usdt。
+
+
+### 用非稳定币给用户卡充值
+
+用非稳定币给用户卡充值，Noumena需要先去交易所按市场价兑换，```loading_fee``` 和 ```currency_amount``` 兑换后才能确定。
+
+```text
+url：/api/v1/deposit-transactions/coin
+method：POST
+```
+
+- 请求：
+
+| Parameter |  Type  | Requirement  |Description                |
+| :------------: | :----: | :----------: |:---------- |
+|     card_no     | String | 必填|银行卡ID                   |
+|     acct_no     | String | 必填|机构端用户编号(机构端唯一) |
+|     amount      | String | 必填|充值对应币种的金额         |
+|    coin_type    | String | 必填|币种。只支持BTC、ETH      |
+|   cust_tx_id    | String | 必填|机构的交易流水号           |
+|     remark     | String | 选填|交易备注                   |
+
+- 响应：
+
+```json
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "tx_id": "2020022511324811001637548",
+        "exchange_fee_rate": "0",
+        "exchange_fee": "0"
+    }
+}
+```
+
+| Parameter |  Type    | Description |
+| :------------: | :----------: |:---------- |
+|     tx_id      | String | Noumena 交易流水id  |
+|     deposit_usdt      | String | 扣除手续费后,为用户充值的USDT数量，单位是USDT   |
+|     exchange_fee_rate      | String | 充值币种兑换成USDT的费率   |
+|     exchange_fee      | String | 充值币种兑换成USDT的费用，单位是 ```coin_type```  |
+
+
+### 查询币对价格
+
+```text
+url：/api/v1/deposit-transactions/price
+method：GET
+```
+
+- 请求：
+
+
+- 响应：
+
+```json
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "total": 2,
+        "records": [
+            {
+                "symbol": "BTC/USDT",
+                "price": "7553.5492732425",
+                "update_time": "2020-04-26 07:19:30"
+            },
+            {
+                "symbol": "ETH/USDT",
+                "price": "193.9202409808",
+                "update_time": "2020-04-26 07:19:30"
+            }
+        ]
+    }
+}
+```
+
+|  Parameter   |  Type  |        Description         |
+| :--------: | :----: | :------------------------------ |
+|  symbol   | String |         	币对名称        |
+|    price    | String | 当前价格 |
+|    update_time    | String | 价格更新时间 |
 
 ### 查询某笔卡充值交易状态
 
@@ -981,6 +1068,7 @@ method：GET
 |     currency_amount      | String | 到账法币数量  |
 | exchange_rate | String |            USDT/法币汇率            |
 |  tx_status   | int |   交易状态。0、3、4:待处理中，1:充值成功，2充值失败，5:充值失败        |
+
 
 
 

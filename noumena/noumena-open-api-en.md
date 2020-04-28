@@ -382,6 +382,7 @@ method：POST
         "currency_type": "usd",
         "currency_amount": "94.13",
         "exchange_rate": "1.00145966373",
+        "fiat_exchange_rate": "1",        
         "exchange_fee": "1",
         "exchange_fee_rate": "0.01",
         "loading_fee": "5",
@@ -399,7 +400,7 @@ method：POST
 |  loading_fee    | String  |       loading fee of transaction       |
 |  loading_fee_rate    | String  |       loading fee rate of transaction       |
 | exchange_rate    | String  | exchange rate of USDT/USD             |
-
+| fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 
 
 
@@ -769,7 +770,8 @@ method：POST
         "deposit_usdt": "0.9188",
         "currency_type": "USD",
         "currency_amount": "0.92",
-        "exchange_rate": "1.00239251357"
+        "exchange_rate": "1.00239251357",
+        "fiat_exchange_rate": "1"
     }
 }
 ```
@@ -783,8 +785,8 @@ method：POST
 |     deposit_usdt      | String | The amount of USDT deposited for the user after charging loading_fee and exchange_fee, Unit: USDT   |
 |     currency_amount      | String | User received currency amount  |
 |     currency_type      | String | It is card supported currency type |
-|     exchange_rate      | String |  exchange rate of USDT/Fiat currency  |
-
+|     exchange_rate      | String |  exchange rate of USDT/USD  |
+| fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 
 > If coin_type is USDT, USDT amount charged from institution balance = exchange_fee + loading_fee + deposit_usdt.
 
@@ -816,7 +818,8 @@ method：POST
     "result": {
         "tx_id": "2020022511324811001637548",
         "exchange_fee_rate": "0.002",
-        "exchange_fee": "0.01"
+        "exchange_fee": "0.01",
+        "currency_type": "USD"
     }
 }
 ```
@@ -826,7 +829,7 @@ method：POST
 |     tx_id      | String | Noumena transaction ID  |
 |     exchange_fee_rate      | String | Fee rate for exchanging digital coin to USDT   |
 |     exchange_fee      | String | Fee for exchanging digital coin to USDT, Unit: ```coin_type```  |
-
+|     currency_type      | String | It is card supported currency type |
 
 ### Query Exchange Price
 
@@ -900,6 +903,7 @@ method：GET
                 "currency_type": "USD",                
                 "currency_amount": "60",
                 "exchange_rate": "1.00239251357",
+                "fiat_exchange_rate": "1",
                 "tx_status": 3
   }
 }
@@ -918,7 +922,8 @@ method：GET
 |   tx_amount   | String |                        Deposit amount                         |
 |     currency_type      | String | Received currency type  |
 |     currency_amount      | String | Received currency amount  |
-| exchange_rate | String |                           Exchange rate of USDT/Fiat currency                          |
+| exchange_rate | String |                           Exchange rate of USDT/USD                       |
+| fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 |  tx_status   | int |   Transaction status. 0, 3 and 4:process pending，1: deposit successful, 2 and 5：deposit failed        |
 
 
@@ -947,18 +952,19 @@ method：GET
         "total": 1,
         "records": [
             {
-                "cust_tx_id": "1223",
-                "acct_no": "03030062",
-                "card_no": "8993152800000013334",
-                "cust_tx_time": 1584350913000,
                 "tx_id": "2020031609283339501898843",
+                "cust_tx_id": "1223",
+                "card_no": "8993152800000013334",
+                "acct_no": "03030062",
                 "coin_type": "USDT",
-                "tx_amount": "61.86",     
+                "tx_amount": "61.86",
                 "exchange_fee": "0",
                 "loading_fee": "1.8558",
-                "currency_type": "USD",                
+                "currency_type": "CNY",
                 "currency_amount": "60",
-                "exchange_rate": "1.00239251357",
+                "exchange_rate": "1",
+                "fiat_exchange_rate": "1",
+                "cust_tx_time": 1584350913000,
                 "tx_status": 3
             }
         ]
@@ -979,7 +985,8 @@ method：GET
 |   tx_amount   | String |                        Deposit amount                         |
 |     currency_type      | String | Received currency type  |
 |     currency_amount      | String | Received currency amount  |
-| exchange_rate | String |                           Exchange rate of USDT/Fiat currency                          |
+| exchange_rate | String |                           Exchange rate of USDT/USD                          |
+| fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 |  tx_status   | int |   Transaction status. 0, 3 and 4:process pending，1: deposit successful, 2 and 5：deposit failed        |
 
 
@@ -1012,19 +1019,20 @@ method：GET
         "total": 1,
         "records": [
             {
-                "currency_type": "CNY",
+                "tx_id": "2020031609283339501898843",
                 "cust_tx_id": "1223",
                 "card_no": "8993152800000013334",
                 "acct_no": "03030062",
-                "cust_tx_time": 1584350913000,
-                "loading_fee": "1.8558",
-                "currency_amount": "60",
-                "tx_amount": "61.86",
-                "exchange_rate": "1",
-                "tx_id": "2020031609283339501898843",
                 "coin_type": "USDT",
-                "tx_status": 3,
-                "exchange_fee": "0"
+                "tx_amount": "61.86",
+                "exchange_fee": "0",
+                "loading_fee": "1.8558",
+                "currency_type": "CNY",
+                "currency_amount": "60",
+                "exchange_rate": "1",
+                "fiat_exchange_rate": "1",
+                "cust_tx_time": 1584350913000,
+                "tx_status": 3
             }
         ]
     }
@@ -1045,7 +1053,8 @@ method：GET
 |   tx_amount   | String |                        Deposit amount                         |
 |     currency_type      | String | Received currency type  |
 |     currency_amount      | String | Received currency amount  |
-| exchange_rate | String |                           Exchange rate of USDT/Fiat currency                          |
+| exchange_rate | String |                           Exchange rate of USDT/USD                          |
+| fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 |  tx_status   | int |   Transaction status. 0, 3 and 4:process pending，1: deposit successful, 2 and 5：deposit failed        |
 
 

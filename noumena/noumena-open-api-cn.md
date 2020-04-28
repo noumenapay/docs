@@ -386,6 +386,7 @@ method：POST
         "currency_type": "usd",
         "currency_amount": "94.13",
         "exchange_rate": "1.00145966373",
+        "fiat_exchange_rate": "1",
         "exchange_fee": "1",
         "exchange_fee_rate": "0.01",
         "loading_fee": "5",
@@ -403,6 +404,7 @@ method：POST
 |  loading_fee    | String  |       充值手续费       |
 |  loading_fee_rate    | String  |   充值手续费率       |
 | exchange_rate    | String  | USDT/USD 汇率              |
+| fiat_exchange_rate    | String  | 卡支持的法币/USD 汇率              |
 
 
 
@@ -786,7 +788,8 @@ method：POST
         "deposit_usdt": "0.9188",
         "currency_type": "USD",
         "currency_amount": "0.92",
-        "exchange_rate": "1.00239251357"
+        "exchange_rate": "1.00239251357",
+        "fiat_exchange_rate": "1"
     }
 }
 ```
@@ -800,8 +803,8 @@ method：POST
 |     loading_fee      | String | 充值手续费，单位是USDT   |
 |     currency_amount      | String | 到账法币数量  |
 |     currency_type      | String | 到账法币类型  |
-|     exchange_rate      | String | USDT/法币汇率  |
-
+|     exchange_rate      | String | USDT/USD汇率  |
+|     fiat_exchange_rate      | String | 卡支持的法币/USD汇率  |
 
 > 如果coin_type是USDT，从机构扣的USDT费用 = exchange_fee + loading_fee + deposit_usdt。
 
@@ -835,7 +838,8 @@ method：POST
     "result": {
         "tx_id": "2020022511324811001637548",
         "exchange_fee_rate": "0",
-        "exchange_fee": "0"
+        "exchange_fee": "0",
+        "currency_type": "USD"
     }
 }
 ```
@@ -843,10 +847,9 @@ method：POST
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
 |     tx_id      | String | Noumena 交易流水id  |
-|     deposit_usdt      | String | 扣除手续费后,为用户充值的USDT数量，单位是USDT   |
 |     exchange_fee_rate      | String | 充值币种兑换成USDT的费率   |
 |     exchange_fee      | String | 充值币种兑换成USDT的费用，单位是 ```coin_type```  |
-
+|     currency_type      | String | 到账法币类型  |
 
 ### 查询币对价格
 
@@ -920,6 +923,7 @@ method：GET
                 "currency_type": "USD",                
                 "currency_amount": "60",
                 "exchange_rate": "1.00239251357",
+                "fiat_exchange_rate": "1",
                 "tx_status": 3
   }
 }
@@ -938,7 +942,8 @@ method：GET
 |      loading_fee      | String |  充值手续费，单位是USDT          |
 |     currency_type      | String | 到账法币类型  |
 |     currency_amount      | String | 到账法币数量  |
-| exchange_rate | String |            USDT/法币汇率            |
+| exchange_rate | String |            USDT/USD汇率            |
+|   fiat_exchange_rate      | String | 卡支持的法币/USD汇率  |
 |  tx_status   | int |   交易状态。0、3、4:待处理中，1:充值成功，2充值失败，5:充值失败        |
 
 
@@ -979,6 +984,7 @@ method：GET
                 "currency_type": "USD",                
                 "currency_amount": "60",
                 "exchange_rate": "1.00239251357",
+                "fiat_exchange_rate": "1",
                 "tx_status": 3
             }
         ]
@@ -1000,6 +1006,7 @@ method：GET
 |     currency_type      | String | 到账法币类型  |
 |     currency_amount      | String | 到账法币数量  |
 | exchange_rate | String |            USDT/法币汇率            |
+|   fiat_exchange_rate      | String | 卡支持的法币/USD汇率  |
 |  tx_status   | int |   交易状态。0、3、4:待处理中，1:充值成功，2、5:充值失败         |
 
 
@@ -1046,6 +1053,7 @@ method：GET
                 "currency_type": "USD",                
                 "currency_amount": "60",
                 "exchange_rate": "1.00239251357",
+                "fiat_exchange_rate": "1",
                 "tx_status": 3
             }
         ]
@@ -1066,7 +1074,8 @@ method：GET
 |      loading_fee      | String |  充值手续费，单位是USDT          |
 |     currency_type      | String | 到账法币类型  |
 |     currency_amount      | String | 到账法币数量  |
-| exchange_rate | String |            USDT/法币汇率            |
+| exchange_rate | String |            USDT/USD汇率            |
+|   fiat_exchange_rate      | String | 卡支持的法币/USD汇率  |
 |  tx_status   | int |   交易状态。0、3、4:待处理中，1:充值成功，2充值失败，5:充值失败        |
 
 

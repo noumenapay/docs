@@ -839,7 +839,9 @@ method：POST
         "tx_id": "2020022511324811001637548",
         "exchange_fee_rate": "0",
         "exchange_fee": "0",
-        "currency_type": "USD"
+        "currency_type": "USD",
+        "fiat_exchange_rate": "1",
+        "exchange_rate": "1.00221569722"
     }
 }
 ```
@@ -850,6 +852,8 @@ method：POST
 |     exchange_fee_rate      | String | 充值币种兑换成USDT的费率   |
 |     exchange_fee      | String | 充值币种兑换成USDT的费用，单位是 ```coin_type```  |
 |     currency_type      | String | 到账法币类型  |
+|     exchange_rate      | String | USDT/USD汇率  |
+|     fiat_exchange_rate      | String | 卡支持的法币/USD汇率  |
 
 ### 查询币对价格
 

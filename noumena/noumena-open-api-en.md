@@ -819,7 +819,9 @@ method：POST
         "tx_id": "2020022511324811001637548",
         "exchange_fee_rate": "0.002",
         "exchange_fee": "0.01",
-        "currency_type": "USD"
+        "currency_type": "USD",
+        "fiat_exchange_rate": "1",
+        "exchange_rate": "1.00221569722"        
     }
 }
 ```
@@ -830,6 +832,8 @@ method：POST
 |     exchange_fee_rate      | String | Fee rate for exchanging digital coin to USDT   |
 |     exchange_fee      | String | Fee for exchanging digital coin to USDT, Unit: ```coin_type```  |
 |     currency_type      | String | It is card supported currency type |
+|     exchange_rate      | String |  exchange rate of USDT/USD  |
+| fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 
 ### Query Exchange Price
 

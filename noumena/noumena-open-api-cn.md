@@ -813,7 +813,7 @@ method：POST
 
 ### 用非稳定币给用户卡充值
 
-用非稳定币给用户卡充值，Noumena需要先去交易所按市场价兑换，```loading_fee``` 和 ```currency_amount``` 兑换后才能确定。
+ ETH 充值金额请大于或等于0.01，BTC 充值金额请大于或等于0.005。用非稳定币给用户卡充值，Noumena需要先去交易所按市场价兑换，```loading_fee``` 和 ```currency_amount``` 兑换后才能确定。
 
 ```text
 url：/api/v1/deposit-transactions/coin

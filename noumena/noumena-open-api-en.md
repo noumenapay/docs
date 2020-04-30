@@ -795,6 +795,8 @@ method：POST
 
 ### User deposit with non-stablecoin
 
+ETH amount please greater than or equal to 0.01, BTC amount please greater than or equal to 0.005.
+
 - Request:
 
 ```text

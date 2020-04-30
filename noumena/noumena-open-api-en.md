@@ -313,7 +313,7 @@ method：GET
 |   bank_atm_fee| String |          ATM withdraw fixed fee|
 
 
-### Crypto calculation
+### Crypto calculation (Currently not supported)
 
 - Request:
 

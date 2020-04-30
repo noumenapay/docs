@@ -146,14 +146,16 @@ method：GET
                 "currency_type": "USD",               
                 "bank_id": "5000",
                 "description": "card 1",
-                "card_network": "visa"
+                "card_network": "visa",
+                "virtual_card": false
             },
             {
                 "card_type_id": "50000002",
                 "currency_type": "USD",               
                 "bank_id": "5000",
                 "description": "card 2",
-                "card_network": "visa"
+                "card_network": "visa",
+                "virtual_card": true
             }
         ]
     }
@@ -167,7 +169,7 @@ method：GET
 | card_type_id |String | Card type id, for example 50000001|
 | description |String |description of card type |
 |   card_network   | String |    card network           |
-
+| virtual_card  | Bool |    virtual card           |
 
 ### Query customer balance
 

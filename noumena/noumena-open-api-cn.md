@@ -148,14 +148,16 @@ method：GET
                 "currency_type": "USD",
                 "bank_id": "5000",
                 "description": "card 1",
-                "card_network": "visa"
+                "card_network": "visa",
+                "virtual_card": false
             },
             {
                 "card_type_id": "50000002",
                 "currency_type": "USD",
                 "bank_id": "5000",
                 "description": "card 2",
-                "card_network": "visa"
+                "card_network": "visa",
+                "virtual_card": true
             }
         ]
     }
@@ -169,7 +171,7 @@ method：GET
 |   bank_id   | String |        银行ID           |
 |   description   | String |    卡种描述           |
 |   card_network   | String |    发卡机构：visa、master、unionpay           |
-
+|   virtual_card   | Bool |    是否是虚拟卡           |
 
 
 ### 查询机构余额

@@ -311,7 +311,7 @@ method：GET
 |   min_deposit   | String |           单笔最小充值金额（法币）           |
 |   max_deposit   | String |           单笔最大充值金额（法币）           |
 |   exchange_rate   | String |           USDT兑换相应法币的汇率           |
-|   loading_rate   | String |           给用户充值时付给 Noumena 的阶梯费率           |
+|   loading_rate   | String |           给用户充值时付给 Noumena 的阶梯费率，大部分卡只有一阶费率             |
 |   bank_transaction_rate   | String |          银行卡刷卡消费的手续费率           |
 |   bank_atm_rate   | String |          ATM取款时的手续费率           |
 |   bank_atm_fee   | String |          ATM取款时的固定手续费           |
@@ -345,8 +345,7 @@ method：POST
         "exchange_rate": "1.00145966373",
         "exchange_fee": "1.0623",
         "exchange_fee_rate": "0.01",
-        "loading_fee": "5.3115",
-        "loading_fee_rate": "0.05"
+        "loading_fee": "5.3115"
     }
 }
 ```
@@ -358,7 +357,6 @@ method：POST
 | exchange_fee    | String  |   其他币种兑换USDT的手续费           |
 | exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率           |
 |  loading_fee    | String  |       充值手续费       |
-|  loading_fee_rate    | String  |  充值手续费率     |
 | exchange_rate    | String  | USDT/USD 汇率             |
 
 
@@ -391,8 +389,7 @@ method：POST
         "fiat_exchange_rate": "1",
         "exchange_fee": "1",
         "exchange_fee_rate": "0.01",
-        "loading_fee": "5",
-        "loading_fee_rate": "0.05"
+        "loading_fee": "5"
     }
 }
 ```
@@ -404,7 +401,6 @@ method：POST
 | exchange_fee    | String  |   其他币种兑换USDT的手续费           |
 | exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率          |
 |  loading_fee    | String  |       充值手续费       |
-|  loading_fee_rate    | String  |   充值手续费率       |
 | exchange_rate    | String  | USDT/USD 汇率              |
 | fiat_exchange_rate    | String  | 卡支持的法币/USD 汇率              |
 
@@ -439,7 +435,7 @@ method：POST
 |   country | String |必填 |国家，字符长度最大50位|
 |   nationality | String |必填 |出生国，字符长度最大255位|
 | doc_no | String |必填 |证件号码，字符长度最大128位|
-| doc_type | String |必填 |证件类型: passport: 护照，idcard：身份证，字符长度最大8位|
+| doc_type | String |必填 |证件类型(目前只支持护照): passport: 护照，idcard：身份证，字符长度最大8位|
 | front_doc | String |必填 |正面照。base64编码, 照片文件大小应小于2M|
 | back_doc | String |选填 |反面照，doc_type是idcard时必须填写。base64编码，照片文件大小应小于2M|
 | mix_doc | String |必填 |手持证件照。base64编码，照片文件大小应小于2M|

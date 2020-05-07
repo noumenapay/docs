@@ -307,7 +307,7 @@ method：GET
 |   min_deposit   | String |          Maximum deposit amount(Fiat currency) in one transaction          |
 |   max_deposit   | String |           Minimum deposit amount(Fiat currency) in one transaction         |
 |   exchange_rate   | String |   exchange rate of  USDT to fiat currency         |
-|   loading_rate   | String |           Loading step rate for deposit to user        |
+|   loading_rate   | String |           Loading step rate for deposit to user, most cards have only one step rate        |
 |   bank_transaction_rate   | String |          Bank transaction rate for consumption          |
 |   bank_atm_rate   | String |          ATM withdraw rate           |
 |   bank_atm_fee| String |          ATM withdraw fixed fee|
@@ -341,8 +341,7 @@ method：POST
         "exchange_rate": "1.00145966373",
         "exchange_fee": "1.0623",
         "exchange_fee_rate": "0.01",
-        "loading_fee": "5.3115",
-        "loading_fee_rate": "0.05"
+        "loading_fee": "5.3115"
     }
 }
 ```
@@ -353,8 +352,7 @@ method：POST
 |  coin_type  |  String    |  the coin type you received    |
 | exchange_fee    | String  |   exchange fee for converting other coin to USDT           |
 | exchange_fee_rate    | String  |   exchange fee rate for converting other coin to USDT           |
-|  loading_fee    | String  |       loading fee of transaction       |
-|  loading_fee_rate    | String  |       loading fee rate of transaction       |
+|  loading_fee    | String  |       loading fee of transaction       
 | exchange_rate    | String  | exchange rate of USDT/USD             |
 
 
@@ -387,8 +385,7 @@ method：POST
         "fiat_exchange_rate": "1",        
         "exchange_fee": "1",
         "exchange_fee_rate": "0.01",
-        "loading_fee": "5",
-        "loading_fee_rate": "0.05"
+        "loading_fee": "5"
     }
 }
 ```
@@ -400,7 +397,6 @@ method：POST
 | exchange_fee    | String  |   exchange fee for converting other coin to USDT           |
 | exchange_fee_rate    | String  |   exchange fee rate for converting other coin to USDT           |
 |  loading_fee    | String  |       loading fee of transaction       |
-|  loading_fee_rate    | String  |       loading fee rate of transaction       |
 | exchange_rate    | String  | exchange rate of USDT/USD             |
 | fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 
@@ -437,7 +433,7 @@ method：POST
 |        country         | String |     Required     |                              Country, Max. character length: 50                               |
 |      nationality       | String |     Required     |                           Nationality，, Max. character length: 255                           |
 |         doc_no         | String |     Required     |                                        Document number                                        |
-|        doc_type        | String |     Required     | Document type. passport：Passport，idcard：National ID card |
+|        doc_type        | String |     Required     | Document type(Only support passport). passport：Passport，idcard：National ID card |
 |       front_doc        | String |     Required     |                              Front face picture. Base64 encoding. File size should be less than 2M  |
 |        back_doc        | String |     Optional     |                              Back face picture. Required if doc_type is idcard. Base64 encoding. File size should be less than 2M              |
 |        mix_doc         | String |     Required     |                            Photo with certificate in hand. Base64 encoding. File size should be less than 2M |

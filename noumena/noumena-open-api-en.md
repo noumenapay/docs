@@ -590,7 +590,7 @@ method：POST
 | :-----: | :----: | :-----------------: |
 | card_no | String | To prevent real card information from being exposed, use 'card_no' parameter to query  |
 | card_number | String | Actual card number, Expose only the first 6 and last 4 |
-|   status   | int |   status：2. apply card successfully(Not active), 5. apply card failed, card is being made           |
+|   status   | int |   status：2. apply card successfully(Not active), 5. apply card failed, card is being made，please apply later           |
 
 
 ### Submit active card attachment
@@ -686,7 +686,7 @@ method：GET
 | :---------: | :----: | :------------------------------------------------------------------: |
 |   acct_no   | String |  Institution account name (Unique within scope of the institution)   |
 |   card_no   |  int   |                             Card ID                              |
-|   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active, 3 - Under review, 4 - Verification failed, 5 - Apply card failed, card is being made |
+|   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active, 3 - Under review, 4 - Verification failed, 5 - Apply card failed, card is being made，please apply later |
 | create_time |  long  |                            Creation time                             |
 
 ### Query a specific user card activation status
@@ -731,7 +731,7 @@ method：GET
 | :---------: | :----: | :------------------------------------------------------------------: |
 |   acct_no   | String |  Institution account name (Unique within scope of the institution)   |
 |   card_no   |  int   |                             Card ID                              |
-|   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active, 3 - Under review, 4 - Verification failed, 5 - Apply card failed, card is being made |
+|   status    |  int   | Status code : 0 - Frozen, 1 - Activated successfully, 2 - Not active, 3 - Under review, 4 - Verification failed, 5 - Apply card failed, card is being made，please apply later |
 | create_time |  long  |                            Creation time                             |
 
 ## Transactions
@@ -1470,6 +1470,8 @@ events[n] element convert string to json:
 
 
 ### Card Apply Event
+
+The bank card has been made, please apply.
 
 | Parameter| Type|Description |
 | --- | --- |--- |

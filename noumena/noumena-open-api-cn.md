@@ -450,7 +450,7 @@ method：POST
 | mail_verification_code | String |选填 |邮箱验证码|
 | mail_token | String |选填|发送邮件后返回的token|
 | cust_tx_id | String | 选填| KYC流水号|
-| poa_doc | String |选填 |地址证明照片。base64编码，照片文件大小应小于2M|
+| poa_doc | String |选填 |地址证明照片。base64编码，照片或PDF文件大小应小于2M|
 
 - 响应：
 
@@ -618,7 +618,7 @@ method：POST
 |  Parameter  | Type  | Whether Required |                        Description                         |
 | :---------: | :---: | :--------------: | :-------------------------------------------------------- |
 |  card_no  |  String  |    必填     | 卡号    |
-|  poa_doc  |  String  |    选填     |   地址证明照。base64编码，照片文件大小应小于2M。如果已在KYC时提交，无需再提交。  |
+|  poa_doc  |  String  |    选填     |   地址证明照。base64编码，照片或PDF文件大小应小于2M。如果已在KYC时提交，无需再提交。  |
 |  active_doc  |  String  |    选填     | 手持护照和银行卡照。base64编码，照片文件大小应小于2M  |
 
 - Response:

@@ -6,8 +6,8 @@
      - [1.3 Query institution information](#Query-institution-information)
      - [1.4 Upload public key](#Upload-public-key)
      - [1.5 Query rate](#Query-rate)
-     - [1.6 Crypto calculation](#crypto-calculation)
-     - [1.7 Currency calculation](#currency-calculation)
+     - [1.6 Estimate the amount of fiat will be arrived](#Estimate-the-amount-of-fiat-will-be-arrived)
+     - [1.7 Estimate the deposit amount of crypto](#Estimate-the-deposit-amount-of-crypto)
 - [2.KYC](#KYC)
      - [2.1 Submitting user KYC data](#Submitting-user-KYC-data)
      - [2.2 Query all KYC records](#Query-all-KYC-records)
@@ -20,7 +20,9 @@
      - [3.5 Query a specific user card activation status](#Query-a-specific-user-card-activation-status)
 - [4.Transactions](#transactions)
      - [4.1 User deposit with stablecoin](#User-deposit-with-stablecoin)
+            - [4.2.2 Fixed amount received in fiat](#User-deposit-with-stablecoin-Fixed-amount-received-in-fiat-)
      - [4.2 User deposit with non-stablecoin](#User-deposit-with-non-stablecoin)
+            - [4.2.2 Fixed amount received in fiat](#User-deposit-with-non-stablecoin-Fixed-amount-received-in-fiat-)
      - [4.3 Query Exchange Price](Query-Exchange-Price)
      - [4.4 Query a deposit transaction status](#Query-a-deposit-transaction-status)
      - [4.5 Query all the deposit records](#Query-all-the-deposit-records)
@@ -38,12 +40,13 @@
      - [6.3 Sending SMS verification code (Currently not supported)](#Sending-SMS-verification-code-(Currently-not-supported))
      - [6.4 SMS verification code validation (Currently not supported)](#SMS-verification-code-validation-(Currently-not-supported))
 - [7.Webhook](#Webhook)   
-     - [7.1 KYC Event](#KYC-Event)
-     - [7.2 Card Apply Event](#Card-Apply-Event)
-     - [7.3 Card Activation Event](#Card-Activation-Event)
-     - [7.4 Deposit Event](#Deposit-Event)
-     - [7.5 Query push failure events](#Query-push-failure-events)
-     - [7.6 Update push failure events](#Update-push-failure-events)
+     - [7.1 Push KYC Event](#Push-KYC-Event)
+     - [7.2 Push Card Apply Event](#Push-Card-Apply-Event)
+     - [7.3 Push Card Activation Event](#Push-Card-Activation-Event)
+     - [7.4 Push Deposit Event](#Push-Deposit-Event)
+     - [7.5 Test push events](#Test-push-events)
+     - [7.6 Query push failure events](#Query-push-failure-events)
+     - [7.7 Update push failure events](#Update-push-failure-events)
 - [8.Error Codes](#error-codes)
      - [8.1 Business Logic Error Codes](#Business-Logic-Error-Codes)
      - [8.2 Identity Authentication Error Codes](#Identity-Authentication-Error-Codes)
@@ -307,62 +310,18 @@ method：GET
 |   min_deposit   | String |          Maximum deposit amount(Fiat currency) in one transaction          |
 |   max_deposit   | String |           Minimum deposit amount(Fiat currency) in one transaction         |
 |   exchange_rate   | String |   exchange rate of  USDT to fiat currency         |
-|   loading_rate   | String |           Loading step rate for deposit to user, most cards have only one step rate        |
+|   loading_rate   | String |           Loading step rate for deposit to user, most cards have only one step rate         |
 |   bank_transaction_rate   | String |          Bank transaction rate for consumption          |
 |   bank_atm_rate   | String |          ATM withdraw rate           |
 |   bank_atm_fee| String |          ATM withdraw fixed fee|
 
 
-### Crypto calculation (Currently not supported)
+### Estimate the amount of fiat will be arrived
 
 - Request:
 
 ```text
-url：/api/v1/institution/calculation/crypto
-method：POST
-```
-- Request:
-
-|  Parameter  | Type  | Whether Required |                        Description                         |
-| :---------: | :---: | :--------------: | :--------------------------------------------------------|
-|  currency_amount  |  String  |    Required     |  received currency amount     |
-|  card_type_id  |  String  |    Required     |  card type id    |
-|  coin_type  |  String  |    Required     |  the coin type you want to convert    |
-
-- Response:
-
-```
-{
-    "code": 0,
-    "msg": "SUCCESS",
-    "result": {
-        "coin_type": "usdt",
-        "coin_amount": "106.23",
-        "exchange_rate": "1.00145966373",
-        "exchange_fee": "1.0623",
-        "exchange_fee_rate": "0.01",
-        "loading_fee": "5.3115"
-    }
-}
-```
-
-|    Parameter    |  Type   |      Description                                                     |
-| :---------: | :----:   | :--------------------------- |
-|  coin_amount    | String  |    required coin amount          |
-|  coin_type  |  String    |  the coin type you received    |
-| exchange_fee    | String  |   exchange fee for converting other coin to USDT           |
-| exchange_fee_rate    | String  |   exchange fee rate for converting other coin to USDT           |
-|  loading_fee    | String  |       loading fee of transaction       
-| exchange_rate    | String  | exchange rate of USDT/USD             |
-
-
-
-### Currency calculation
-
-- Request:
-
-```text
-url：/api/v1/institution/calculation/currency
+url：/api/v1/institution/estimation/currency
 method：POST
 ```
 
@@ -400,6 +359,48 @@ method：POST
 | exchange_rate    | String  | exchange rate of USDT/USD             |
 | fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 
+
+### Estimate the deposit amount of crypto  
+
+- Request:
+
+```text
+url：/api/v1/institution/estimation/crypto
+method：POST
+```
+- Request:
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :--------------------------------------------------------|
+|  currency_amount  |  String  |    Required     |  received currency amount     |
+|  card_type_id  |  String  |    Required     |  card type id    |
+|  coin_type  |  String  |    Required     |  the coin type you want to convert    |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "coin_type": "usdt",
+        "coin_amount": "106.23",
+        "exchange_rate": "1.00145966373",
+        "exchange_fee": "1.0623",
+        "exchange_fee_rate": "0.01",
+        "loading_fee": "5.3115"
+    }
+}
+```
+
+|    Parameter    |  Type   |      Description                                                     |
+| :---------: | :----:   | :--------------------------- |
+|  coin_amount    | String  |    required coin amount          |
+|  coin_type  |  String    |  the coin type you received    |
+| exchange_fee    | String  |   exchange fee for converting other coin to USDT           |
+| exchange_fee_rate    | String  |   exchange fee rate for converting other coin to USDT           |
+|  loading_fee    | String  |       loading fee of transaction       |
+| exchange_rate    | String  | exchange rate of USDT/USD             |
 
 
 
@@ -448,7 +449,7 @@ method：POST
 | mail_verification_code | String |     Optional     |                                    Email verification code                                    |
 |       mail_token       | String |     Optional     |                        Token returned upon sending verification Email                         |
 | cust_tx_id            | String | Optional         | customer transaction id|
-| poa_doc | String |Optional |Picture or PDF of proof of address. Base64 encoding. File size should be less than 2M|
+| poa_doc | String[] |Optional |Picture or PDF of proof of address. Base64 encoding. Each file size should be less than 2M|
 
 - Response:
 
@@ -607,7 +608,7 @@ method：POST
 |  Parameter  | Type  | Whether Required |                        Description                         |
 | :---------: | :---: | :--------------: | :-------------------------------------------------------- |
 |  card_no  |  String  |    Required     | card no     |
-|  poa_doc  |  String  |    Optional     | Picture or PDF of proof of address. File size should be less than 2M. If you submited poa_doc in KYC don't need do again.    |
+|  poa_doc  |  String[]  |    Optional     | Picture or PDF of proof of address. Base64 encoding. Each file size should be less than 2M. If you submited poa_doc in KYC don't need do again.    |
 |  active_doc  |  String  |    Optional     | Picture of holding passport and bank card. File size should be less than 2M  |
 
 - Response:
@@ -789,6 +790,56 @@ method：POST
 > If coin_type is USDT, USDT amount charged from institution balance = exchange_fee + loading_fee + deposit_usdt.
 
 
+### User deposit with stablecoin (Fixed amount received in fiat)
+
+- Request:
+
+```text
+url：/api/v1/deposit-transactions/fiat-amount
+method：POST
+```
+
+| Parameter  |  Type  | Whether Required |                            Description                            |
+| :--------: | :----: | :--------------: | :---------------------------------------------------------------: |
+|  card_no   | String |     Required     |                           Bank card no.                           |
+|  acct_no   | String |     Required     | Institution account name (Unique within scope of the institution) |
+|   credited_amount   | String |     Required     |             Fixed amount received in fiat              |
+| coin_type  | String |     Required     |             Only USDT supported yet              |
+| cust_tx_id | String |     Required     |                    Institution transaction ID                     |
+|  remarks   | String |     Optional     |                        Transaction remarks                        |
+
+- Response:
+
+```json
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "tx_id": "2020022511324811001637548",
+        "exchange_fee_rate": "0",
+        "exchange_fee": "0",
+        "loading_fee": "0.0812",
+        "deposit_usdt": "0.9188",
+        "currency_type": "USD",
+        "currency_amount": "0.92",
+        "exchange_rate": "1.00239251357",
+        "fiat_exchange_rate": "1"
+    }
+}
+```
+
+| Parameter |  Type    | Description |
+| :------------: | :----------: |:---------- |
+|     tx_id      | String | Noumena transaction ID  |
+|     exchange_fee_rate      | String | Fee rate for exchanging digital coin to USDT   |
+|     exchange_fee      | String | Fee for exchanging digital coin to USDT, Unit: USDT  |
+|     loading_fee      | String | Deposit fee，Unit: USDT   |
+|     deposit_usdt      | String | The amount of USDT deposited for the user after charging loading_fee and exchange_fee, Unit: USDT   |
+|     currency_amount      | String | User received currency amount  |
+|     currency_type      | String | It is card supported currency type |
+|     exchange_rate      | String |  exchange rate of USDT/USD  |
+| fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
+
 ### User deposit with non-stablecoin
 
 ETH amount please greater than or equal to 0.01, BTC amount please greater than or equal to 0.005.
@@ -796,7 +847,7 @@ ETH amount please greater than or equal to 0.01, BTC amount please greater than 
 - Request:
 
 ```text
-url：/api/v1/deposit-transactions/coin
+url：/api/v1/deposit-transactions/crypto
 method：POST
 ```
 
@@ -805,6 +856,53 @@ method：POST
 |  card_no   | String |     Required     |                           Bank card no.                           |
 |  acct_no   | String |     Required     | Institution account name (Unique within scope of the institution) |
 |   amount   | String |     Required     |             Deposit amount in corresponding coin_type              |
+| coin_type  | String |     Required     |             Only BTC and ETH supported yet              |
+| cust_tx_id | String |     Required     |                    Institution transaction ID                     |
+|  remarks   | String |     Optional     |                        Transaction remarks                        |
+
+- Response:
+
+```json
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "tx_id": "2020022511324811001637548",
+        "exchange_fee_rate": "0.002",
+        "exchange_fee": "0.01",
+        "currency_type": "USD",
+        "fiat_exchange_rate": "1",
+        "exchange_rate": "1.00221569722"        
+    }
+}
+```
+
+| Parameter |  Type    | Description |
+| :------------: | :----------: |:---------- |
+|     tx_id      | String | Noumena transaction ID  |
+|     exchange_fee_rate      | String | Fee rate for exchanging digital coin to USDT   |
+|     exchange_fee      | String | Fee for exchanging digital coin to USDT, Unit: ```coin_type```  |
+|     currency_type      | String | It is card supported currency type |
+|     exchange_rate      | String |  exchange rate of USDT/USD  |
+| fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
+
+
+### User deposit with non-stablecoin (Fixed amount received in fiat)
+
+ETH amount please greater than or equal to 0.01, BTC amount please greater than or equal to 0.005.
+
+- Request:
+
+```text
+url：/api/v1/deposit-transactions/crypto/fiat-amount
+method：POST
+```
+
+| Parameter  |  Type  | Whether Required |                            Description                            |
+| :--------: | :----: | :--------------: | :---------------------------------------------------------------: |
+|  card_no   | String |     Required     |                           Bank card no.                           |
+|  acct_no   | String |     Required     | Institution account name (Unique within scope of the institution) |
+|   credited_amount   | String |     Required     |            Fixed amount received in fiat              |
 | coin_type  | String |     Required     |             Only BTC and ETH supported yet              |
 | cust_tx_id | String |     Required     |                    Institution transaction ID                     |
 |  remarks   | String |     Optional     |                        Transaction remarks                        |
@@ -1409,6 +1507,11 @@ The data structure of header：
 | Signature |String | Signature  |
 | Timestamp | String | Timestamp |
 
+```
+--header Timestamp：1585310160226
+--header Signature：UqAwtsx9HF3s5yJh/c8luvUITZNXE/f3aujwndnXLBU=
+
+```
 How to verify signature ? [Example](https://github.com/noumenapay/noumena-sdk-java/blob/master/src/test/java/com/noumena/open/api/test/NotificationTest.java)
 
 
@@ -1425,8 +1528,6 @@ The data structure of response should as follows. **If you response correct data
 Response Example:
 
 ```
---header Timestamp：1585310160226
---header Signature：UqAwtsx9HF3s5yJh/c8luvUITZNXE/f3aujwndnXLBU=
 
 {
    "code": 0,
@@ -1436,7 +1537,7 @@ Response Example:
 
 
 
-### KYC Event
+### Push KYC Event
 
 | Parameter| Type|Description |
 | --- | --- |--- |
@@ -1469,7 +1570,7 @@ events[n] element convert string to json:
 ```
 
 
-### Card Apply Event
+### Push Card Apply Event
 
 The bank card has been made, please apply.
 
@@ -1499,7 +1600,7 @@ events[n] element convert string to json:
 }
 ```
 
-### Card Activation Event
+### Push Card Activation Event
 
 | Parameter| Type|Description |
 | --- | --- |--- |
@@ -1528,7 +1629,7 @@ events[n] element convert string to json:
 }
 ```
 
-### Deposit Event
+### Push Deposit Event
 
 | Parameter| Type|Description |
 | --- | --- |--- |
@@ -1556,6 +1657,42 @@ events[n] element convert string to json:
 }
 ```
 
+### Test push events
+
+```text
+url：/api/v1/events/test
+method：POST
+```
+
+- Request:
+
+|  Parameter   |  Type  | Whether Required |        Description        |
+| :----------: | :----: | :--------------: | :-----------------------: |
+
+- Response:
+
+| Parameter| Type|Description |
+| --- | --- |--- |
+| action |String |  deposit-status|
+| events[n].params |Object | event parameters |
+
+Example：
+```
+{
+    "action": "test",
+    "events": [
+        "{\"id\":\"bc76488ddda4\",\"create_time\":1585293811000,\"params\":{}}"
+    ]
+}
+
+events element convert string to json:
+{
+       "id": "bc76488ddda4",
+       "create_time": 1585293811000,
+       "params":{
+       }
+}
+```
 
 ### Query push failure events
 

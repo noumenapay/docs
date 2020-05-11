@@ -7,8 +7,8 @@
      - [1.3 机构信息查询](#机构信息查询)
      - [1.4 上传公钥](#上传公钥)
      - [1.5 费率查询](#费率查询)
-     - [1.6 数字货币计算接口](#数字货币计算接口-暂不支持-)
-     - [1.7 法币计算接口](#法币计算接口)
+     - [1.6 估算将到账的法币金额](#估算将到账的法币金额)
+     - [1.7 估算需要充值多少数字货币](#估算需要充值多少数字货币)
 - [2.KYC](#KYC)
      - [2.1 提交用户 KYC 数据](#提交用户-KYC-数据)
      - [2.2 查询所有用户 KYC 记录](#查询所有用户-KYC-记录)
@@ -21,7 +21,9 @@
      - [3.5 查询指定用户所有卡片状态](#查询指定用户所有卡片状态)
 - [4.充值](#充值)
      - [4.1 用稳定币给用户卡充值](#用稳定币给用户卡充值)
+         - [4.1.2 固定到账法币金额](#用稳定币给用户卡充值-指定到账法币金额-)
      - [4.2 用非稳定币给用户卡充值](#用非稳定币给用户卡充值)
+         - [4.2.2 固定到账法币金额](#用非稳定币给用户卡充值-指定到账法币金额-)
      - [4.3 查询币对价格](#查询币对价格)
      - [4.4 查询某笔卡充值交易状态](#查询某笔卡充值交易状态)
      - [4.5 查询所有卡充值记录](#查询所有卡充值记录)
@@ -38,10 +40,11 @@
      - [6.3 发送手机验证码 (暂不支持)](#发送手机验证码-暂不支持-)
      - [6.4 校验手机验证码(暂不支持)](#校验手机验证码-暂不支持-)
 - [7.事件推送](#事件推送)    
-     - [7.1 KYC 事件](#KYC-事件)
-     - [7.2 开卡事件](#开卡事件)
-     - [7.3 卡激活事件](#卡激活事件)
-     - [7.4 卡充值事件](#卡充值事件)
+     - [7.1 推送 KYC 事件](#推送-KYC-事件)
+     - [7.2 推送开卡事件](#推送开卡事件)
+     - [7.3 推送卡激活事件](#推送卡激活事件)
+     - [7.4 推送卡充值事件](#推送卡充值事件)
+     - [7.5 测试推送事件](#测试推送事件)
      - [7.5 查询推送失败的事件](#查询推送失败的事件)
      - [7.6 更新推送失败的事件](#更新推送失败的事件)
 - [8.错误码](#错误码)
@@ -311,62 +314,18 @@ method：GET
 |   min_deposit   | String |           单笔最小充值金额（法币）           |
 |   max_deposit   | String |           单笔最大充值金额（法币）           |
 |   exchange_rate   | String |           USDT兑换相应法币的汇率           |
-|   loading_rate   | String |           给用户充值时付给 Noumena 的阶梯费率，大部分卡只有一阶费率             |
+|   loading_rate   | String |           给用户充值时付给 Noumena 的阶梯费率，大部分卡只有一阶费率           |
 |   bank_transaction_rate   | String |          银行卡刷卡消费的手续费率           |
 |   bank_atm_rate   | String |          ATM取款时的手续费率           |
 |   bank_atm_fee   | String |          ATM取款时的固定手续费           |
 
 
-### 数字货币计算接口（暂不支持）
+### 估算将到账的法币金额
 
 - Request:
 
 ```text
-url：/api/v1/institution/calculation/crypto
-method：POST
-```
-- Request:
-
-|  Parameter  | Type  | Whether Required |                        Description                         |
-| :---------: | :---: | :--------------: | :--------------------------------------------------------|
-|  currency_amount  |  String  |    Required     |  需要充值到账的法币金额     |
-|  card_type_id  |  String  |    Required     |  卡种ID    |
-|  coin_type  |  String  |    Required     |  需要换算的数字货币类型    |
-
-- Response:
-
-```
-{
-    "code": 0,
-    "msg": "SUCCESS",
-    "result": {
-        "coin_type": "usdt",
-        "coin_amount": "106.23",
-        "exchange_rate": "1.00145966373",
-        "exchange_fee": "1.0623",
-        "exchange_fee_rate": "0.01",
-        "loading_fee": "5.3115"
-    }
-}
-```
-
-|    Parameter    |  Type   |      Description                                                     |
-| :---------: | :----:   | :--------------------------- |
-|  coin_amount    | String  |    需要的数字货币金额         |
-|  coin_type  |  String    |  需要的数字货币类型    |
-| exchange_fee    | String  |   其他币种兑换USDT的手续费           |
-| exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率           |
-|  loading_fee    | String  |       充值手续费       |
-| exchange_rate    | String  | USDT/USD 汇率             |
-
-
-
-### 法币计算接口
-
-- Request:
-
-```text
-url：/api/v1/institution/calculation/currency
+url：/api/v1/institution/estimation/currency
 method：POST
 ```
 
@@ -405,6 +364,53 @@ method：POST
 | fiat_exchange_rate    | String  | 卡支持的法币/USD 汇率              |
 
 
+### 估算需要充值多少数字货币
+
+- Request:
+
+```text
+url：/api/v1/institution/estimation/crypto
+method：POST
+```
+- Request:
+
+|  Parameter  | Type  | Whether Required |                        Description                         |
+| :---------: | :---: | :--------------: | :--------------------------------------------------------|
+|  currency_amount  |  String  |    Required     |  需要充值到账的法币金额     |
+|  card_type_id  |  String  |    Required     |  卡种ID    |
+|  coin_type  |  String  |    Required     |  需要换算的数字货币类型    |
+
+- Response:
+
+```
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "coin_type": "usdt",
+        "coin_amount": "106.23",
+        "exchange_rate": "1.00145966373",
+        "exchange_fee": "1.0623",
+        "exchange_fee_rate": "0.01",
+        "loading_fee": "5.3115",
+        "loading_fee_rate": "0.05"
+    }
+}
+```
+
+|    Parameter    |  Type   |      Description                                                     |
+| :---------: | :----:   | :--------------------------- |
+|  coin_amount    | String  |    需要的数字货币金额         |
+|  coin_type  |  String    |  需要的数字货币类型    |
+| exchange_fee    | String  |   其他币种兑换USDT的手续费           |
+| exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率           |
+|  loading_fee    | String  |       充值手续费       |
+|  loading_fee_rate    | String  |  充值手续费率     |
+| exchange_rate    | String  | USDT/USD 汇率             |
+
+
+
+
 
 ## KYC
 
@@ -435,7 +441,7 @@ method：POST
 |   country | String |必填 |国家，字符长度最大50位|
 |   nationality | String |必填 |出生国，字符长度最大255位|
 | doc_no | String |必填 |证件号码，字符长度最大128位|
-| doc_type | String |必填 |证件类型(目前只支持护照): passport: 护照，idcard：身份证，字符长度最大8位|
+| doc_type | String |必填 |证件类型(目前只支持passport): passport: 护照，idcard：身份证，字符长度最大8位|
 | front_doc | String |必填 |正面照。base64编码, 照片文件大小应小于2M|
 | back_doc | String |选填 |反面照，doc_type是idcard时必须填写。base64编码，照片文件大小应小于2M|
 | mix_doc | String |必填 |手持证件照。base64编码，照片文件大小应小于2M|
@@ -450,7 +456,7 @@ method：POST
 | mail_verification_code | String |选填 |邮箱验证码|
 | mail_token | String |选填|发送邮件后返回的token|
 | cust_tx_id | String | 选填| KYC流水号|
-| poa_doc | String |选填 |地址证明照片。base64编码，照片或PDF文件大小应小于2M|
+| poa_doc | String[] |选填 |地址证明照片。base64编码，照片或PDF文件每个文件大小应小于2M|
 
 - 响应：
 
@@ -618,7 +624,7 @@ method：POST
 |  Parameter  | Type  | Whether Required |                        Description                         |
 | :---------: | :---: | :--------------: | :-------------------------------------------------------- |
 |  card_no  |  String  |    必填     | 卡号    |
-|  poa_doc  |  String  |    选填     |   地址证明照。base64编码，照片或PDF文件大小应小于2M。如果已在KYC时提交，无需再提交。  |
+|  poa_doc  |  String[]  |    选填     |   地址证明照。base64编码，照片或PDF文件每个文件大小应小于2M。如果已在KYC时提交，无需再提交。  |
 |  active_doc  |  String  |    选填     | 手持护照和银行卡照。base64编码，照片文件大小应小于2M  |
 
 - Response:
@@ -754,6 +760,8 @@ method：GET
 
 ## 充值
 
+
+
 ### 用稳定币给用户卡充值
 
 ```text
@@ -807,12 +815,63 @@ method：POST
 > 如果coin_type是USDT，从机构扣的USDT费用 = exchange_fee + loading_fee + deposit_usdt。
 
 
+### 用稳定币给用户卡充值(固定到账法币金额)
+
+```text
+url：/api/v1/deposit-transactions/fiat-amount
+method：POST
+```
+
+- 请求：
+
+| Parameter |  Type  | Requirement  |Description                |
+| :------------: | :----: | :----------: |:---------- |
+|     card_no     | String | 必填|银行卡ID                   |
+|     acct_no     | String | 必填|机构端用户编号(机构端唯一) |
+|     credited_amount      | String | 必填|卡将到账的法币金额         |
+|    coin_type    | String | 必填|充值使用的币种。只支持USDT      |
+|   cust_tx_id    | String | 必填|机构的交易流水号           |
+|     remark     | String | 选填|交易备注                   |
+
+- 响应：
+
+```json
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "tx_id": "2020022511324811001637548",
+        "exchange_fee_rate": "0",
+        "exchange_fee": "0",
+        "loading_fee": "0.0812",        
+        "deposit_usdt": "0.9188",
+        "currency_type": "USD",
+        "currency_amount": "0.92",
+        "exchange_rate": "1.00239251357",
+        "fiat_exchange_rate": "1"
+    }
+}
+```
+
+| Parameter |  Type    | Description |
+| :------------: | :----------: |:---------- |
+|     tx_id      | String | Noumena 交易流水id  |
+|     deposit_usdt      | String | 扣除手续费后,为用户充值的USDT数量，单位是USDT   |
+|     exchange_fee_rate      | String | 充值币种兑换成USDT的费率   |
+|     exchange_fee      | String | 充值币种兑换成USDT的费用，单位是USDT  |
+|     loading_fee      | String | 充值手续费，单位是USDT   |
+|     currency_amount      | String | 到账法币数量  |
+|     currency_type      | String | 到账法币类型  |
+|     exchange_rate      | String | USDT/USD汇率  |
+|     fiat_exchange_rate      | String | 卡支持的法币/USD汇率  |
+
+
 ### 用非稳定币给用户卡充值
 
  ETH 充值金额请大于或等于0.01，BTC 充值金额请大于或等于0.005。用非稳定币给用户卡充值，Noumena需要先去交易所按市场价兑换，```loading_fee``` 和 ```currency_amount``` 兑换后才能确定。
 
 ```text
-url：/api/v1/deposit-transactions/coin
+url：/api/v1/deposit-transactions/crypto
 method：POST
 ```
 
@@ -824,6 +883,50 @@ method：POST
 |     acct_no     | String | 必填|机构端用户编号(机构端唯一) |
 |     amount      | String | 必填|充值对应币种的金额         |
 |    coin_type    | String | 必填|币种。只支持BTC、ETH      |
+|   cust_tx_id    | String | 必填|机构的交易流水号           |
+|     remark     | String | 选填|交易备注                   |
+
+- 响应：
+
+```json
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": {
+        "tx_id": "2020022511324811001637548",
+        "exchange_fee_rate": "0",
+        "exchange_fee": "0",
+        "currency_type": "USD",
+        "fiat_exchange_rate": "1",
+        "exchange_rate": "1.00221569722"
+    }
+}
+```
+
+| Parameter |  Type    | Description |
+| :------------: | :----------: |:---------- |
+|     tx_id      | String | Noumena 交易流水id  |
+|     exchange_fee_rate      | String | 充值币种兑换成USDT的费率   |
+|     exchange_fee      | String | 充值币种兑换成USDT的费用，单位是 ```coin_type```  |
+|     currency_type      | String | 到账法币类型  |
+|     exchange_rate      | String | USDT/USD汇率  |
+|     fiat_exchange_rate      | String | 卡支持的法币/USD汇率  |
+
+### 用非稳定币给用户卡充值(固定到账法币金额)
+
+```text
+url：/api/v1/deposit-transactions/crypto/fiat-amount
+method：POST
+```
+
+- 请求：
+
+| Parameter |  Type  | Requirement  |Description                |
+| :------------: | :----: | :----------: |:---------- |
+|     card_no     | String | 必填|银行卡ID                   |
+|     acct_no     | String | 必填|机构端用户编号(机构端唯一) |
+|     credited_amount      | String | 必填|卡将到账的法币金额         |
+|    coin_type    | String | 必填|充值使用的币种。只支持BTC、ETH        |
 |   cust_tx_id    | String | 必填|机构的交易流水号           |
 |     remark     | String | 选填|交易备注                   |
 
@@ -1437,6 +1540,12 @@ method：PUT
 | Signature |String | 签名  |
 | Timestamp | String | 时间戳 |
 
+```
+--header Timestamp：1585310160226
+--header Signature：UqAwtsx9HF3s5yJh/c8luvUITZNXE/f3aujwndnXLBU=
+
+```
+
 如何验签请见：[noumena推送验签流程](https://github.com/noumenapay/noumena-sdk-java/blob/master/src/test/java/com/noumena/open/api/test/NotificationTest.java)
 
 
@@ -1453,9 +1562,6 @@ method：PUT
 
 ```
 
---header Timestamp：1585310160226
---header Signature：UqAwtsx9HF3s5yJh/c8luvUITZNXE/f3aujwndnXLBU=
-
 {
    "code": 0,
    "msg": "SUCCESS"
@@ -1464,7 +1570,7 @@ method：PUT
 
 
 
-### KYC 事件
+### 推送 KYC 事件
 
 | 名称| 类型|描述 |
 | --- | --- |--- |
@@ -1496,7 +1602,7 @@ events 数组元素从 string 转成 json:
 ```
 
 
-### 开卡事件
+### 推送开卡事件
 
 银行卡已制作完成，请申请银行卡。
 
@@ -1526,7 +1632,7 @@ events 数组元素从 string 转成 json:
 }
 ```
 
-### 卡激活事件
+### 推送卡激活事件
 
 | 名称| 类型|描述 |
 | --- | --- |--- |
@@ -1555,7 +1661,7 @@ events 数组元素从 string 转成 json:
 }
 ```
 
-### 卡充值事件
+### 推送卡充值事件
 
 | 名称| 类型|描述 |
 | --- | --- |--- |
@@ -1583,6 +1689,44 @@ events element convert string to json:
 }
 ```
 
+### 测试推送事件
+
+```text
+url：/api/v1/events/test
+method：POST
+```
+
+- 请求：
+
+| Parameter |  Type  | Requirement  |Description |
+| :------------: | :----: | :----------: |:---------- |
+
+
+- 响应：
+
+
+| 名称| 类型|描述 |
+| --- | --- |--- |
+| action |String |  deposit-status|
+| events[n].params |Object | 事件参数 |
+
+示例：
+```
+{
+    "action": "test",
+    "events": [
+        "{\"id\":\"bc76488ddda4\",\"create_time\":1585293811000,\"params\":{}}"
+    ]
+}
+
+events element convert string to json:
+{
+       "id": "bc76488ddda4",
+       "create_time": 1585293811000,
+       "params":{
+       }
+}
+```
 
 ### 查询推送失败的事件
 

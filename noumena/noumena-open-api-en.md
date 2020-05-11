@@ -20,9 +20,9 @@
      - [3.5 Query a specific user card activation status](#Query-a-specific-user-card-activation-status)
 - [4.Transactions](#transactions)
      - [4.1 User deposit with stablecoin](#User-deposit-with-stablecoin)
-         - [4.2.2 Fixed amount received in fiat](#User-deposit-with-stablecoin-Fixed-amount-received-in-fiat)
+         - [4.2.2 Fixed amount will be received in fiat](#User-deposit-with-stablecoin-Fixed-amount-will-be-received-in-fiat)
      - [4.2 User deposit with non-stablecoin](#User-deposit-with-non-stablecoin)
-         - [4.2.2 Fixed amount received in fiat](#User-deposit-with-non-stablecoin-Fixed-amount-received-in-fiat)
+         - [4.2.2 Fixed amount will be received in fiat](#User-deposit-with-non-stablecoin-Fixed-amount-will-be-received-in-fiat)
      - [4.3 Query Exchange Price](Query-Exchange-Price)
      - [4.4 Query a deposit transaction status](#Query-a-deposit-transaction-status)
      - [4.5 Query all the deposit records](#Query-all-the-deposit-records)
@@ -790,7 +790,7 @@ method：POST
 > If coin_type is USDT, USDT amount charged from institution balance = exchange_fee + loading_fee + deposit_usdt.
 
 
-### User deposit with stablecoin (Fixed amount received in fiat)
+### User deposit with stablecoin (Fixed amount will be received in fiat)
 
 - Request:
 
@@ -803,7 +803,7 @@ method：POST
 | :--------: | :----: | :--------------: | :---------------------------------------------------------------: |
 |  card_no   | String |     Required     |                           Bank card no.                           |
 |  acct_no   | String |     Required     | Institution account name (Unique within scope of the institution) |
-|   credited_amount   | String |     Required     |             Fixed amount received in fiat              |
+|   credited_amount   | String |     Required     |             Fixed amount will be received in fiat              |
 | coin_type  | String |     Required     |             Only USDT supported yet              |
 | cust_tx_id | String |     Required     |                    Institution transaction ID                     |
 |  remarks   | String |     Optional     |                        Transaction remarks                        |
@@ -887,7 +887,7 @@ method：POST
 | fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 
 
-### User deposit with non-stablecoin (Fixed amount received in fiat)
+### User deposit with non-stablecoin (Fixed amount will be received in fiat)
 
 ETH amount please greater than or equal to 0.01, BTC amount please greater than or equal to 0.005.
 
@@ -902,7 +902,7 @@ method：POST
 | :--------: | :----: | :--------------: | :---------------------------------------------------------------: |
 |  card_no   | String |     Required     |                           Bank card no.                           |
 |  acct_no   | String |     Required     | Institution account name (Unique within scope of the institution) |
-|   credited_amount   | String |     Required     |            Fixed amount received in fiat              |
+|   credited_amount   | String |     Required     |            Fixed amount will be received in fiat              |
 | coin_type  | String |     Required     |             Only BTC and ETH supported yet              |
 | cust_tx_id | String |     Required     |                    Institution transaction ID                     |
 |  remarks   | String |     Optional     |                        Transaction remarks                        |

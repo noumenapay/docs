@@ -763,6 +763,8 @@ method：POST
     "msg": "SUCCESS",
     "result": {
         "tx_id": "2020022511324811001637548",
+        "coin_type": "USDT",
+        "tx_amount": "0.92",         
         "exchange_fee_rate": "0",
         "exchange_fee": "0",
         "loading_fee": "0.0812",
@@ -778,6 +780,8 @@ method：POST
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
 |     tx_id      | String | Noumena transaction ID  |
+|    coin_type    |  int   |          Coin type          |
+|   tx_amount   | String |                        Deposit amount                         |
 |     exchange_fee_rate      | String | Fee rate for exchanging digital coin to USDT   |
 |     exchange_fee      | String | Fee for exchanging digital coin to USDT, Unit: USDT  |
 |     loading_fee      | String | Deposit fee，Unit: USDT   |
@@ -816,6 +820,8 @@ method：POST
     "msg": "SUCCESS",
     "result": {
         "tx_id": "2020022511324811001637548",
+        "coin_type": "USDT",
+        "tx_amount": "0.92",         
         "exchange_fee_rate": "0",
         "exchange_fee": "0",
         "loading_fee": "0.0812",
@@ -831,6 +837,8 @@ method：POST
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
 |     tx_id      | String | Noumena transaction ID  |
+|    coin_type    |  int   |          Coin type          |
+|   tx_amount   | String |                        Deposit amount                         |
 |     exchange_fee_rate      | String | Fee rate for exchanging digital coin to USDT   |
 |     exchange_fee      | String | Fee for exchanging digital coin to USDT, Unit: USDT  |
 |     loading_fee      | String | Deposit fee，Unit: USDT   |
@@ -868,6 +876,8 @@ method：POST
     "msg": "SUCCESS",
     "result": {
         "tx_id": "2020022511324811001637548",
+        "coin_type": "BTC",
+        "tx_amount": "0.01",         
         "exchange_fee_rate": "0.002",
         "exchange_fee": "0.01",
         "currency_type": "USD",
@@ -880,6 +890,8 @@ method：POST
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
 |     tx_id      | String | Noumena transaction ID  |
+|    coin_type    |  int   |          Coin type          |
+|   tx_amount   | String |                        Deposit amount                         |
 |     exchange_fee_rate      | String | Fee rate for exchanging digital coin to USDT   |
 |     exchange_fee      | String | Fee for exchanging digital coin to USDT, Unit: ```coin_type```  |
 |     currency_type      | String | It is card supported currency type |
@@ -915,11 +927,16 @@ method：POST
     "msg": "SUCCESS",
     "result": {
         "tx_id": "2020022511324811001637548",
-        "exchange_fee_rate": "0.002",
-        "exchange_fee": "0.01",
+        "coin_type": "BTC",
+        "tx_amount": "0.01",         
+        "exchange_fee_rate": "0",
+        "exchange_fee": "0",
+        "loading_fee": "0.0812",
+        "deposit_usdt": "0.9188",
         "currency_type": "USD",
-        "fiat_exchange_rate": "1",
-        "exchange_rate": "1.00221569722"        
+        "currency_amount": "0.92",
+        "exchange_rate": "1.00239251357",
+        "fiat_exchange_rate": "1"
     }
 }
 ```
@@ -927,8 +944,13 @@ method：POST
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
 |     tx_id      | String | Noumena transaction ID  |
+|    coin_type    |  int   |          Coin type          |
+|   tx_amount   | String |                        Deposit amount                         |
 |     exchange_fee_rate      | String | Fee rate for exchanging digital coin to USDT   |
 |     exchange_fee      | String | Fee for exchanging digital coin to USDT, Unit: ```coin_type```  |
+|     loading_fee      | String | Deposit fee，Unit: USDT   |
+|     deposit_usdt      | String | The amount of USDT deposited for the user after charging loading_fee and exchange_fee, Unit: USDT   |
+|     currency_amount      | String | User received currency amount  |
 |     currency_type      | String | It is card supported currency type |
 |     exchange_rate      | String |  exchange rate of USDT/USD  |
 | fiat_exchange_rate    | String  | exchange rate of card currency/USD              |

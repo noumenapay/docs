@@ -788,6 +788,8 @@ method：POST
     "msg": "SUCCESS",
     "result": {
         "tx_id": "2020022511324811001637548",
+        "coin_type": "USDT",
+        "tx_amount": "0.92",         
         "exchange_fee_rate": "0",
         "exchange_fee": "0",
         "loading_fee": "0.0812",        
@@ -803,6 +805,8 @@ method：POST
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
 |     tx_id      | String | Noumena 交易流水id  |
+|    coin_type    | String | 充值币种       |
+|    tx_amount      | String | 充值币种对应的金额         |
 |     deposit_usdt      | String | 扣除手续费后,为用户充值的USDT数量，单位是USDT   |
 |     exchange_fee_rate      | String | 充值币种兑换成USDT的费率   |
 |     exchange_fee      | String | 充值币种兑换成USDT的费用，单位是USDT  |
@@ -841,6 +845,8 @@ method：POST
     "msg": "SUCCESS",
     "result": {
         "tx_id": "2020022511324811001637548",
+        "coin_type": "USDT",
+        "tx_amount": "0.92",          
         "exchange_fee_rate": "0",
         "exchange_fee": "0",
         "loading_fee": "0.0812",        
@@ -856,6 +862,8 @@ method：POST
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
 |     tx_id      | String | Noumena 交易流水id  |
+|    coin_type    | String | 充值币种       |
+|    tx_amount      | String | 充值币种对应的金额         |
 |     deposit_usdt      | String | 扣除手续费后,为用户充值的USDT数量，单位是USDT   |
 |     exchange_fee_rate      | String | 充值币种兑换成USDT的费率   |
 |     exchange_fee      | String | 充值币种兑换成USDT的费用，单位是USDT  |
@@ -894,6 +902,8 @@ method：POST
     "msg": "SUCCESS",
     "result": {
         "tx_id": "2020022511324811001637548",
+        "coin_type": "BTC",
+        "tx_amount": "0.01",        
         "exchange_fee_rate": "0",
         "exchange_fee": "0",
         "currency_type": "USD",
@@ -906,6 +916,8 @@ method：POST
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
 |     tx_id      | String | Noumena 交易流水id  |
+|    coin_type    | String | 充值币种       |
+|    tx_amount      | String | 充值币种对应的金额         |
 |     exchange_fee_rate      | String | 充值币种兑换成USDT的费率   |
 |     exchange_fee      | String | 充值币种兑换成USDT的费用，单位是 ```coin_type```  |
 |     currency_type      | String | 到账法币类型  |
@@ -938,11 +950,16 @@ method：POST
     "msg": "SUCCESS",
     "result": {
         "tx_id": "2020022511324811001637548",
+        "coin_type": "BTC",
+        "tx_amount": "0.01",         
         "exchange_fee_rate": "0",
         "exchange_fee": "0",
+        "loading_fee": "0.0812",        
+        "deposit_usdt": "0.9188",
         "currency_type": "USD",
-        "fiat_exchange_rate": "1",
-        "exchange_rate": "1.00221569722"
+        "currency_amount": "100",
+        "exchange_rate": "1.00239251357",
+        "fiat_exchange_rate": "1"
     }
 }
 ```
@@ -950,8 +967,13 @@ method：POST
 | Parameter |  Type    | Description |
 | :------------: | :----------: |:---------- |
 |     tx_id      | String | Noumena 交易流水id  |
+|    coin_type    | String | 充值币种       |
+|    tx_amount      | String | 充值币种对应的金额         |
+|     deposit_usdt      | String | 扣除手续费后,为用户充值的USDT数量，单位是USDT   |
 |     exchange_fee_rate      | String | 充值币种兑换成USDT的费率   |
-|     exchange_fee      | String | 充值币种兑换成USDT的费用，单位是 ```coin_type```  |
+|     exchange_fee      | String | 充值币种兑换成USDT的费用，单位是 ```coin_type```   |
+|     loading_fee      | String | 充值手续费，单位是USDT   |
+|     currency_amount      | String | 到账法币数量  |
 |     currency_type      | String | 到账法币类型  |
 |     exchange_rate      | String | USDT/USD汇率  |
 |     fiat_exchange_rate      | String | 卡支持的法币/USD汇率  |

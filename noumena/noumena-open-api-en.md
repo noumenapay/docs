@@ -929,14 +929,11 @@ method：POST
         "tx_id": "2020022511324811001637548",
         "coin_type": "BTC",
         "tx_amount": "0.01",         
-        "exchange_fee_rate": "0",
-        "exchange_fee": "0",
-        "loading_fee": "0.0812",
-        "deposit_usdt": "0.9188",
+        "exchange_fee_rate": "0.002",
+        "exchange_fee": "0.01",
         "currency_type": "USD",
-        "currency_amount": "0.92",
-        "exchange_rate": "1.00239251357",
-        "fiat_exchange_rate": "1"
+        "fiat_exchange_rate": "1",
+        "exchange_rate": "1.00221569722"        
     }
 }
 ```
@@ -948,9 +945,6 @@ method：POST
 |   tx_amount   | String |                        Deposit amount                         |
 |     exchange_fee_rate      | String | Fee rate for exchanging digital coin to USDT   |
 |     exchange_fee      | String | Fee for exchanging digital coin to USDT, Unit: ```coin_type```  |
-|     loading_fee      | String | Deposit fee，Unit: USDT   |
-|     deposit_usdt      | String | The amount of USDT deposited for the user after charging loading_fee and exchange_fee, Unit: USDT   |
-|     currency_amount      | String | User received currency amount  |
 |     currency_type      | String | It is card supported currency type |
 |     exchange_rate      | String |  exchange rate of USDT/USD  |
 | fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
@@ -1040,8 +1034,8 @@ method：GET
 |    card_no    |  int   |                            Card ID                            |
 | cust_tx_time  |  long  |                           Creation time                           |
 |  tx_id   | String |        Transaction id         |
-|  exchange_fee   | String |     Exchange fee for converting other coin to USDT   |
-|      loading_fee      | String |                          Transaction fee                          |
+|  exchange_fee   | String |     Exchange fee for converting other coin to USDT, Unit: ```coin_type```   |
+|      loading_fee      | String |                          Transaction fee, Unit: ```coin_type```                           |
 |    coin_type    |  int   |          Coin type          |
 |   tx_amount   | String |                        Deposit amount                         |
 |     currency_type      | String | Received currency type  |
@@ -1103,8 +1097,8 @@ method：GET
 |    card_no    |  int   |                            Card ID                            |
 | cust_tx_time  |  long  |                           Creation time                           |
 |  tx_id   | String |        Transaction id         |
-|  exchange_fee   | String |     Exchange fee for converting other coin to USDT   |
-|      loading_fee      | String |                          Transaction fee                          |
+|  exchange_fee   | String |     Exchange fee for converting other coin to USDT, Unit: ```coin_type```    |
+|      loading_fee      | String |                          Transaction fee, Unit: ```coin_type```                           |
 |    coin_type    |  int   |          Coin type          |
 |   tx_amount   | String |                        Deposit amount                         |
 |     currency_type      | String | Received currency type  |
@@ -1171,8 +1165,8 @@ method：GET
 |    card_no    |  int   |                            Card ID                            |
 | cust_tx_time  |  long  |                           Creation time                           |
 |  tx_id   | String |        Transaction id         |
-|  exchange_fee   | String |     Exchange fee for converting other coin to USDT   |
-|      loading_fee      | String |                          Transaction fee                          |
+|  exchange_fee   | String |     Exchange fee for converting other coin to USDT, Unit: ```coin_type```    |
+|      loading_fee      | String |                          Transaction fee, Unit: ```coin_type```                           |
 |    coin_type    |  int   |          Coin type          |
 |   tx_amount   | String |                        Deposit amount                         |
 |     currency_type      | String | Received currency type  |

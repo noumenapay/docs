@@ -390,6 +390,7 @@ method：POST
         "coin_type": "usdt",
         "coin_amount": "106.23",
         "exchange_rate": "1.00145966373",
+        "fiat_exchange_rate": "1",
         "exchange_fee": "1.0623",
         "exchange_fee_rate": "0.01",
         "loading_fee": "5.3115",
@@ -407,7 +408,7 @@ method：POST
 |  loading_fee    | String  |       充值手续费       |
 |  loading_fee_rate    | String  |  充值手续费率     |
 | exchange_rate    | String  | USDT/USD 汇率             |
-
+| fiat_exchange_rate    | String  | 卡支持的法币/USD 汇率              |
 
 
 

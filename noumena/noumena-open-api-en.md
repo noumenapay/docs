@@ -338,6 +338,8 @@ method：POST
     "code": 0,
     "msg": "SUCCESS",
     "result": {
+        "coin_type": "usdt",
+        "coin_amount": "106.23",
         "currency_type": "usd",
         "currency_amount": "94.13",
         "exchange_rate": "1.00145966373",
@@ -351,6 +353,8 @@ method：POST
 
 |    Parameter    |  Type   |      Description                                                     |
 | :---------: | :----:   | :--------------------------- |
+|  coin_amount    | String  |    required coin amount          |
+|  coin_type  |  String    |  the coin type you received    |
 |  currency_amount    | String  |    received currency amount          |
 |  currency_type  |  String    |  the currency type you received    |
 | exchange_fee    | String  |   exchange fee for converting other coin to USDT           |
@@ -385,7 +389,10 @@ method：POST
     "result": {
         "coin_type": "usdt",
         "coin_amount": "106.23",
+        "currency_type": "usd",
+        "currency_amount": "94.13",
         "exchange_rate": "1.00145966373",
+        "fiat_exchange_rate": "1",
         "exchange_fee": "1.0623",
         "exchange_fee_rate": "0.01",
         "loading_fee": "5.3115"
@@ -397,11 +404,13 @@ method：POST
 | :---------: | :----:   | :--------------------------- |
 |  coin_amount    | String  |    required coin amount          |
 |  coin_type  |  String    |  the coin type you received    |
+|  currency_amount    | String  |    received currency amount          |
+|  currency_type  |  String    |  the currency type you received    |
 | exchange_fee    | String  |   exchange fee for converting other coin to USDT           |
 | exchange_fee_rate    | String  |   exchange fee rate for converting other coin to USDT           |
 |  loading_fee    | String  |       loading fee of transaction       |
 | exchange_rate    | String  | exchange rate of USDT/USD             |
-
+| fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 
 
 ## KYC

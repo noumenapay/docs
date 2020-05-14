@@ -342,24 +342,30 @@ method：POST
     "code": 0,
     "msg": "SUCCESS",
     "result": {
+        "coin_type": "usdt",
+        "coin_amount": "106.23",
         "currency_type": "usd",
         "currency_amount": "94.13",
         "exchange_rate": "1.00145966373",
         "fiat_exchange_rate": "1",
-        "exchange_fee": "1",
+        "exchange_fee": "1.0623",
         "exchange_fee_rate": "0.01",
-        "loading_fee": "5"
+        "loading_fee": "5.3115",
+        "loading_fee_rate": "0.05"
     }
 }
 ```
 
 |    Parameter    |  Type   |      Description                                                     |
 | :---------: | :----:   | :--------------------------- |
+|  coin_amount  |  String  |    Required     |  充值的数字货币金额     |
+| coin_type  |  String  |    Required     |  充值的数字货币类型     |
 |  currency_amount    | String  |    充值到账的法币金额          |
 |  currency_type  |  String    |  充值到账的法币类型    |
 | exchange_fee    | String  |   其他币种兑换USDT的手续费           |
 | exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率          |
 |  loading_fee    | String  |       充值手续费       |
+|  loading_fee_rate    | String  |  充值手续费率     |
 | exchange_rate    | String  | USDT/USD 汇率              |
 | fiat_exchange_rate    | String  | 卡支持的法币/USD 汇率              |
 
@@ -389,6 +395,8 @@ method：POST
     "result": {
         "coin_type": "usdt",
         "coin_amount": "106.23",
+        "currency_type": "usd",
+        "currency_amount": "94.13",
         "exchange_rate": "1.00145966373",
         "fiat_exchange_rate": "1",
         "exchange_fee": "1.0623",
@@ -403,6 +411,8 @@ method：POST
 | :---------: | :----:   | :--------------------------- |
 |  coin_amount    | String  |    需要的数字货币金额         |
 |  coin_type  |  String    |  需要的数字货币类型    |
+|  currency_amount    | String  |    充值到账的法币金额          |
+|  currency_type  |  String    |  充值到账的法币类型    |
 | exchange_fee    | String  |   其他币种兑换USDT的手续费           |
 | exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率           |
 |  loading_fee    | String  |       充值手续费       |

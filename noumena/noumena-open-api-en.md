@@ -347,7 +347,8 @@ method：POST
         "exchange_fee": "1.0623",
         "exchange_fee_rate": "0.01",
         "loading_fee": "5.3115",
-        "loading_fee_rate": "0.05"
+        "loading_fee_rate": "0.05"，
+        "coin_price": "1"
     }
 }
 ```
@@ -364,7 +365,7 @@ method：POST
 |  loading_fee_rate    | String  |       loading fee rate      |
 | exchange_rate    | String  | exchange rate of USDT/USD             |
 | fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
-
+| coin_price    | String  | price of coin_type/USDT              |
 
 ### Estimate the deposit amount of crypto  
 
@@ -398,7 +399,8 @@ method：POST
         "exchange_fee": "1.0623",
         "exchange_fee_rate": "0.01",
         "loading_fee": "5.3115",
-        "loading_fee_rate": "0.05"
+        "loading_fee_rate": "0.05"，
+        "coin_price": "1"
     }
 }
 ```
@@ -415,7 +417,7 @@ method：POST
 |  loading_fee_rate    | String  |       loading fee rate      |
 | exchange_rate    | String  | exchange rate of USDT/USD             |
 | fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
-
+| coin_price    | String  | price of coin_type/USDT              |
 
 ## KYC
 

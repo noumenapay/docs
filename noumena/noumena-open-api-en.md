@@ -359,13 +359,15 @@ method：POST
 |  coin_type  |  String    |  the coin type you received    |
 |  currency_amount    | String  |    received currency amount          |
 |  currency_type  |  String    |  the currency type you received    |
-| exchange_fee    | String  |   exchange fee for converting other coin to USDT           |
+| exchange_fee    | String  |   exchange fee for converting other coin to USDT, Unit: coin_type           |
 | exchange_fee_rate    | String  |   exchange fee rate for converting other coin to USDT           |
-|  loading_fee    | String  |       loading fee of transaction       |
+|  loading_fee    | String  |       loading fee of transaction, Unit: coin_type       |
 |  loading_fee_rate    | String  |       loading fee rate      |
 | exchange_rate    | String  | exchange rate of USDT/USD             |
 | fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 | coin_price    | String  | price of coin_type/USDT              |
+
+> exchange_rate = (currency_amount * fiat_exchange_rate) / ((coin_amount - exchange_fee - loading_fee) * coin_price)
 
 ### Estimate the deposit amount of crypto  
 
@@ -405,19 +407,21 @@ method：POST
 }
 ```
 
-|    Parameter    |  Type   |      Description                                                     |
+|    Parameter    |  Type   |      Description      |
 | :---------: | :----:   | :--------------------------- |
 |  coin_amount    | String  |    required coin amount          |
 |  coin_type  |  String    |  the coin type you received    |
 |  currency_amount    | String  |    received currency amount          |
 |  currency_type  |  String    |  the currency type you received    |
-| exchange_fee    | String  |   exchange fee for converting other coin to USDT           |
+| exchange_fee    | String  |   exchange fee for converting other coin to USDT, Unit: coin_type           |
 | exchange_fee_rate    | String  |   exchange fee rate for converting other coin to USDT           |
 |  loading_fee    | String  |       loading fee of transaction       |
-|  loading_fee_rate    | String  |       loading fee rate      |
+|  loading_fee_rate    | String  |       loading fee rate, Unit: coin_type      |
 | exchange_rate    | String  | exchange rate of USDT/USD             |
 | fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 | coin_price    | String  | price of coin_type/USDT              |
+
+> exchange_rate = (currency_amount * fiat_exchange_rate) / ((coin_amount - exchange_fee - loading_fee) * coin_price)
 
 ## KYC
 

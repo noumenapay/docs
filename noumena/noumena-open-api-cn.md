@@ -357,19 +357,21 @@ method：POST
 }
 ```
 
-|    Parameter    |  Type   |      Description                                                     |
+|    Parameter    |  Type   |      Description           |
 | :---------: | :----:   | :--------------------------- |
-|  coin_amount  |  String  |    Required     |  充值的数字货币金额     |
-| coin_type  |  String  |    Required     |  充值的数字货币类型     |
+|  coin_amount  |  String      |  充值的数字货币金额     |
+| coin_type  |  String      |  充值的数字货币类型     |
 |  currency_amount    | String  |    充值到账的法币金额          |
 |  currency_type  |  String    |  充值到账的法币类型    |
-| exchange_fee    | String  |   其他币种兑换USDT的手续费           |
+| exchange_fee    | String  |   其他币种兑换USDT的手续费，单位是 coin_type            |
 | exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率          |
-|  loading_fee    | String  |       充值手续费       |
+|  loading_fee    | String  |       充值手续费，单位是 coin_type        |
 |  loading_fee_rate    | String  |  充值手续费率     |
 | exchange_rate    | String  | USDT/USD 汇率              |
 | fiat_exchange_rate    | String  | 卡支持的法币/USD 汇率              |
 | coin_price    | String  | coin_type/USDT 价格              |
+
+> 注： exchange_rate = (currency_amount * fiat_exchange_rate) / ((coin_amount - exchange_fee - loading_fee) * coin_price)
 
 ### 估算需要充值多少数字货币
 
@@ -409,21 +411,21 @@ method：POST
 }
 ```
 
-|    Parameter    |  Type   |      Description                                                     |
+|    Parameter    |  Type   |      Description          |
 | :---------: | :----:   | :--------------------------- |
 |  coin_amount    | String  |    需要的数字货币金额         |
 |  coin_type  |  String    |  需要的数字货币类型    |
 |  currency_amount    | String  |    充值到账的法币金额          |
 |  currency_type  |  String    |  充值到账的法币类型    |
-| exchange_fee    | String  |   其他币种兑换USDT的手续费           |
+| exchange_fee    | String  |   其他币种兑换USDT的手续费，单位是 coin_type            |
 | exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率           |
-|  loading_fee    | String  |       充值手续费       |
+|  loading_fee    | String  |       充值手续费，单位是 coin_type       |
 |  loading_fee_rate    | String  |  充值手续费率     |
 | exchange_rate    | String  | USDT/USD 汇率             |
 | fiat_exchange_rate    | String  | 卡支持的法币/USD 汇率              |
 | coin_price    | String  | coin_type/USDT 价格              |
 
-
+> 注： exchange_rate = (currency_amount * fiat_exchange_rate) / ((coin_amount - exchange_fee - loading_fee) * coin_price)
 
 ## KYC
 

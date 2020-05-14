@@ -347,7 +347,6 @@ method：POST
         "exchange_fee": "1.0623",
         "exchange_fee_rate": "0.01",
         "loading_fee": "5.3115",
-        "loading_fee_rate": "0.05"，
         "coin_price": "1"
     }
 }
@@ -362,7 +361,6 @@ method：POST
 | exchange_fee    | String  |   exchange fee for converting other coin to USDT, Unit: coin_type           |
 | exchange_fee_rate    | String  |   exchange fee rate for converting other coin to USDT           |
 |  loading_fee    | String  |       loading fee of transaction, Unit: coin_type       |
-|  loading_fee_rate    | String  |       loading fee rate      |
 | exchange_rate    | String  | exchange rate of USDT/USD             |
 | fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 | coin_price    | String  | price of coin_type/USDT              |
@@ -401,7 +399,6 @@ method：POST
         "exchange_fee": "1.0623",
         "exchange_fee_rate": "0.01",
         "loading_fee": "5.3115",
-        "loading_fee_rate": "0.05"，
         "coin_price": "1"
     }
 }
@@ -415,8 +412,7 @@ method：POST
 |  currency_type  |  String    |  the currency type you received    |
 | exchange_fee    | String  |   exchange fee for converting other coin to USDT, Unit: coin_type           |
 | exchange_fee_rate    | String  |   exchange fee rate for converting other coin to USDT           |
-|  loading_fee    | String  |       loading fee of transaction       |
-|  loading_fee_rate    | String  |       loading fee rate, Unit: coin_type      |
+|  loading_fee    | String  |       loading fee of transaction, Unit: coin_type       |
 | exchange_rate    | String  | exchange rate of USDT/USD             |
 | fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 | coin_price    | String  | price of coin_type/USDT              |

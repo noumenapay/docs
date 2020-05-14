@@ -351,7 +351,6 @@ method：POST
         "exchange_fee": "1.0623",
         "exchange_fee_rate": "0.01",
         "loading_fee": "5.3115",
-        "loading_fee_rate": "0.05",
         "coin_price": "1"
     }
 }
@@ -366,7 +365,6 @@ method：POST
 | exchange_fee    | String  |   其他币种兑换USDT的手续费，单位是 coin_type            |
 | exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率          |
 |  loading_fee    | String  |       充值手续费，单位是 coin_type        |
-|  loading_fee_rate    | String  |  充值手续费率     |
 | exchange_rate    | String  | USDT/USD 汇率              |
 | fiat_exchange_rate    | String  | 卡支持的法币/USD 汇率              |
 | coin_price    | String  | coin_type/USDT 价格              |
@@ -405,7 +403,6 @@ method：POST
         "exchange_fee": "1.0623",
         "exchange_fee_rate": "0.01",
         "loading_fee": "5.3115",
-        "loading_fee_rate": "0.05",
         "coin_price": "1"
     }
 }
@@ -420,7 +417,6 @@ method：POST
 | exchange_fee    | String  |   其他币种兑换USDT的手续费，单位是 coin_type            |
 | exchange_fee_rate    | String  |   其他币种兑换USDT的手续费率           |
 |  loading_fee    | String  |       充值手续费，单位是 coin_type       |
-|  loading_fee_rate    | String  |  充值手续费率     |
 | exchange_rate    | String  | USDT/USD 汇率             |
 | fiat_exchange_rate    | String  | 卡支持的法币/USD 汇率              |
 | coin_price    | String  | coin_type/USDT 价格              |

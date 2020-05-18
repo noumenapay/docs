@@ -1056,7 +1056,8 @@ method：GET
                 "currency_amount": "60",
                 "exchange_rate": "1.00239251357",
                 "fiat_exchange_rate": "1",
-                "tx_status": 3
+                "tx_status": 3,
+                "coin_price": "1"
   }
 }
 ```
@@ -1077,7 +1078,7 @@ method：GET
 | exchange_rate | String |            USDT/USD汇率            |
 |   fiat_exchange_rate      | String | 卡支持的法币/USD汇率  |
 |  tx_status   | int |   交易状态。0、3、4:待处理中，1:充值成功，2充值失败，5:充值失败        |
-
+|   coin_price      | String | coin_type/USD汇率  |
 
 ### 查询所有卡充值记录
 
@@ -1117,7 +1118,8 @@ method：GET
                 "currency_amount": "60",
                 "exchange_rate": "1.00239251357",
                 "fiat_exchange_rate": "1",
-                "tx_status": 3
+                "tx_status": 3,
+                "coin_price": "1"
             }
         ]
     }
@@ -1140,7 +1142,7 @@ method：GET
 | exchange_rate | String |            USDT/法币汇率            |
 |   fiat_exchange_rate      | String | 卡支持的法币/USD汇率  |
 |  tx_status   | int |   交易状态。0、3、4:待处理中，1:充值成功，2、5:充值失败         |
-
+|   coin_price      | String | coin_type/USD汇率  |
 
 
 
@@ -1186,7 +1188,8 @@ method：GET
                 "currency_amount": "60",
                 "exchange_rate": "1.00239251357",
                 "fiat_exchange_rate": "1",
-                "tx_status": 3
+                "tx_status": 3,
+                "coin_price": "1"
             }
         ]
     }
@@ -1209,7 +1212,7 @@ method：GET
 | exchange_rate | String |            USDT/USD汇率            |
 |   fiat_exchange_rate      | String | 卡支持的法币/USD汇率  |
 |  tx_status   | int |   交易状态。0、3、4:待处理中，1:充值成功，2充值失败，5:充值失败        |
-
+|   coin_price      | String | coin_type/USD汇率  |
 
 
 

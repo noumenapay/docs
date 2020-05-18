@@ -1037,7 +1037,8 @@ method：GET
                 "currency_amount": "60",
                 "exchange_rate": "1.00239251357",
                 "fiat_exchange_rate": "1",
-                "tx_status": 3
+                "tx_status": 3,
+                "coin_price": "1"
   }
 }
 ```
@@ -1058,7 +1059,7 @@ method：GET
 | exchange_rate | String |                           Exchange rate of USDT/USD                       |
 | fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 |  tx_status   | int |   Transaction status. 0, 3 and 4:process pending，1: deposit successful, 2 and 5：deposit failed        |
-
+|   coin_price      | String | coin_type/USD rate  |
 
 ### Query all the deposit records
 
@@ -1098,7 +1099,8 @@ method：GET
                 "exchange_rate": "1",
                 "fiat_exchange_rate": "1",
                 "cust_tx_time": 1584350913000,
-                "tx_status": 3
+                "tx_status": 3,
+                "coin_price": "1"
             }
         ]
     }
@@ -1121,7 +1123,7 @@ method：GET
 | exchange_rate | String |                           Exchange rate of USDT/USD                          |
 | fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 |  tx_status   | int |   Transaction status. 0, 3 and 4:process pending，1: deposit successful, 2 and 5：deposit failed        |
-
+|   coin_price      | String | coin_type/USD rate  |
 
 
 ### Query a particular user deposit records
@@ -1165,7 +1167,8 @@ method：GET
                 "exchange_rate": "1",
                 "fiat_exchange_rate": "1",
                 "cust_tx_time": 1584350913000,
-                "tx_status": 3
+                "tx_status": 3,
+                "coin_price": "1"
             }
         ]
     }
@@ -1189,7 +1192,7 @@ method：GET
 | exchange_rate | String |                           Exchange rate of USDT/USD                          |
 | fiat_exchange_rate    | String  | exchange rate of card currency/USD              |
 |  tx_status   | int |   Transaction status. 0, 3 and 4:process pending，1: deposit successful, 2 and 5：deposit failed        |
-
+|   coin_price      | String | coin_type/USD rate  |
 
 
 

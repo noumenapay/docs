@@ -449,8 +449,8 @@ method：POST
 |   birthday | String |必填 |生日（生日格式为"1990-01-01"）|
 |   city | String |必填 |城市，字符长度最大100位|
 |   state | String |必填 |省份，字符长度最大100位|
-|   country | String |必填 |国家，字符长度最大50位|
-|   nationality | String |必填 |出生国，字符长度最大255位|
+|   country | String |必填 |用户所在国家，字符长度最大50位|
+|   nationality | String |必填 |国籍，字符长度最大255位|
 | doc_no | String |必填 |证件号码，字符长度最大128位|
 | doc_type | String |必填 |证件类型(目前只支持passport): passport: 护照，idcard：身份证，字符长度最大8位|
 | front_doc | String |必填 |正面照。base64编码, 照片文件大小应小于2M|

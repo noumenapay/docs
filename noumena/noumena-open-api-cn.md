@@ -1372,7 +1372,7 @@ method：POST
 
 ```text
 url：/api/v1/bank/virtualcard
-method：GET
+method：GET 或 POST
 ```
 
 |  Parameter  | Type  | Whether Required |                        Description                         |

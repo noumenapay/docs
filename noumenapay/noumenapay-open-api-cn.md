@@ -1,6 +1,8 @@
 # noumena-pay-OpenAPI 接口
 
 
+* [Noumena Pay充值](#Noumena-Pay充值)
+* [Onto对接 Noumena Pay](#Onto对接-Noumena-Pay)
 
 ## 接口规范
 
@@ -117,7 +119,7 @@ method：GET
 
 
 
-### 1.3.获取机构交易记录
+### 1.2.获取机构交易记录
 
 包括充值和提币。
 
@@ -182,7 +184,7 @@ method：GET
 
 
 
-### 1.2.给用户充值
+### 1.3.给用户充值
 
 
 ```text
@@ -224,7 +226,7 @@ method：POST
 
 
 
-### 1.3.获取用户充值记录
+### 1.4.获取用户充值记录
 
 ```text
 url：/api/v1/npay/cust/deposit
@@ -286,7 +288,7 @@ method：GET
 |  update_time   | long |      更新日期   |
 
 
-### 1.4.用户提现
+### 1.5.用户提现
 
 
 ```text
@@ -325,7 +327,7 @@ method：POST
 
 
 
-### 1.5.获取的用户提现记录
+### 1.6.获取用户提现记录
 
 ```text
 url：/api/v1/npay/cust/withdrawal
@@ -388,7 +390,7 @@ method：GET
 
 
 
-### 1.6.获取的用户资产
+### 1.7.获取用户资产
 
 ```text
 url：/api/v1/npay/cust/user/balance?acct_no=123&coin_type=USDT

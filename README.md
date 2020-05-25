@@ -229,7 +229,7 @@ Are SMS and Email verification required for our users? If yes, when should we qu
 
 - How the different KYC parameters between USD and EUR card?
 
-EUR card country,state,city,address should fill europe country.
+EUR card "country,state,city,address" should fill europe country address.
 ```
 {
     "acct_no":"0513000013",

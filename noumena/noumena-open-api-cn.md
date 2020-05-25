@@ -51,6 +51,7 @@
      - [8.1 业务逻辑错误码](#业务逻辑错误码)
      - [8.2 身份权限认证错误码](#身份权限认证错误码)
      - [8.3 异常错误码](#异常错误码)
+     - [8.4 KYC失败错误码](#KYC失败错误码)
 
 ## 接口规范
 
@@ -107,7 +108,7 @@
 
 例如请求 `body` 为：
 
-```javascript
+```
 {
 	"ont_id":"did:ont:Ae9ujqUnAtH9yRiepRvLUE3t9R2NbCTZPG",
 	"amount":190,
@@ -466,7 +467,7 @@ method：POST
 |   kyc_info | text |选填 |KYC 其他信息|
 | mail_verification_code | String |选填 |邮箱验证码|
 | mail_token | String |选填|发送邮件后返回的token|
-| cust_tx_id | String | 选填| KYC流水号，可以填随机字符串|
+| cust_tx_id | String | 选填| KYC流水号|
 | poa_doc | String[] |选填 |地址证明照片。base64编码，照片或PDF文件每个文件大小应小于2M|
 
 - 响应：
@@ -510,8 +511,8 @@ method：GET
       {
         "acct_no": "1222",
         "card_type_id": "10010001",
-        "status": 1,
-        "reason": "",
+        "status": 2,
+        "reason": "{\"code\":1110032,\"msg\":\"KYC failure, photo error\"}",
         "create_time": 1546300800000
       }
     ]
@@ -528,6 +529,7 @@ method：GET
 |   reason   | String | 认证失败原因。其他情况为空字符串 |
 | create_time |  long  |                      创建时间                       |
 
+> 失败原因请查看KYC失败错误码
 
 ### 查询指定用户 KYC 记录
 
@@ -559,8 +561,8 @@ method：GET
       {
         "acct_no": "1222",
         "card_type_id": "10010001",
-        "status": 1,
-        "reason": "",
+        "status": 2,
+        "reason": "{\"code\":1110032,\"msg\":\"KYC failure, photo error\"}",
         "create_time": 1546300800000
       }
     ]
@@ -578,7 +580,7 @@ method：GET
 | create_time |  long  |                      创建时间                       |
 
 
-
+> 失败原因请查看KYC失败错误码
 
 
 ## 开卡
@@ -1910,6 +1912,7 @@ method：PUT
 |   119006 |   该api没有被授权  |
 
 
+
 ### KYC失败错误码
 
 | 状态值 | 描述|
@@ -1930,6 +1933,6 @@ method：PUT
 ```
 {
    "code": 1110032,
-   "msg": "KYC 失败，证件照片错误"
+   "msg": "KYC failure, photo error"
 }
 ```

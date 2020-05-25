@@ -51,6 +51,7 @@
      - [8.1 Business Logic Error Codes](#Business-Logic-Error-Codes)
      - [8.2 Identity Authentication Error Codes](#Identity-Authentication-Error-Codes)
      - [8.3 Abnormal Status Error Codes](#Abnormal-Status-Error-Codes)
+     - [8.4 KYC Failure Error Codes](#KYC-Failure-Error-Codes)
 
 ## API Specifications
 
@@ -508,8 +509,8 @@ method：GET
       {
         "acct_no": "1222",
         "card_type_id": "10010001",
-        "status": 1,
-        "reason": "",
+        "status": 2,
+        "reason": "{\"code\":1110032,\"msg\":\"KYC failure, photo error\"}",
         "create_time": 1546300800000
       }
     ]
@@ -524,6 +525,8 @@ method：GET
 |   status    |  int    | Status code : 0 - Submitted successfully, 1 - Verification successful (Account activated), 2 - Verification failed, 3 - Verifying, 4 - Submission in progress|
 | reason | String |      Reason for verification failure. Blank for status other than failure       |
 | create_time |  long   |                                                   Creation time                                                    |
+
+> KYC failure reason please see "KYC Failure Error Codes"
 
 ### Query a specific user KYC records
 
@@ -552,8 +555,8 @@ method：GET
       {
         "acct_no": "1222",
         "card_type_id": "10010001",
-        "status": 1,
-        "reason": "",
+        "status": 2,
+        "reason": "{\"code\":1110032,\"msg\":\"KYC failure, photo error\"}",
         "create_time": 1546300800000
       }
     ]
@@ -569,6 +572,7 @@ method：GET
 | reason | String |      Reason for verification failure. Blank for status other than failure       |
 | create_time |  long   |                                                   Creation time                                                    |
 
+> KYC failure reason please see "KYC Failure Error Codes"
 
 ## Cards
 
@@ -1877,3 +1881,27 @@ method：PUT
 |   119005    | Too many API requests |
 |   119006    | Unauthorized API      |
 
+
+### KYC Failure Error Codes
+
+| Status Code | Description           |
+| :--------------: | --------| 
+|   111003 |   KYC failure   |
+|   1110031 |   KYC failure, country or nationality error   |
+|   1110032|   KYC failure, certificate photo error   |
+|   1110033 |   KYC failure, certificate photo in hand error   |
+|   1110034 |   KYC failure, address error   |
+|   1110035 |   KYC failure, mobile error   |
+|   1110036 |   KYC failure, birthday error   |
+|   1110037 |   KYC failure, user name error   |
+|   1110038 |   KYC failure, zipcode error   |
+|   1110039 |   KYC failure, other error   |
+
+KYC Failure reason filled in parameter ```reason```, the content for example:
+
+```
+{
+   "code": 1110032,
+   "msg": "KYC failure, photo error"
+}
+```

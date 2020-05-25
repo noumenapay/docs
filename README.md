@@ -221,8 +221,39 @@ Are SMS and Email verification required for our users? If yes, when should we qu
 
 - In the document I can’t find API for card balance retrieving. Do you have such an API? We need to display actual card balance in the user’s  account
 
-**A:** Please refer to "5.2 Check account balance" API.
+**A:** Please refer to "5.2 Query account balance" API.
 
 - Do you have a test API environment? Can you please provide API URL and credentials?
 
 **A:** Please clarify with our business team.
+
+- How the different KYC parameters between USD and EUR card?
+
+EUR card country,state,city,address should fill europe country.
+```
+{
+    "acct_no":"0513000013",
+    "acct_name":"HANS",
+    "card_type_id":"60000002",
+    "first_name":"SUNILKUMAR",
+    "last_name":"HANSRAJ",
+    "gender":"male",
+    "birthday":"1996-11-01",
+    "city":"Stockholm",
+    "state":"AHMEDABAD,GUJARAT",
+    "country":"SE",  //USD card example: Australia, EUR card example: SE
+    "nationality":"SE",  //USD card example: Australian, EUR card example: SE
+    "doc_no":"K1988247",
+    "doc_type":"passport",
+    "country_code":"86",
+    "mobile":"+86-15821703553", //USD card example: +8615821703553, EUR card example: +86-15821703553
+    "mail":"test@email.com",
+    "address":"123",
+    "zipcode":"100028",
+    "maiden_name":"zhang xiaohong",
+    "cust_tx_id":"202020420",
+    "front_doc":"{base64 image}",
+    "mix_doc":"{base64 image}"
+}
+
+```

@@ -466,7 +466,7 @@ method：POST
 |   kyc_info | text |选填 |KYC 其他信息|
 | mail_verification_code | String |选填 |邮箱验证码|
 | mail_token | String |选填|发送邮件后返回的token|
-| cust_tx_id | String | 选填| KYC流水号|
+| cust_tx_id | String | 选填| KYC流水号，可以填随机字符串|
 | poa_doc | String[] |选填 |地址证明照片。base64编码，照片或PDF文件每个文件大小应小于2M|
 
 - 响应：
